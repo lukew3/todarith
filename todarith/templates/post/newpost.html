@@ -3,18 +3,26 @@
   <div class="form">
     <form method="POST" action="">
       {{ form.hidden_tag() }}
-      <h2>Post a Question</h2>
+      <h2>Add a Problem</h2>
       <div class="form-group">
-        {{ form.title.label() }}
-        {{ form.title() }}
+        {{ form.question.label() }}
+        {{ form.question() }}
       </div>
       <div class="form-group">
-        {{ form.description.label() }}
-        {{ form.description() }}
+        {{ form.answer.label() }}
+        {{ form.answer() }}
       </div>
       <div class="form-group">
-        {{ form.photo.label() }}
-        {{ form.photo() }}
+        {{ form.classNumber.label() }}
+        {{ form.classNumber() }}
+      </div>
+      <div class="form-group">
+        {{ form.section.label() }}
+        {{ form.section() }}
+      </div>
+      <div class="form-group">
+        {{ form.type.label() }}
+        {{ form.type() }}
       </div>
       <div class="form-group">
         {{ form.submit(class="btn", value="Submit") }}

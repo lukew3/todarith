@@ -4,19 +4,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_login import LoginManager
 from todarith.config import Config
 
-
 db = SQLAlchemy()
 login_manager = LoginManager()
-
-#@app.errorhandler(404)
-#def not_found(error):
-#    return render_template('404.html'), 404
-
-
-# Build the database:
-#This will create the database file using SQLAlchemy
-#db.create_all()
-
 
 def create_app(config_class=Config):
     app = Flask(__name__)
