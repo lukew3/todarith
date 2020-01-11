@@ -13,8 +13,9 @@ login_manager = LoginManager()
 
 
 # Build the database:
-# This will create the database file using SQLAlchemy
+#This will create the database file using SQLAlchemy
 #db.create_all()
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -23,7 +24,9 @@ def create_app(config_class=Config):
     db.init_app(app)
     login_manager.init_app(app)
 
-    from todarith.mod_auth.routes import auth
+    from todarith.mod_auth.controller import auth
+    from todarith.errors.handlers import errors
     app.register_blueprint(auth, url_prefix='/auth')
+    app.register_blueprint(errors)
 
     return app
