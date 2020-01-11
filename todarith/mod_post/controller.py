@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template
 from todarith import db
-from todarith.mod_post.models import Post
+from todarith.models import Problem
 from todarith.mod_post.forms import PostForm
 
 post = Blueprint('post', __name__)

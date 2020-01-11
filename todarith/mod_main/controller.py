@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template
 from todarith import db
 #from todarith.mod_auth.forms import LoginForm
-from todarith.mod_main.models import Problem
+from todarith.models import Problem
 
 main = Blueprint('main', __name__)
 

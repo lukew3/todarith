@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for
 from todarith import db
 from flask_login import login_user, current_user, logout_user, login_required
-from todarith.mod_auth.models import User
+from todarith.models import User
 from todarith.mod_auth.forms import LoginForm, RegistrationForm
 
 auth = Blueprint('auth', __name__)
