@@ -6,6 +6,6 @@ from todarith.mod_main.models import Problem
 main = Blueprint('main', __name__)
 
 # Set the route and accepted methods
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/')
 def lanidng():
     return(render_template("main/landing.html"))
