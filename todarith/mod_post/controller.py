@@ -3,7 +3,7 @@ from todarith import db
 
 post = Blueprint('post', __name__)
 
-@app.route("/new", methods=['GET', 'POST'])
+@post.route("/new", methods=['GET', 'POST'])
 def newPost():
     form = EarnForm()
     if form.validate_on_submit():
