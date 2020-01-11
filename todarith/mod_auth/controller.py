@@ -10,27 +10,26 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('community'))
+        return redirect(url_for('main.explore'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and (user.password == form.password.data):
             login_user(user)
-            redirect(url_for('community'))
+            redirect(url_for('main.explore'))
         else:
             flash('Login Unsuccessful')
-    return render_template('auth/login.html', form=form)
     #if form.validate_on_submit():
     #    return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
     if form.validate_on_submit():
-        return redirect(url_for('community'))
+        return redirect(url_for('main.explore'))
 
     return render_template('/auth/login.html', form=form)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('community'))
+        return redirect(url_for('main.explore'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, password=form.password.data)
@@ -39,3 +38,9 @@ def register():
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('auth.login'))
     return render_template('/auth/register.html', form=form)
+
+@auth.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('main.explore'))

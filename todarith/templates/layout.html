@@ -9,10 +9,10 @@
     <nav>
       <ul>
         <li><a href="{{ url_for('main.landing') }}">Landing</a></li> &nbsp;
-        <li><a href="{{ url_for('post.newPost') }}">Make New Post</a></li> &nbsp;
+        <li><a href="{{ url_for('post.newPost') }}">Submit New Problem</a></li> &nbsp;
         <li><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
         {% if current_user.is_authenticated %}
-          <li><a href="{{ url_for('logout') }}">Logout</a></li> &nbsp;
+          <li><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
         {% else %}
           <li><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
           <li><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
