@@ -5,14 +5,12 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from werkzeug import secure_filename
 
 
-classChoices=[('1', 'kindergarten'), ('2', 'first grade'), ('3', 'second grade')]
+#classChoices=[('1', 'Kindergarten'), ('2', 'First Grade'), ('3', 'Second Grade')]
 
 class QuestionForm(FlaskForm):
     question = StringField('Question')
     answer = StringField('Answer')
-    #classNumber = StringField('Class')
-
-    classNumber = SelectField('Class', choices = classChoices)
+    classNumber = SelectField('Class')
     section = StringField('Section')
     type = StringField('Type')
     #photo = StringField('Photo')

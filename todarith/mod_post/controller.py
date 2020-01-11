@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, url_for
 from todarith import db
-from todarith.models import Problem
+from todarith.models import Problem, Classnum, Section, Type
 from todarith.mod_post.forms import QuestionForm
 
 post = Blueprint('post', __name__)
@@ -8,6 +8,7 @@ post = Blueprint('post', __name__)
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
     form = QuestionForm()
+    form.classNumber.choices = [(row.id, row.className) for row in Classnum.query.all()]
     if form.validate_on_submit():
         newQuestion = Problem(question=form.question.data, answer=form.answer.data, classNumber=form.classNumber.data, section=form.section.data, type=form.type.data)
         db.session.add(newQuestion)
