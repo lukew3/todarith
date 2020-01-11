@@ -16,3 +16,8 @@ class QuestionForm(FlaskForm):
     #photo = StringField('Photo')
     #image = FileField()
     submit = SubmitField('Submit')
+
+class BranchForm(FlaskForm):
+    parentBranch = StringField('Parent Branch')
+    branchName = StringField('New Branch Name', validators=[DataRequired()])
+    submit = SubmitField('Submit')

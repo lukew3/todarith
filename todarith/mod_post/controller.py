@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for
 from todarith import db
 from todarith.models import Problem, Classnum, Section, Topic
-from todarith.mod_post.forms import QuestionForm
+from todarith.mod_post.forms import QuestionForm, BranchForm
 
 post = Blueprint('post', __name__)
 
@@ -21,3 +21,37 @@ def newPost():
 @post.route('/edit')
 def edit():
     return render_template('post/editpost.html')
+
+
+@post.route('/createClass', methods=['GET', 'POST'])
+def createClass():
+    branchtype = 'classnum'
+    form = BranchForm()
+    if form.validate_on_submit():
+        newClass = Classnum(className=form.branchName.data)
+        db.session.add(newClass)
+        db.session.commit()
+        return redirect(url_for('post/newPost'))
+    return render_template('post/createBranch.html', form=form, branchtype=branchtype)
+
+@post.route('/createSection', methods=['GET', 'POST'])
+def createSection():
+    branchtype = 'section'
+    form = BranchForm()
+    if form.validate_on_submit():
+        newSection = Section(parent=form.parent.data, className=form.branchName.data)
+        db.session.add(newSection)
+        db.session.commit()
+        return redirect(url_for('post/newPost'))
+    return render_template('post/createBranch.html', form=form, branchtype=branchtype)
+
+@post.route('/createTopic', methods=['GET', 'POST'])
+def createTopic():
+    branchtype = 'topic'
+    form = BranchForm()
+    if form.validate_on_submit():
+        newTopic = Topic(parent=form.parent.data, className=form.branchName.data)
+        db.session.add(newTopic)
+        db.session.commit()
+        return redirect(url_for('post/newPost'))
+    return render_template('post/createBranch.html', form=form, branchtype=branchtype)
