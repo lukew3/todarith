@@ -9,3 +9,7 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def landing():
     return(render_template("main/landing.html"))
+
+@main.route('/explore')
+def explore ():
+    return(render_template("main/explore.html"))

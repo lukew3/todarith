@@ -7,9 +7,9 @@ from todarith.mod_auth.models import User
 auth = Blueprint('auth', __name__)
 
 # Set the route and accepted methods
-@auth.route('/signin', methods=['GET', 'POST'])
-def signIn():
-    return(render_template("/auth/signin.html"))
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
+    return(render_template("/auth/login.html"))
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
