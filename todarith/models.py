@@ -43,6 +43,7 @@ class Classnum(db.Model):
 class Section(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     section = db.Column(db.String(100), nullable=False)
+    #parent = #classNum
 
     def __repr__(self):
         return f"Section('{self.id}', '{self.section}' )"
@@ -50,7 +51,8 @@ class Section(db.Model):
 class Type(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(100), nullable=False)
-
+    #parent = Section
+    
     def __repr__(self):
         return f"Type('{self.id}', '{self.type}' )"
 

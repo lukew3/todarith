@@ -9,6 +9,8 @@ post = Blueprint('post', __name__)
 def newPost():
     form = QuestionForm()
     form.classNumber.choices = [(row.id, row.className) for row in Classnum.query.all()]
+    form.section.choices = [(row.id, row.section) for row in Section.query.all()]
+    form.type.choices = [(row.id, row.type) for row in Type.query.all()]
     if form.validate_on_submit():
         newQuestion = Problem(question=form.question.data, answer=form.answer.data, classNumber=form.classNumber.data, section=form.section.data, type=form.type.data)
         db.session.add(newQuestion)
