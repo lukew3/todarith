@@ -1,23 +1,29 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from todarith.config import Config
 
-app = Flask(__name__)
 
-app.config.from_object('config')
-db = SQLAlchemy(app)
+db = SQLAlchemy()
+login_manager = LoginManager()
 
-@app.errorhandler(404)
-def not_found(error):
-    return render_template('404.html'), 404
+#@app.errorhandler(404)
+#def not_found(error):
+#    return render_template('404.html'), 404
 
-# Import a module / component using its blueprint handler variable (mod_auth)
-from todarith.mod_auth.controllers import mod_auth as auth_module
-
-# Register blueprint(s)
-app.register_blueprint(auth_module)
-# app.register_blueprint(xyz_module)
-# ..
 
 # Build the database:
 # This will create the database file using SQLAlchemy
-db.create_all()
+#db.create_all()
+
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    db.init_app(app)
+    login_manager.init_app(app)
+
+    from todarith.mod_auth.routes import auth
+    app.register_blueprint(auth, url_prefix='/auth')
+
+    return app
