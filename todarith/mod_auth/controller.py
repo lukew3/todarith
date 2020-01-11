@@ -28,4 +28,13 @@ def login():
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    return(render_template("/auth/register.html"))
+    if current_user.is_authenticated:
+        return redirect(url_for('community'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('auth.login'))
+    return render_template('/auth/register.html', form=form)
