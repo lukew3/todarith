@@ -12,7 +12,7 @@ class QuestionForm(FlaskForm):
     answer = StringField('Answer')
     classNumber = SelectField('Class')
     section = SelectField('Section')
-    type = SelectField('Type')
+    topic = SelectField('Topic')
     #photo = StringField('Photo')
     #image = FileField()
     submit = SubmitField('Submit')

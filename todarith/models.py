@@ -22,20 +22,23 @@ class User(db.Model, UserMixin):
 class Problem(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    #probNumofType = db.Column(db.Integer)
+    #probNumof = db.Column(db.Integer)
     question = db.Column(db.String(1000), nullable=False)
     answer = db.Column(db.String(1000), nullable=False)
     #Not sure if this should be a number or a name, number could have a name that renders after displayed and name might take extra space
     classNumber = db.Column(db.Integer, nullable=False)
     section = db.Column(db.Integer, nullable=False)
-    type = db.Column(db.Integer, nullable =False)
+    topic = db.Column(db.Integer, nullable =False)
 
     def __repr__(self):
         return f"Problem('{self.question}', '{self.answer}' )"
 
+
 class Classnum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     className = db.Column(db.String(100), nullable=False)
+    sections = db.relationship('Section', backref='parent', lazy=True)
+    #classnum.sections to get a list of all sections that belong to class
 
     def __repr__(self):
         return f"Classnum('{self.id}', '{self.className}' )"
@@ -43,18 +46,21 @@ class Classnum(db.Model):
 class Section(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     section = db.Column(db.String(100), nullable=False)
+    class_id = db.Column(db.Integer, db.ForeignKey('classnum.id'))
+    topics = db.relationship('Section', backref='parent', lazy=True)
     #parent = #classNum
 
     def __repr__(self):
         return f"Section('{self.id}', '{self.section}' )"
 
-class Type(db.Model):
+class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(100), nullable=False)
+    topic = db.Column(db.String(100), nullable=False)
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
     #parent = Section
-    
+
     def __repr__(self):
-        return f"Type('{self.id}', '{self.type}' )"
+        return f"Topic('{self.id}', '{self.topic}' )"
 
 
 """
