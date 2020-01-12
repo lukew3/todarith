@@ -37,7 +37,8 @@ class Problem(db.Model):
 class Classnum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     className = db.Column(db.String(100), nullable=False)
-    sections = db.relationship('Section', backref='parentBranch', lazy=True)
+
+    sections = db.relationship('Section', backref='classnum', lazy=True)
     #classnum.sections to get a list of all sections that belong to class
 
     def __repr__(self):
@@ -46,8 +47,9 @@ class Classnum(db.Model):
 class Section(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     section = db.Column(db.String(100), nullable=False)
+
     class_id = db.Column(db.Integer, db.ForeignKey('classnum.id'))
-    topics = db.relationship('Section', backref='parentBranch', lazy=True)
+    topics = db.relationship('Topic', backref='section', lazy=True)
     #parent = #classNum
 
     def __repr__(self):
@@ -56,6 +58,7 @@ class Section(db.Model):
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     topic = db.Column(db.String(100), nullable=False)
+
     section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
     #parent = Section
 

@@ -18,6 +18,6 @@ class QuestionForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class BranchForm(FlaskForm):
-    parentBranch = StringField('Parent Branch')
+    parentBranch = SelectField('Parent Branch')
     branchName = StringField('New Branch Name', validators=[DataRequired()])
     submit = SubmitField('Submit')

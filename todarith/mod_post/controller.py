@@ -9,7 +9,7 @@ post = Blueprint('post', __name__)
 def newPost():
     form = QuestionForm()
     form.classNumber.choices = [(row.id, row.className) for row in Classnum.query.all()]
-    form.section.choices = [(row.id, row.section) for row in Section.query.all()]
+    form.section.choices = [(row.id, row.section) for row in Section.query.filter(Section.class_id == 1) ]
     form.topic.choices = [(row.id, row.topic) for row in Topic.query.all()]
     if form.validate_on_submit():
         newQuestion = Problem(question=form.question.data, answer=form.answer.data, classNumber=form.classNumber.data, section=form.section.data, topic=form.topic.data)
@@ -25,24 +25,27 @@ def edit():
 
 @post.route('/createClass', methods=['GET', 'POST'])
 def createClass():
-    branchtype = 'classnum'
     form = BranchForm()
+    form.parentBranch.choices = [(row.id, row.className) for row in Classnum.query.all()]
+    branchtype = 'classnum'
     if form.validate_on_submit():
         newClass = Classnum(className=form.branchName.data)
         db.session.add(newClass)
         db.session.commit()
-        return redirect(url_for('post/newPost'))
+        return redirect(url_for('post.newPost'))
     return render_template('post/createBranch.html', form=form, branchtype=branchtype)
 
 @post.route('/createSection', methods=['GET', 'POST'])
 def createSection():
-    branchtype = 'section'
     form = BranchForm()
+    form.parentBranch.choices = [(row.id, row.className) for row in Classnum.query.all()]
+    branchtype = 'section'
     if form.validate_on_submit():
-        newSection = Section(parent=form.parent.data, className=form.branchName.data)
+        #cvhange class id to number
+        newSection = Section(class_id=form.parentBranch.data, className=form.branchName.data)
         db.session.add(newSection)
         db.session.commit()
-        return redirect(url_for('post/newPost'))
+        return redirect(url_for('post.newPost'))
     return render_template('post/createBranch.html', form=form, branchtype=branchtype)
 
 @post.route('/createTopic', methods=['GET', 'POST'])
@@ -50,8 +53,8 @@ def createTopic():
     branchtype = 'topic'
     form = BranchForm()
     if form.validate_on_submit():
-        newTopic = Topic(parent=form.parent.data, className=form.branchName.data)
+        newTopic = Topic(parentBranch=form.parentBranch.data, className=form.branchName.data)
         db.session.add(newTopic)
         db.session.commit()
-        return redirect(url_for('post/newPost'))
+        return redirect(url_for('post.newPost'))
     return render_template('post/createBranch.html', form=form, branchtype=branchtype)
