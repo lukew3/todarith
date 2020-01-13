@@ -3,14 +3,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_login import LoginManager
 from todarith.config import Config
+from flaskext.mysql import MySQL
 
 db = SQLAlchemy()
+mysql = MySQL()
 login_manager = LoginManager()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    mysql.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
 
@@ -22,5 +25,10 @@ def create_app(config_class=Config):
     app.register_blueprint(errors)
     app.register_blueprint(main)
     app.register_blueprint(post, url_prefix='/post')
+
+    conn = mysql.connect()
+    cursor = conn.cursor()
+
+    #cur = mysql.get_db().cursor()
 
     return app
