@@ -26,9 +26,6 @@ def create_app(config_class=Config):
     app.register_blueprint(main)
     app.register_blueprint(post, url_prefix='/post')
 
-    conn = mysql.connect()
-    cursor = conn.cursor()
-
     #cur = mysql.get_db().cursor()
 
     return app
