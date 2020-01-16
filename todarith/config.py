@@ -5,12 +5,11 @@ class Config:
     #BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     #SQLALCHEMY_DATABASE_URI = 'sqlite://' + os.path.join(BASE_DIR, 'app.db')
     #SQLALCHEMY_DATABASE_URI = ''
-    MYSQL_HOST = 'sql9.freemysqlhosting.net'
-    MYSQL_USER = 'sql9318896'
-    MYSQL_PASSWORD = 'whlSMpD33C'
-    MYSQL_DB = 'sql9318896'
-    MYSQL_CHARSET = 'utf-8'
-    MYSQL_CURSORCLASS = 'DictCursor'
+    SQLALCHEMY_DATABASE_URI = 'mysql://sql9318896:whlSMpD33C@sql9.freemysqlhosting.net/mydatabase'
+    MYSQL_DATABSE_HOST = 'localhost'
+    MYSQL_DATABASE_USER = 'root'
+    MYSQL_DATABASE_PASSWORD = '8a9cbor4'
+    MYSQL_DATABASE_DB = 'todarith'
     DATABASE_CONNECT_OPTIONS = {}
     CSRF_SESSION_KEY = "secret"
     SECRET_KEY = "secret"

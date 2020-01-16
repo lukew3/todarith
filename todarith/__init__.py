@@ -21,7 +21,7 @@ def create_app(config_class=Config):
     from todarith.errors.handlers import errors
     from todarith.mod_main.controller import main
     from todarith.mod_post.controller import post
-    app.register_blueprint(auth, url_prefix='/auth')
+    app.register_blueprint(auth, url_prefix='/auth')    
     app.register_blueprint(errors)
     app.register_blueprint(main)
     app.register_blueprint(post, url_prefix='/post')
