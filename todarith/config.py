@@ -14,7 +14,7 @@ class Config:
     MYSQL_HOST = 'sql207.epizy.com'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://epiz_25094715:QT7BmdgeAnf0Op@sql207.epizy.com/epiz_25094715_todarith'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://epiz_25094715:QT7BmdgeAnf0Op@sql207.epizy.com:3307/epiz_25094715_todarith'
     #CSRF_SESSION_KEY = "secret"
     SECRET_KEY = "secret"
     CSRF_ENABLED = True
