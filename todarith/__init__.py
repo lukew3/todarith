@@ -6,14 +6,15 @@ from todarith.config import Config
 from flaskext.mysql import MySQL
 
 db = SQLAlchemy()
-mysql = MySQL()
+
+#mysql = MySQL()
 login_manager = LoginManager()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    mysql.init_app(app)
+    #mysql.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
 
@@ -21,7 +22,7 @@ def create_app(config_class=Config):
     from todarith.errors.handlers import errors
     from todarith.mod_main.controller import main
     from todarith.mod_post.controller import post
-    app.register_blueprint(auth, url_prefix='/auth')    
+    app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(errors)
     app.register_blueprint(main)
     app.register_blueprint(post, url_prefix='/post')
