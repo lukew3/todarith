@@ -10,8 +10,8 @@ class Config:
     #SQLALCHEMY_DATABASE_URI = 'mysql://username:password@server/db'
     MYSQL_USER = 'epiz_25094715'
     MYSQL_PASSWORD = 'QT7BmdgeAnf0Op'
-    MYSQL_DB = 'epiz_25094715_todarith'
-    MYSQL_HOST = 'sql207.epizy.com'
+    MYSQL_DB = 'todarith'
+    MYSQL_HOST = 'localhost'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://epiz_25094715:QT7BmdgeAnf0Op@sql207.epizy.com:3307/epiz_25094715_todarith'
