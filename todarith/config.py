@@ -1,5 +1,4 @@
 import os
-from flaskext.mysql import MySQL
 
 class Config:
     DEBUG = True
