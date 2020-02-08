@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_login import LoginManager
 from todarith.config import Config
-from flaskext.mysql import MySQL
 
 db = SQLAlchemy()
 

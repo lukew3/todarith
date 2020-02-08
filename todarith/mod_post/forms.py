@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from werkzeug import secure_filename
 
 
 #classChoices=[('1', 'Kindergarten'), ('2', 'First Grade'), ('3', 'Second Grade')]
