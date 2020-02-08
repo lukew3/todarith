@@ -6,7 +6,7 @@ class Config:
     """Default configuration options."""
     #SITE_NAME = os.environ.get('APP_NAME', 'Todarith')
 
-    #SECRET_KEY = os.environ.get('SECRET_KEY', 'secrets')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'secrets')
     #SERVER_NAME = os.environ.get('SERVER_NAME', 'app.docker:5000')
 
     #MAIL_SERVER = os.environ.get('MAIL_SERVER', 'mail')
@@ -35,4 +35,3 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SUPPORTED_LOCALES = ['en']
-
