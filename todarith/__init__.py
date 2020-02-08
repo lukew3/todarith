@@ -4,7 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_login import LoginManager
 from todarith.commands import create_db, drop_db, populate_db, recreate_db
 from todarith.database import db
-from todarith import config
+from todarith.config import Config
 
 from todarith.mod_auth import auth
 from todarith.errors import errors
@@ -15,9 +15,10 @@ from todarith.mod_post import post
 
 #mysql = MySQL()
 
-def create_app(config=config.base_config):
+
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(config)
+    app.config.from_object(Config)
 
     #db = SQLAlchemy()
     login_manager = LoginManager()

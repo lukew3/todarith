@@ -1,6 +1,6 @@
 import os
 
-class base_config(object):
+class Config:
     DEBUG = True
 
     """Default configuration options."""
@@ -37,12 +37,14 @@ class base_config(object):
 
     SUPPORTED_LOCALES = ['en']
 
+"""
 class dev_config(base_config):
-    """Development configuration options."""
+    #Development configuration options.
     ASSETS_DEBUG = True
     WTF_CSRF_ENABLED = False
 
 class test_config(base_config):
-    """Testing configuration options."""
+    #Testing configuration options.
     TESTING = True
     WTF_CSRF_ENABLED = False
+"""
