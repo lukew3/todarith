@@ -15,7 +15,7 @@ from todarith.mod_post import post
 
 #mysql = MySQL()
 
-def create_app(config_class=config.base_config):
+def create_app(config=config.base_config):
     app = Flask(__name__)
     app.config.from_object(config)
 
@@ -25,7 +25,6 @@ def create_app(config_class=config.base_config):
     register_blueprints(app)
     register_commands(app)
 
-    #mysql.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
 
@@ -33,7 +32,6 @@ def create_app(config_class=config.base_config):
     from todarith.errors.handlers import errors
     from todarith.mod_main.controller import main
     from todarith.mod_post.controller import post
-    #cur = mysql.get_db().cursor()
 
     return app
 
