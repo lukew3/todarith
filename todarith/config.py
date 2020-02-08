@@ -1,6 +1,6 @@
 import os
 
-class Config:
+class base_config(object):
     DEBUG = True
 
     """Default configuration options."""
@@ -32,6 +32,17 @@ class Config:
         POSTGRES_PORT,
         POSTGRES_DB
     )
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SUPPORTED_LOCALES = ['en']
+
+class dev_config(base_config):
+    """Development configuration options."""
+    ASSETS_DEBUG = True
+    WTF_CSRF_ENABLED = False
+
+class test_config(base_config):
+    """Testing configuration options."""
+    TESTING = True
+    WTF_CSRF_ENABLED = False

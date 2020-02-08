@@ -3,8 +3,9 @@ from todarith import db
 from flask_login import login_user, current_user, logout_user, login_required
 from todarith.models import User
 from todarith.mod_auth.forms import LoginForm, RegistrationForm
+from todarith.mod_auth import auth #not sure if this is necessary
 
-auth = Blueprint('auth', __name__)
+#auth = Blueprint('auth', __name__)
 
 # Set the route and accepted methods
 @auth.route('/login', methods=['GET', 'POST'])
