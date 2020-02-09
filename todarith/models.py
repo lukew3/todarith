@@ -43,7 +43,7 @@ class Problem(db.Model):
     otherTags = db.Column(db.String(1000), nullable=False)
 
 
-class Topics(db.Model):
+class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     topicName = db.Column(db.String(100), nullable=False)
     #next columnshould be a list of topic id's that belong underneath the topic
