@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, g, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_login import LoginManager
@@ -35,6 +35,7 @@ def create_app(config_class=Config):
     from todarith.mod_post.controller import post
 
     return app
+    
 
 def register_commands(app):
     """Register custom commands for the Flask CLI."""
