@@ -1,9 +1,8 @@
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for
 from todarith import db
 from todarith.models import Problem, Classnum, Section, Topic
 from todarith.mod_post.forms import QuestionForm, BranchForm
-
-post = Blueprint('post', __name__)
+from todarith.mod_post import post
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
