@@ -1,14 +1,16 @@
 from flask import request, render_template, redirect, url_for
 from todarith.database import db
 from todarith.models import User, Problem, Topic
-from todarith.mod_post.forms import QuestionForm, BranchForm
+from todarith.mod_post.forms import QuestionForm, TopicForm
 from todarith.mod_post import post
+from flask_wtf import FlaskForm
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
     form = QuestionForm()
     form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
     if form.validate_on_submit():
+        print('problem added')
         newQuestion = Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data)
         db.session.add(newQuestion)
         db.session.commit()
