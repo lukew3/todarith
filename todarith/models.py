@@ -25,6 +25,46 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.id}', '{self.username}', '{self.email}' )"
 
+
+class Problem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(1000), nullable=False)
+    answer = db.Column(db.String(1000), nullable=False)
+    #should either be a boolean that says if confirmed or not or be a number
+    #maybe be a number that says how many people have confirmed correct
+    confirmedCorrect = db.Column(db.String(1000), nullable=False)
+    #The problems difficulty level, not sure how that will be judged, maybe by students independently
+    difficultyLevel = db.Column(db.String(1000), nullable=False) #time in minutes, could be intervals of 1,2,3,5,10,15
+    # The expected time to solve if basic understanding is assumed
+    #could be judged by how long students spend on the page until it is solved
+    #make sure that they are active and extra long data is not included
+    expectedTime = db.Column(db.String(1000), nullable=False)
+    #other tags can be included like AP style, conceptual, application, or word problem
+    otherTags = db.Column(db.String(1000), nullable=False)
+
+
+class Topic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    topicName = db.Column(db.String(100), nullable=False)
+    #next columnshould be a list of topic id's that belong underneath the topic
+    #ex. calculus is main topic and differentiation is a subTopic
+    subTopics = db.Column(db.String(100), nullable=False)
+    #next col should be a list of problems that belong directly to the topic and don't fall into subtopic category
+    problems = db.Column(db.String(100), nullable=False)
+
+"""
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), unique=False, nullable=False)
+    description = db.Column(db.String(1000), unique=False, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    photo = db.Column(db.String(1000), nullable=False, unique=False)
+    #author =
+    #photo =
+
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.description}')"
+
 class Problem(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -38,7 +78,6 @@ class Problem(db.Model):
 
     def __repr__(self):
         return f"Problem('{self.question}', '{self.answer}' )"
-
 
 class Classnum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -70,18 +109,4 @@ class Topic(db.Model):
 
     def __repr__(self):
         return f"Topic('{self.id}', '{self.topic}' )"
-
-
-"""
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), unique=False, nullable=False)
-    description = db.Column(db.String(1000), unique=False, nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    photo = db.Column(db.String(1000), nullable=False, unique=False)
-    #author =
-    #photo =
-
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.description}')"
 """
