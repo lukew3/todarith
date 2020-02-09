@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for
 from todarith import db
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import login_user, current_user, logout_user, login_required, UserMixin
 from todarith.models import User
 from todarith.mod_auth.forms import LoginForm, RegistrationForm
 from todarith.mod_auth import auth #not sure if this is necessary
@@ -8,9 +8,9 @@ from todarith import login_manager
 
 
 @login_manager.user_loader
-def load_user(id):
-    return User.get_by_id(id)
-    
+def get_user(ident):
+  return User.query.get(int(ident))
+
 # Set the route and accepted methods
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
