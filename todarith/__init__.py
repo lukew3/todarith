@@ -4,6 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_login import LoginManager
 from todarith.commands import create_db, drop_db, populate_db, recreate_db
 from todarith.database import db
+from todarith.extensions import login_manager
 from todarith.config import Config
 
 from todarith.mod_auth import auth
@@ -25,7 +26,7 @@ def create_app(config_class=Config):
 
     register_blueprints(app)
     register_commands(app)
-    #register_extensions(app)
+    register_extensions(app)
 
     from todarith.mod_auth.controller import auth
     from todarith.errors.handlers import errors
@@ -48,4 +49,5 @@ def register_blueprints(app):
     app.register_blueprint(post, url_prefix='/post')
 
 def register_extensions(app):
-    db.init_app(app)
+    login_manager.init_app(app)
+    #db.init_app(app)
