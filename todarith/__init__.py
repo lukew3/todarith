@@ -11,9 +11,7 @@ from todarith.errors import errors
 from todarith.mod_main import main
 from todarith.mod_post import post
 
-#from todarith.config import base_config
-
-#mysql = MySQL()
+from todarith.models import User, Problem
 
 
 def create_app(config_class=Config):
@@ -22,12 +20,12 @@ def create_app(config_class=Config):
 
     #db = SQLAlchemy()
     login_manager = LoginManager()
+    login_manager.init_app(app)
+    db.init_app(app)
 
     register_blueprints(app)
     register_commands(app)
-
-    db.init_app(app)
-    login_manager.init_app(app)
+    #register_extensions(app)
 
     from todarith.mod_auth.controller import auth
     from todarith.errors.handlers import errors
@@ -35,7 +33,7 @@ def create_app(config_class=Config):
     from todarith.mod_post.controller import post
 
     return app
-    
+
 
 def register_commands(app):
     """Register custom commands for the Flask CLI."""
@@ -48,3 +46,6 @@ def register_blueprints(app):
     app.register_blueprint(errors)
     app.register_blueprint(main)
     app.register_blueprint(post, url_prefix='/post')
+
+def register_extensions(app):
+    db.init_app(app)

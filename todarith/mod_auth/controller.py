@@ -5,8 +5,6 @@ from todarith.models import User
 from todarith.mod_auth.forms import LoginForm, RegistrationForm
 from todarith.mod_auth import auth #not sure if this is necessary
 
-#auth = Blueprint('auth', __name__)
-
 # Set the route and accepted methods
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
