@@ -5,18 +5,13 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 
 
 #classChoices=[('1', 'Kindergarten'), ('2', 'First Grade'), ('3', 'Second Grade')]
-
 class QuestionForm(FlaskForm):
     question = StringField('Question')
     answer = StringField('Answer')
-    classNumber = SelectField('Class')
-    section = SelectField('Section')
-    topic = SelectField('Topic')
-    #photo = StringField('Photo')
-    #image = FileField()
+    topic = SelectField('Class')
     submit = SubmitField('Submit')
 
-class BranchForm(FlaskForm):
-    parentBranch = SelectField('Parent Branch')
-    branchName = StringField('New Branch Name', validators=[DataRequired()])
+class TopicForm(FlaskForm):
+    #add some way to add parent or child topics
+    topicName = StringField('Topic Name')
     submit = SubmitField('Submit')
