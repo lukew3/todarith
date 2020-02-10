@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
         self.password = password
 
     def __repr__(self):
-        return f"User('{self.id}', '{self.username}', '{self.email}' )"
+        return f"User('{self.id}', '{self.username}', '{self.email}')"
 
 
 class Problem(db.Model):
@@ -43,7 +43,7 @@ class Problem(db.Model):
     otherTags = db.Column(db.String(1000), nullable=True)
 
     def __repr__(self):
-        return f"Problem('{self.question}', '{self.answer}' )"
+        return f"Problem('{self.question}', '{self.answer}')"
 
 
 class Topic(db.Model):
