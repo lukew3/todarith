@@ -7,6 +7,9 @@ from flask_wtf import FlaskForm
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
+    question = Problem(question='7+3', answer='10')
+    db.session.add(question)
+    db.session.commit()
     form = QuestionForm()
     form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
     if form.validate_on_submit() == False:
