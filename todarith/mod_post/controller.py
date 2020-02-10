@@ -12,12 +12,25 @@ def newPost():
     if form.validate_on_submit() == False:
         print("Why")
         print(Problem(question=form.question.data, answer=form.answer.data, ))
+        print(None)
+        Problem.create(
+            question=form.question.data,
+            answer=form.answer.data,
+            confirmedCorrect=None,
+            difficultyLevel=None,
+            expectedTime=None,
+            otherTags=None
+        )
     if form.validate_on_submit():
         print('problem added')
-        #newQuestion = Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data)
-        newQuestion = Problem(question=form.question.data, answer=form.answer.data, confirmedCorrect=None, difficultyLevel=None, expectedTime=None, otherTags=None)
-        db.session.add(newQuestion)
-        db.session.commit()
+        Problem.create(
+            question=form.question.data,
+            answer=form.answer.data,
+            confirmedCorrect=None,
+            difficultyLevel=None,
+            expectedTime=None,
+            otherTags=None
+        )
         return redirect(url_for('main.explore'))
     return render_template('post/newpost.html', form=form)
 

@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import current_app
 from flask_login import UserMixin
-from todarith.database import db
+from todarith.database import db, CRUDMixin
 """from todarith import login_manager
 
 
@@ -10,7 +10,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 """
 
-class User(db.Model, UserMixin):
+class User(CRUDMixin, db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(30), unique=False, nullable=False)
@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.id}', '{self.username}', '{self.email}')"
 
 
-class Problem(db.Model):
+class Problem(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(1000), nullable=False)
     answer = db.Column(db.String(1000), nullable=False)
@@ -46,7 +46,7 @@ class Problem(db.Model):
         return f"Problem('{self.question}', '{self.answer}')"
 
 
-class Topic(db.Model):
+class Topic(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     topicName = db.Column(db.String(100), nullable=False)
     #next columnshould be a list of topic id's that belong underneath the topic
