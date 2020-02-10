@@ -15,7 +15,7 @@ def newPost():
     if form.validate_on_submit():
         print('problem added')
         #newQuestion = Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data)
-        newQuestion = Problem(question=form.question.data, answer=form.answer.data, confirmedCorrect=null, difficultyLevel=null, expectedTime=null, otherTags=null)
+        newQuestion = Problem(question=form.question.data, answer=form.answer.data, confirmedCorrect=None, difficultyLevel=None, expectedTime=None, otherTags=None)
         db.session.add(newQuestion)
         db.session.commit()
         return redirect(url_for('main.explore'))
