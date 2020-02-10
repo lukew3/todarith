@@ -9,9 +9,13 @@ from flask_wtf import FlaskForm
 def newPost():
     form = QuestionForm()
     form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
+    if form.validate_on_submit() == False:
+        print("Why")
+        print(Problem(question=form.question.data, answer=form.answer.data))
     if form.validate_on_submit():
         print('problem added')
-        newQuestion = Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data)
+        #newQuestion = Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data)
+        newQuestion = Problem(question=form.question.data, answer=form.answer.data)
         db.session.add(newQuestion)
         db.session.commit()
         return redirect(url_for('main.explore'))

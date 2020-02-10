@@ -11,6 +11,7 @@ class QuestionForm(FlaskForm):
     topic = SelectField('Class')
     submit = SubmitField('Submit')
 
+
 class TopicForm(FlaskForm):
     #add some way to add parent or child topics
     topicName = StringField('Topic Name')

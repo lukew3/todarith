@@ -32,15 +32,18 @@ class Problem(db.Model):
     answer = db.Column(db.String(1000), nullable=False)
     #should either be a boolean that says if confirmed or not or be a number
     #maybe be a number that says how many people have confirmed correct
-    confirmedCorrect = db.Column(db.String(1000), nullable=True)#should be nullable=False
+    """confirmedCorrect = db.Column(db.String(1000), nullable=True)#should be nullable=False
     #The problems difficulty level, not sure how that will be judged, maybe by students independently
     difficultyLevel = db.Column(db.String(1000), nullable=True) #time in minutes, could be intervals of 1,2,3,5,10,15
     # The expected time to solve if basic understanding is assumed
     #could be judged by how long students spend on the page until it is solved
     #make sure that they are active and extra long data is not included
-    expectedTime = db.Column(db.String(1000), nullable=True) 
+    expectedTime = db.Column(db.String(1000), nullable=True)
     #other tags can be included like AP style, conceptual, application, or word problem
-    otherTags = db.Column(db.String(1000), nullable=True)
+    otherTags = db.Column(db.String(1000), nullable=True)"""
+
+    def __repr__(self):
+        return f"Problem('{self.question}', '{self.answer}' )"
 
 
 class Topic(db.Model):
