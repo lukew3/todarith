@@ -2,7 +2,7 @@
 {% block content %}
   <div class="form">
     <form method="POST" action="">
-      {{ form.hidden_tag() }}
+      {{ form.csrf_token }}
       <h2>Add a Problem</h2>
       <div class="form-group">
         {{ form.question.label() }}
@@ -13,20 +13,13 @@
         {{ form.answer() }}
       </div>
       <div class="form-group">
-        {{ form.classNumber.label() }}
-        {{ form.classNumber() }}
-      </div>
-      <div class="form-group">
-        {{ form.section.label() }}
-        {{ form.section() }}
-      </div>
-      <div class="form-group">
         {{ form.topic.label() }}
         {{ form.topic() }}
       </div>
       <div class="form-group">
         {{ form.submit(class="btn", value="Submit") }}
       </div>
+
     </form>
   </div>
 {% endblock content %}

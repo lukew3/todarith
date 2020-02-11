@@ -2,21 +2,20 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from todarith.models import Problem;
+from todarith.models import User, Problem, Topic
+from todarith.database import db
 
-
-#classChoices=[('1', 'Kindergarten'), ('2', 'First Grade'), ('3', 'Second Grade')]
-
+#topicChoices=[('1', 'Addition'), ('2', 'Subtraction'), ('3', 'Multiplication')]
+#topicChoices = [('1', 'Addition'), ('2', 'Subtraction'), ('3', 'Multiplication')]
 class QuestionForm(FlaskForm):
     question = StringField('Question')
     answer = StringField('Answer')
-    classNumber = SelectField('Class')
-    section = SelectField('Section')
-    topic = SelectField('Topic')
-    #photo = StringField('Photo')
-    #image = FileField()
-    submit = SubmitField('Submit')
+    topic = SelectField('Class')
+    submit = SubmitField('Add')
 
-class BranchForm(FlaskForm):
-    parentBranch = SelectField('Parent Branch')
-    branchName = StringField('New Branch Name', validators=[DataRequired()])
+
+class TopicForm(FlaskForm):
+    #add some way to add parent or child topics
+    topicName = StringField('Topic Name')
     submit = SubmitField('Submit')
