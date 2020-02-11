@@ -1,0 +1,23 @@
+#problemCard{
+  position:absolute;
+  height: 50vh;
+  width: 80vw;
+}
+
+#cardHeader{
+  position: relative;
+  height: 10vh;
+  width: 80vw;
+}
+
+#cardBody{
+  position: relative;
+  height: 10vh;
+  width: 80vw;
+}
+
+#cardFooter{
+  position: relative;
+  height: 10vh;
+  width: 80vw;
+}

@@ -3,7 +3,6 @@ from flask import (
 )
 #from flask import Blueprint, request, render_template
 from todarith import db
-#from todarith import mysql
 #from todarith.mod_auth.forms import LoginForm
 from todarith.models import Problem
 from todarith.mod_main import main
@@ -15,5 +14,6 @@ def landing():
     return(render_template("main/landing.html"))
 
 @main.route('/explore')
-def explore ():
-    return(render_template("main/explore.html"))
+def explore():
+    problems = Problem.query.all()
+    return render_template('main/explore.html', problems=problems)
