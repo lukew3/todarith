@@ -9,20 +9,26 @@ from flask_wtf import FlaskForm
 def newPost():
     form = QuestionForm()
     form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
-    if form.validate_on_submit() == False:
-        print("Why")
-        print(Problem(question=form.question.data, answer=form.answer.data, ))
-        print(None)
-        Problem.create(
-            question=form.question.data,
-            answer=form.answer.data,
-            confirmedCorrect=None,
-            difficultyLevel=None,
-            expectedTime=None,
-            otherTags=None
-        )
+    if request.method == 'POST':
+        if form.validate():
+            print('Validate: True')
+            print(Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data))
+            Problem.create(
+                question=form.question.data,
+                answer=form.answer.data,
+                topic=form.topic.data,
+                confirmedCorrect=None,
+                difficultyLevel=None,
+                expectedTime=None,
+                otherTags=None
+            )
+            return redirect(url_for('main.explore'))
+        else:
+            print(form.errors)
+    """
     if form.validate_on_submit():
-        print('problem added')
+        print('Validate: True')
+        print(Problem(question=form.question.data, answer=form.answer.data, ))
         Problem.create(
             question=form.question.data,
             answer=form.answer.data,
@@ -32,7 +38,7 @@ def newPost():
             otherTags=None
         )
         return redirect(url_for('main.explore'))
-    return render_template('post/newpost.html', form=form)
+    """
 
 @post.route('/edit')
 def edit():
