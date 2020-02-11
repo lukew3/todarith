@@ -8,10 +8,10 @@ from todarith.database import db
 
 #topicChoices=[('1', 'Addition'), ('2', 'Subtraction'), ('3', 'Multiplication')]
 #topicChoices = [('1', 'Addition'), ('2', 'Subtraction'), ('3', 'Multiplication')]
-class QuestionForm(FlaskForm, meta=None, **topicChoices):
+class QuestionForm(FlaskForm):
     question = StringField('Question')
     answer = StringField('Answer')
-    topic = SelectField('Class', choices=topicChoices)
+    topic = SelectField('Class')
     submit = SubmitField('Add')
 
 

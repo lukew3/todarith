@@ -7,11 +7,10 @@ from flask_wtf import FlaskForm
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
-    #choices = [(row.id, row.topicName) for row in Topic.query.all()]
-    topicChoices = [(row.id, row.topicName) for row in Topic.query.all()]
+    #topicChoices = [(row.id, row.topicName) for row in Topic.query.all()]
 
-    form = QuestionForm(topicChoices)
-    #form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
+    form = QuestionForm()
+    form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
 
     if request.method == 'POST':
         print(form.topic.data)
@@ -30,6 +29,16 @@ def newPost():
             return redirect(url_for('main.explore'))
         else:
             print(form.errors)
+            Problem.create(
+                question=form.question.data,
+                answer=form.answer.data,
+                topic=form.topic.data,
+                confirmedCorrect=None,
+                difficultyLevel=None,
+                expectedTime=None,
+                otherTags=None
+            )
+            return redirect(url_for('main.explore'))
     return render_template('post/newpost.html', form=form)
 
     """
