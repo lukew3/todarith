@@ -1,23 +1,35 @@
 #problemCard{
-  position:absolute;
-  height: 50vh;
+  position: relative;
+  height: 40%;
+  width: 80%;
+  background-color: #e6e6e6
+}
+
+.cardSection{
+  height: 25%;
   width: 80vw;
+  padding:none;
+  display:block;
+  background-color: #bfbfbf;  
 }
 
 #cardHeader{
-  position: relative;
-  height: 10vh;
-  width: 80vw;
 }
 
 #cardBody{
-  position: relative;
-  height: 10vh;
-  width: 80vw;
 }
 
 #cardFooter{
-  position: relative;
-  height: 10vh;
-  width: 80vw;
+}
+
+#ratings {
+  height: 10%;
+  width: 10%;
+  text-align: right;
+  display: inline;
+}
+
+#question{
+  width: inherit;
+  text-align: center;
 }
