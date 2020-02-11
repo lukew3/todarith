@@ -30,7 +30,7 @@ class Problem(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(1000), nullable=False)
     answer = db.Column(db.String(1000), nullable=False)
-    topic = db.Column(db.String(1000), nullable=True) # should be a backref to a list of topics that the problem falls under, starting with the one it was assigned when created
+    topic = db.Column(db.Integer, nullable=True) # should be a backref to a list of topics that the problem falls under, starting with the one it was assigned when created
     #user id of the person who posted it
     #postedBy = db.Column(db.String(100), nullable=True)
     #should either be a boolean that says if confirmed or not or be a number

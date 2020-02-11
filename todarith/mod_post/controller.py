@@ -7,12 +7,15 @@ from flask_wtf import FlaskForm
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
+    #choices = [(row.id, row.topicName) for row in Topic.query.all()]
     form = QuestionForm()
-    form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
+    #form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
+
     if request.method == 'POST':
+        print(form.topic.data)
         if form.validate():
             print('Validate: True')
-            print(Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data))
+            #print(Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data))
             Problem.create(
                 question=form.question.data,
                 answer=form.answer.data,
@@ -25,6 +28,8 @@ def newPost():
             return redirect(url_for('main.explore'))
         else:
             print(form.errors)
+    return render_template('post/newpost.html', form=form)
+
     """
     if form.validate_on_submit():
         print('Validate: True')
