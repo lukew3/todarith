@@ -8,7 +8,9 @@ from flask_wtf import FlaskForm
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
     #choices = [(row.id, row.topicName) for row in Topic.query.all()]
-    form = QuestionForm()
+    topicChoices = [(row.id, row.topicName) for row in Topic.query.all()]
+
+    form = QuestionForm(topicChoices)
     #form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
 
     if request.method == 'POST':
