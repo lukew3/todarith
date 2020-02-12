@@ -1,0 +1,58 @@
+#problemCard{
+  position: relative;
+  height: 40%;
+  width: 80%;
+  background-color: #e6e6e6
+}
+
+.cardSection{
+  position: relative;
+  height: 25%;
+  width: 100%;
+  padding:none;
+  display:block;
+  background-color: #bfbfbf;
+}
+
+#cardHeader{
+}
+
+#cardBody{
+}
+
+#cardFooter{
+}
+
+#ratings{
+  position: relative;
+  height: 10%;
+  width: 10%;
+  display: inline;
+  left: 80%;
+  top: -30%;
+}
+
+.ratingValue{
+  position: relative;
+  display: inline;
+  width: 15%;
+  padding: 8px;
+  text-align: right;
+}
+
+#question{
+  width: 100%;
+  text-align: center;
+}
+
+#hiddenAnswer{
+  text-align: left;
+}
+
+#problemAuthor{
+  text-align: right;
+}
+
+#dateCreated{
+  text-align: right;
+}

@@ -2,4 +2,30 @@
 {% block content %}
   <h1>Explore</h1>
   <p>This page is for displaying random math problems or new problems</p>
+  {% for problem in problems %}
+    <div id="problemCard">
+
+      <div id="cardHeader" class="cardSection">
+        <p id="topicName">Topic: {{ problem.topic }}</p>
+        <!-- Ratings might be numbers or be small bars that fill with color when their value increases-->
+        <div id="ratings">
+          <p id="timeRating">Estimated time: {{ problem.expectedTime }}</p>
+          <p id="difficultyRating">Difficulty (1-10):{{ problem.difficultyLevel }}</p>
+          <p id="confidenceRating">Confidence Rating (1-10): {{ problem.confirmedCorrect }}</p>
+        </div>
+      </div>
+
+      <div id="cardBody" class="cardSection">
+        <p id="question">Question: {{ problem.question }}</p>
+      </div>
+
+      <div id="cardFooter" class="cardSection">
+        <p id="hiddenAnswer">Answer: {{ problem.answer }}</p>
+        <p id="problemAuthor">Author: Unavailable</p>
+        <p id="dateCreated">Date Created: Unavailable</p>
+      </div>
+
+    </div>
+  {% endfor %}
+
 {% endblock content %}
