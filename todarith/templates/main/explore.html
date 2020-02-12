@@ -2,28 +2,27 @@
 {% block content %}
   <h1>Explore</h1>
   <p>This page is for displaying random math problems or new problems</p>
-  <p>Hello</p>
   {% for problem in problems %}
     <div id="problemCard">
 
       <div id="cardHeader" class="cardSection">
-        <p id="topicName">Addition</p>
+        <p id="topicName">{{ problem.topic }}</p>
         <!-- Ratings might be numbers or be small bars that fill with color when their value increases-->
         <div id="ratings">
-          <p id="timeRating">15 mins</p>
-          <p id="difficultyRating">3</p>
-          <p id="confidenceRating">2</p>
+          <p id="timeRating">{{ problem.expectedTime }}</p>
+          <p id="difficultyRating">{{ problem.difficultyLevel }}</p>
+          <p id="confidenceRating">{{ problem.confirmedCorrect }}</p>
         </div>
       </div>
 
       <div id="cardBody" class="cardSection">
-        <p id="question">33+26</p>
+        <p id="question">{{ problem.question }}</p>
       </div>
 
       <div id="cardFooter" class="cardSection">
-        <p id="hiddenAnswer">59</p>
-        <p id="problemAuthor">Luke Weiler</p>
-        <p id="dateCreated">02-11-2020</p>
+        <p id="hiddenAnswer">{{ problem.answer }}</p>
+        <p id="problemAuthor">Unavailable</p>
+        <p id="dateCreated">Unavailable</p>
       </div>
 
     </div>

@@ -6,11 +6,12 @@
 }
 
 .cardSection{
+  position: relative;
   height: 25%;
-  width: 80vw;
+  width: 100%;
   padding:none;
   display:block;
-  background-color: #bfbfbf;  
+  background-color: #bfbfbf;
 }
 
 #cardHeader{
@@ -22,14 +23,36 @@
 #cardFooter{
 }
 
-#ratings {
+#ratings{
+  position: relative;
   height: 10%;
   width: 10%;
-  text-align: right;
   display: inline;
+  left: 80%;
+  top: -30%;
+}
+
+.ratingValue{
+  position: relative;
+  display: inline;
+  width: 15%;
+  padding: 8px;
+  text-align: right;
 }
 
 #question{
-  width: inherit;
+  width: 100%;
   text-align: center;
+}
+
+#hiddenAnswer{
+  text-align: left;
+}
+
+#problemAuthor{
+  text-align: right;
+}
+
+#dateCreated{
+  text-align: right;
 }
