@@ -16,7 +16,7 @@
       </div>
 
       <div id="cardBody" class="cardSection">
-        <p id="question">Question: {{ problem.question }}</p>
+        <p id="questionContent"><a href="{{ url_for('post.viewProblem', problem_id=problem.id) }}">Question: {{ problem.question }}</a></p>
       </div>
 
       <div id="cardFooter" class="cardSection">
