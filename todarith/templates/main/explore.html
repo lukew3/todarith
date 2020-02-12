@@ -9,9 +9,9 @@
         <p id="topicName">Topic: {{ problem.topic }}</p>
         <!-- Ratings might be numbers or be small bars that fill with color when their value increases-->
         <div id="ratings">
-          <p id="timeRating">Estimated time: {{ problem.expectedTime }}</p>
-          <p id="difficultyRating">Difficulty (1-10):{{ problem.difficultyLevel }}</p>
-          <p id="confidenceRating">Confidence Rating (1-10): {{ problem.confirmedCorrect }}</p>
+          <p id="timeRating">{{ problem.expectedTime }}</p>
+          <p id="difficultyRating">{{ problem.difficultyLevel }}</p>
+          <p id="confidenceRating">{{ problem.confirmedCorrect }}</p>
         </div>
       </div>
 

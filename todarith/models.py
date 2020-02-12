@@ -59,6 +59,18 @@ class Topic(CRUDMixin, db.Model):
     problems = db.Column(db.String(100), nullable=False)
 
 """
+class UserList(CRUDMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    listName = db.Column(db.String(100), nullable=False)
+    problems = db.Column(db.String(100), nullable=False) # should be array with references to problems
+"""
+
+
+
+
+
+
+"""
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), unique=False, nullable=False)

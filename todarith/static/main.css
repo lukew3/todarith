@@ -1,8 +1,14 @@
+body {
+  background-color: #f1f1f1
+}
 #problemCard{
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: 40%;
   width: 80%;
-  background-color: #e6e6e6
+  background-color: #e6e6e6;
+  margin: 10%;
 }
 
 .cardSection{
@@ -15,6 +21,9 @@
 }
 
 #cardHeader{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 #cardBody{
@@ -26,22 +35,23 @@
 #ratings{
   position: relative;
   height: 10%;
-  width: 10%;
-  display: inline;
-  left: 80%;
-  top: -30%;
+  width: auto;
+  display: flex;
+  left: 60%;
+  flex-direction: row;
 }
 
 .ratingValue{
   position: relative;
-  display: inline;
-  width: 15%;
-  padding: 8px;
+  width: auto;
+  padding: 5px;
+  margin: 10px;
   text-align: right;
 }
 
 #questionContent{
   width: 100%;
+  font-size: 3rem;
   text-align: center;
 }
 
@@ -55,4 +65,12 @@
 
 #dateCreated{
   text-align: right;
+}
+
+.formBox {
+  width: 30%;
+  height: 40%;
+  text-align: center;
+  background-color: #e6e6e6;
+  margin-left: 35%;
 }

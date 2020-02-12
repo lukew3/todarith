@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="formBox">
   <div class="form">
     <form method="POST" action="">
       {{ form.csrf_token }}
@@ -22,4 +23,5 @@
 
     </form>
   </div>
+</div>
 {% endblock content %}
