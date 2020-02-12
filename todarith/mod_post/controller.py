@@ -41,25 +41,15 @@ def newPost():
             return redirect(url_for('main.explore'))
     return render_template('post/newpost.html', form=form)
 
-    """
-    if form.validate_on_submit():
-        print('Validate: True')
-        print(Problem(question=form.question.data, answer=form.answer.data, ))
-        Problem.create(
-            question=form.question.data,
-            answer=form.answer.data,
-            confirmedCorrect=None,
-            difficultyLevel=None,
-            expectedTime=None,
-            otherTags=None
-        )
-        return redirect(url_for('main.explore'))
-    """
-
 @post.route('/edit')
 def edit():
     return render_template('post/editpost.html')
 
+
+@post.route("/<int:problem_id>")
+def viewProblem(problem_id):
+    problem = Problem.query.get_or_404(problem_id)
+    return render_template('post/problem.html', problem=problem)
 """
 @post.route('/createTopic', methods=['GET', 'POST'])
 def createTopic():
