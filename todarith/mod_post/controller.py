@@ -20,7 +20,7 @@ def newPost():
             Problem.create(
                 question=form.question.data,
                 answer=form.answer.data,
-                topic=form.topic.data,
+                topic_id=form.topic.data,
                 confirmedCorrect=None,
                 difficultyLevel=None,
                 expectedTime=None,
@@ -32,7 +32,7 @@ def newPost():
             Problem.create(
                 question=form.question.data,
                 answer=form.answer.data,
-                topic=form.topic.data,
+                topic_id=form.topic.data,
                 confirmedCorrect=None,
                 difficultyLevel=None,
                 expectedTime=None,

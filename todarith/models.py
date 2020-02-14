@@ -32,8 +32,9 @@ class Problem(CRUDMixin, db.Model):
     answer = db.Column(db.String(1000), nullable=False)
     #topic = db.Column(db.Integer, nullable=True) # should be a backref to a list of topics that the problem falls under, starting with the one it was assigned when created
     #topic = Column(Integer, ForeignKey('topic.id'))
-    topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'))
-    topic = db.relationship("Parent", back_populates="problems")
+    #topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'))
+    #topic = db.relationship("Topic", back_populates="problems")
+    topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
     #user id of the person who posted it
     #postedBy = db.Column(db.String(100), nullable=True)
     #should either be a boolean that says if confirmed or not or be a number
@@ -62,7 +63,8 @@ class Topic(CRUDMixin, db.Model):
     #next col should be a list of problems that belong directly to the topic and don't fall into subtopic category
     #problems = db.Column(db.String(100), nullable=False)
     #problems = relationship("Parent")
-    problems = db.relationship("Child", back_populates="topic")
+    #problems = db.relationship("Problem", back_populates="topic")
+    problems = db.relationship('Problem', backref='topic', lazy=True)
 
 """
 class UserList(CRUDMixin, db.Model):
