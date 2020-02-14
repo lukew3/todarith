@@ -6,7 +6,7 @@
     <div id="problemCard">
 
       <div id="cardHeader" class="cardSection">
-        <p id="topicName">Topic: {{ problem.topic }}</p>
+        <p id="topicName">Topic: {{ problem.topic.topicName }}</p>
         <!-- Ratings might be numbers or be small bars that fill with color when their value increases-->
         <div id="ratings">
           <p id="timeRating">{{ problem.expectedTime }}</p>
@@ -21,7 +21,7 @@
 
       <div id="cardFooter" class="cardSection">
         <p id="hiddenAnswer">Answer: {{ problem.answer }}</p>
-        <p id="problemAuthor">Author: Unavailable</p>
+        <p id="problemAuthor">Author: {{ problem.poster.username }}</p>
         <p id="dateCreated">Date Created: Unavailable</p>
       </div>
 

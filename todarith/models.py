@@ -15,6 +15,7 @@ class User(CRUDMixin, db.Model, UserMixin):
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(30), unique=False, nullable=False)
     password = db.Column(db.String(50), unique=False, nullable=False)
+    problems = db.relationship('Problem', backref='poster', lazy=True)
     #profilePicture = db.Column(db.String(20), unique=False, nullable=False, default="default.jpg")
 
     def __init__(self, username, email, password):
@@ -30,13 +31,8 @@ class Problem(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(1000), nullable=False)
     answer = db.Column(db.String(1000), nullable=False)
-    #topic = db.Column(db.Integer, nullable=True) # should be a backref to a list of topics that the problem falls under, starting with the one it was assigned when created
-    #topic = Column(Integer, ForeignKey('topic.id'))
-    #topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'))
-    #topic = db.relationship("Topic", back_populates="problems")
     topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
-    #user id of the person who posted it
-    #postedBy = db.Column(db.String(100), nullable=True)
+    poster_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) #user id of the person who posted it
     #should either be a boolean that says if confirmed or not or be a number
     #maybe be a number that says how many people have confirmed correct
     confirmedCorrect = db.Column(db.String(1000), nullable=True)#should be nullable=False
@@ -61,13 +57,10 @@ class Topic(CRUDMixin, db.Model):
     subTopics = db.Column(db.String(100), nullable=False)
 
     #next col should be a list of problems that belong directly to the topic and don't fall into subtopic category
-    #problems = db.Column(db.String(100), nullable=False)
-    #problems = relationship("Parent")
-    #problems = db.relationship("Problem", back_populates="topic")
     problems = db.relationship('Problem', backref='topic', lazy=True)
 
 """
-class UserList(CRUDMixin, db.Model):
+class CustomList(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     listName = db.Column(db.String(100), nullable=False)
     problems = db.Column(db.String(100), nullable=False) # should be array with references to problems

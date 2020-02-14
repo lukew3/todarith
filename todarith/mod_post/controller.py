@@ -3,11 +3,16 @@ from todarith.database import db
 from todarith.models import User, Problem, Topic
 from todarith.mod_post.forms import QuestionForm, TopicForm
 from todarith.mod_post import post
+from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
-    #topicChoices = [(row.id, row.topicName) for row in Topic.query.all()]
+
+    if current_user.is_authenticated:
+        poster = current_user.id
+    else:
+        poster = 1
 
     form = QuestionForm()
     form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
@@ -21,6 +26,7 @@ def newPost():
                 question=form.question.data,
                 answer=form.answer.data,
                 topic_id=form.topic.data,
+                poster_id=poster,
                 confirmedCorrect=None,
                 difficultyLevel=None,
                 expectedTime=None,
@@ -33,6 +39,7 @@ def newPost():
                 question=form.question.data,
                 answer=form.answer.data,
                 topic_id=form.topic.data,
+                poster_id=poster,
                 confirmedCorrect=None,
                 difficultyLevel=None,
                 expectedTime=None,
