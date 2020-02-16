@@ -55,7 +55,7 @@ def edit():
 @post.route('/createTopic', methods=['GET', 'POST'])
 def createTopic():
     form = TopicForm()
-    form.parentTopic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
+    #form.parentTopic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
 
     if request.method == 'POST':
         #print(form.data)
@@ -63,7 +63,7 @@ def createTopic():
             print('Validate: True')
             Topic.create(
                 topicName=form.topicName.data,
-                subTopics=None,
+                #subTopics=None,
                 problems=None
             )
             return redirect(url_for('main.explore'))
@@ -71,7 +71,7 @@ def createTopic():
             print(form.errors)
             Topic.create(
                 topicName=form.topicName.data,
-                subTopics=None,
+                #subTopics=None,
                 problems=None
             )
             return redirect(url_for('main.explore'))
