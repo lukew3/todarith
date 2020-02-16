@@ -1,4 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-
+  <h1>Search Results</h1>
+  {% for result in results %}
+    <div id="resultCard">
+      <p id="problemId">{{ result.id }}</p>
+      <p id="problemContent">{{ result.problem }}</p>
+    </div>
+  {% endfor %}
 {% endblock content %}

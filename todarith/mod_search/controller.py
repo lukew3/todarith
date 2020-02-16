@@ -14,8 +14,8 @@ def index():
 def search_results(search):
     #results = []
     search_string = search.data['search']
-    results = [(row.id, row.problem) for row in Problem.query.filter_by(problem=search_string)]
+    results = Problem.query.filter_by(problem=search_string)
     return render_template('search/results.html', results=results)
 
 #form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
-results = [(row.id, row.problem) for row in Problem.query.filter_by(problem=search_string)]
+#results = [(row.id, row.problem) for row in Problem.query.filter_by(problem=search_string)]
