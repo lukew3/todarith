@@ -1,5 +1,5 @@
-from wtforms import Form, StringField, SelectField
+from wtforms import Form, StringField, SelectField, SubmitField
 
-class ProbelmSearchForm(Form):
-    search = StringField('Search for:')
+class ProblemSearchForm(Form):
+    searchQuery = StringField('Search for:')
     submit = SubmitField('Search')

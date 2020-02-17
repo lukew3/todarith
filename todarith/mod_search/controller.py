@@ -1,20 +1,23 @@
-from forms import ProblemSearchForm
+from todarith.mod_search.forms import ProblemSearchForm
 from flask import flash, render_template, request, redirect
 from todarith.models import User, Problem, Topic
+from todarith.mod_search import search
 
-
-@app.route('/', methods=['GET', 'POST'])
+searchString = ""
+@search.route('/', methods=['GET', 'POST'])
 def index():
-    form = MusicSearchForm(request.form)
+    form = ProblemSearchForm()
     if request.method == 'POST':
-        return search_results(search)
-    return render_template('search.html', form=form)
+        searchString = form.searchQuery.data
+        print(searchString)
+        return search_results(searchString)
+    return render_template('search/search.html', form=form)
 
-@app.route('/results')
+@search.route('/results')
 def search_results(search):
     #results = []
-    search_string = search.data['search']
-    results = Problem.query.filter_by(problem=search_string)
+    search_string = searchString
+    results = Problem.query.filter_by(question=search_string)
     return render_template('search/results.html', results=results)
 
 #form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]

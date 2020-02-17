@@ -1,4 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<div class="formBox">
+  <div class="form">
+    <form method="POST" action="">
+      {{ form.csrf_token }}
+      <h2>Search for something</h2>
+      <div class="form-group">
+        {{ form.searchQuery.label() }}
+        {{ form.searchQuery() }}
+      </div>
+      <div class="form-group">
+        {{ form.submit(class="btn", value="Submit") }}
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock content %}
