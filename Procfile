@@ -1,1 +1,1 @@
-web: gunicorn todarith:app
+web: python run.py
