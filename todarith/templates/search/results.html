@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
   <h1>Search Results</h1>
+  <p>Query was {{ searchQuery }}
   {% for result in results %}
     <div id="resultCard">
       <p id="problemId">{{ result.id }}</p>
