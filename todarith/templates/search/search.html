@@ -6,8 +6,8 @@
       {{ form.csrf_token }}
       <h2>Search for something</h2>
       <div class="form-group">
-        {{ form.searchQuery.label() }}
-        {{ form.searchQuery() }}
+        {{ form.submission.label() }}
+        {{ form.submission() }}
       </div>
       <div class="form-group">
         {{ form.submit(class="btn", value="Submit") }}

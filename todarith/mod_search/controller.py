@@ -30,19 +30,19 @@ def search_page():
     if request.method == 'POST':
         if form.validate():
             print("Validation successs")
-            searchQuery=form.searchQuery.data
-            print(searchQuery)
+            submissionString=form.submission.data
+            print(submissionString)
             #results=Problem.filter_by(question=searchquery).all()
-            results = db.session.query(Problem).filter_by(question=searchQuery).all()
+            results = db.session.query(Problem).filter_by(question=submissionString).all()
             print(results)
-            return render_template('search/results.html', searchQuery=searchQuery, results=results)
+            return render_template('search/results.html', searchQuery=submissionString, results=results)
         else:
             print("Validation failed")
-            searchQuery=form.searchQuery.data
-            print(searchQuery)
-            results = db.session.query(Problem).filter_by(question=searchQuery).all()
+            submissionString=form.submission.data
+            print(submissionString)
+            results = db.session.query(Problem).filter_by(question=submissionString).all()
             print(results)
-            return render_template('search/results.html', searchQuery=searchQuery, results=results)
+            return render_template('search/results.html', searchQuery=submissionString, results=results)
 
       #return redirect(url_for('search.search_results', query=query))
     return render_template('search/search.html', form=form)
