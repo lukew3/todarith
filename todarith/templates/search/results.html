@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>Search Results</h1>
+  <h2>Query was {{ searchQuery }}</h2>
+  {% for result in results %}
+    <div id="resultCard">
+      <h3 id="problemId">Problem Id: {{ result.id }}</h3>
+      <p id="problemContent">Question: {{ result.question }}</p>
+      <p id="problemAnswer">Answer: {{ result.answer }}<p>
+    </div>
+  {% endfor %}
+{% endblock content %}

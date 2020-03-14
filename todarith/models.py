@@ -54,8 +54,8 @@ class Topic(CRUDMixin, db.Model):
     topicName = db.Column(db.String(100), nullable=False)
     #next columnshould be a list of topic id's that belong underneath the topic
     #ex. calculus is main topic and differentiation is a subTopic
-    subTopics = db.Column(db.String(100), nullable=False)
-
+    ##parentTopic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
+    ##subTopics = db.relationship('Topic', backref='subTopic', lazy=True)
     #next col should be a list of problems that belong directly to the topic and don't fall into subtopic category
     problems = db.relationship('Problem', backref='topic', lazy=True)
 

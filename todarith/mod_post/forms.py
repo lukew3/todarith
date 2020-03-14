@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from todarith.models import Problem;
 from todarith.models import User, Problem, Topic
 from todarith.database import db
 
@@ -18,4 +17,5 @@ class QuestionForm(FlaskForm):
 class TopicForm(FlaskForm):
     #add some way to add parent or child topics
     topicName = StringField('Topic Name')
+    #parentTopic = SelectField('Parent Topic')
     submit = SubmitField('Submit')

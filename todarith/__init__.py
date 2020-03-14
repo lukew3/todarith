@@ -11,6 +11,7 @@ from todarith.mod_auth import auth
 from todarith.errors import errors
 from todarith.mod_main import main
 from todarith.mod_post import post
+from todarith.mod_search import search
 
 from todarith.models import User, Problem
 
@@ -47,6 +48,7 @@ def register_blueprints(app):
     app.register_blueprint(errors)
     app.register_blueprint(main)
     app.register_blueprint(post, url_prefix='/post')
+    app.register_blueprint(search, url_prefix='/search')
 
 def register_extensions(app):
     login_manager.init_app(app)

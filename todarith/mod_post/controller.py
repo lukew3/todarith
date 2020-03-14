@@ -52,11 +52,37 @@ def newPost():
 def edit():
     return render_template('post/editpost.html')
 
+@post.route('/createTopic', methods=['GET', 'POST'])
+def createTopic():
+    form = TopicForm()
+    #form.parentTopic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
+
+    if request.method == 'POST':
+        #print(form.data)
+        if form.validate():
+            print('Validate: True')
+            Topic.create(
+                topicName=form.topicName.data,
+                #subTopics=None,
+                problems=None
+            )
+            return redirect(url_for('main.explore'))
+        else:
+            print(form.errors)
+            Topic.create(
+                topicName=form.topicName.data,
+                #subTopics=None,
+                problems=None
+            )
+            return redirect(url_for('main.explore'))
+    return render_template('post/newTopic.html', form=form)
+
 
 @post.route("/<int:problem_id>")
 def viewProblem(problem_id):
     problem = Problem.query.get_or_404(problem_id)
     return render_template('post/problem.html', problem=problem)
+
 """
 @post.route('/createTopic', methods=['GET', 'POST'])
 def createTopic():
