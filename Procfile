@@ -1,1 +1,1 @@
-web: gunicorn todarith:app
+web: gunicorn wsgi:app
