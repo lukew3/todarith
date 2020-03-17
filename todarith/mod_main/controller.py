@@ -32,3 +32,7 @@ def topicBrowser(topic_id):
         lastID = 1
     print(lastID)
     return render_template('main/topicBrowser.html', currentTopic=currentTopic, subtopics=subtopics, lastID=lastID)
+
+@main.route('/sitemap')
+def siteMap():
+    return render_template('main/sitemap.html')

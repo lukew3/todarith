@@ -5,6 +5,7 @@ from todarith.mod_post.forms import QuestionForm, TopicForm
 from todarith.mod_post import post
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
+from todarith.mod_post.postProc import checkAll
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
@@ -19,33 +20,37 @@ def newPost():
 
     if request.method == 'POST':
         print(form.topic.data)
-        if form.validate():
-            print('Validate: True')
-            #print(Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data))
-            Problem.create(
-                question=form.question.data,
-                answer=form.answer.data,
-                topic_id=form.topic.data,
-                poster_id=poster,
-                confirmedCorrect=None,
-                difficultyLevel=None,
-                expectedTime=None,
-                otherTags=None
-            )
+        prob = form.question.data
+        ans = form.answer.data
+        if (checkAll(prob, ans)==True):
+            if form.validate():
+                print('Validate: True')
+                #print(Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data))
+                Problem.create(
+                    question=form.question.data,
+                    answer=form.answer.data,
+                    topic_id=form.topic.data,
+                    poster_id=poster,
+                    confirmedCorrect=None,
+                    difficultyLevel=None,
+                    expectedTime=None,
+                    otherTags=None
+                )
+            else:
+                print(form.errors)
+                Problem.create(
+                    question=form.question.data,
+                    answer=form.answer.data,
+                    topic_id=form.topic.data,
+                    poster_id=poster,
+                    confirmedCorrect=None,
+                    difficultyLevel=None,
+                    expectedTime=None,
+                    otherTags=None
+                )
             return redirect(url_for('main.explore'))
         else:
-            print(form.errors)
-            Problem.create(
-                question=form.question.data,
-                answer=form.answer.data,
-                topic_id=form.topic.data,
-                poster_id=poster,
-                confirmedCorrect=None,
-                difficultyLevel=None,
-                expectedTime=None,
-                otherTags=None
-            )
-            return redirect(url_for('main.explore'))
+            return ('<h1>Incorrect Problem Solution set</h1>')
     return render_template('post/newpost.html', form=form)
 
 @post.route('/edit')
@@ -57,20 +62,24 @@ def createTopic():
     form = TopicForm()
     form.parentTopic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
     if request.method == 'POST':
-        if form.validate():
-            print('Validate: True')
-            Topic.create(
-                topicName=form.topicName.data,
-                parentTopic_id = form.parentTopic.data
-            )
+        topicName = form.topicName.data
+        parentID = form.parentTopic.data
+        if checkTopicExists(topicName)==True:
+            if form.validate():
+                print('Validate: True')
+                Topic.create(
+                    topicName=topicName,
+                    parentTopic_id = parentID
+                )
+            else:
+                print(form.errors)
+                Topic.create(
+                    topicName=topicName,
+                    parentTopic_id = parentID
+                )
             return redirect(url_for('main.explore'))
         else:
-            print(form.errors)
-            Topic.create(
-                topicName=form.topicName.data,
-                parentTopic_id = form.parentTopic.data
-            )
-            return redirect(url_for('main.explore'))
+            return ('<h1>Topic already exists</h1>')
     return render_template('post/newTopic.html', form=form)
 
 
