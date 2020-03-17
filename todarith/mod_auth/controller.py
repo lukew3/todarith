@@ -4,7 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required, U
 from todarith.models import User
 from todarith.mod_auth.forms import LoginForm, RegistrationForm
 from todarith.mod_auth import auth #not sure if this is necessary
-from todarith import login_manager
+from todarith import login_manager, bcrypt
 
 
 @login_manager.user_loader
@@ -19,7 +19,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user and (user.password == form.password.data):
+        if user and bcrypt.check_password_hash(user.pw_hash, form.password.data):
             login_user(user)
             redirect(url_for('main.explore'))
         else:
@@ -37,7 +37,8 @@ def register():
         return redirect(url_for('main.explore'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, pw_hash=hashed_password)
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
