@@ -4,7 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_login import LoginManager
 from todarith.commands import create_db, drop_db, populate_db, recreate_db
 from todarith.database import db
-from todarith.extensions import login_manager
+from todarith.extensions import bcrypt, login_manager
 from todarith.config import Config
 
 from todarith.mod_auth import auth
@@ -50,5 +50,6 @@ def register_blueprints(app):
     app.register_blueprint(search, url_prefix='/search')
 
 def register_extensions(app):
+    bcrypt.init_app(app)
     login_manager.init_app(app)
     #db.init_app(app)

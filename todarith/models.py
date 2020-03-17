@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import current_app
 from flask_login import UserMixin
 from todarith.database import db, CRUDMixin
+from app.extensions import bcrypt
 """from todarith import login_manager
 
 
