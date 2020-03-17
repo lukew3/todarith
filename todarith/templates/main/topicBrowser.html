@@ -1,10 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
   <h1>Topic Browser</h1>
-  {% for topic in topics %}
-  <h2>{{ topic.topicName }}</h2>
-  {% for sub in topic.subtopics %}
-    <p>{{ sub.topicName }}</p>
-  {% endfor %}
+  <h2>{{ currentTopic.topicName }}</h2>
+  <p><a href="{{ url_for('main.topicBrowser', topic_id=lastID) }}">Go back to parent</a></p>
+  {% for topic in subtopics %}
+    <p><a href="{{ url_for('main.topicBrowser', topic_id=topic.id) }}">{{ topic.topicName }}</a></p>
   {% endfor %}
 {% endblock content %}

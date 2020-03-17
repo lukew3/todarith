@@ -17,8 +17,18 @@ def landing():
 def explore():
     problems = Problem.query.all()
     return render_template('main/explore.html', problems=problems)
-
+"""
 @main.route('/topicBrowser')
 def topicBrowser():
     topics = Topic.query.all()
     return render_template('main/topicBrowser.html', topics=topics)
+"""
+@main.route('/topicBrowser/<int:topic_id>')
+def topicBrowser(topic_id):
+    currentTopic = Topic.query.filter_by(id=topic_id).first()
+    subtopics = Topic.query.filter_by(parentTopic_id=topic_id)
+    lastID=currentTopic.parentTopic_id
+    if lastID==None:
+        lastID = 1
+    print(lastID)
+    return render_template('main/topicBrowser.html', currentTopic=currentTopic, subtopics=subtopics, lastID=lastID)

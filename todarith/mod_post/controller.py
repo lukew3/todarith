@@ -55,24 +55,20 @@ def edit():
 @post.route('/createTopic', methods=['GET', 'POST'])
 def createTopic():
     form = TopicForm()
-    #form.parentTopic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
-
+    form.parentTopic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
     if request.method == 'POST':
-        #print(form.data)
         if form.validate():
             print('Validate: True')
             Topic.create(
                 topicName=form.topicName.data,
-                #subTopics=None,
-                problems=None
+                parentTopic_id = form.parentTopic.data
             )
             return redirect(url_for('main.explore'))
         else:
             print(form.errors)
             Topic.create(
                 topicName=form.topicName.data,
-                #subTopics=None,
-                problems=None
+                parentTopic_id = form.parentTopic.data
             )
             return redirect(url_for('main.explore'))
     return render_template('post/newTopic.html', form=form)
@@ -82,16 +78,3 @@ def createTopic():
 def viewProblem(problem_id):
     problem = Problem.query.get_or_404(problem_id)
     return render_template('post/problem.html', problem=problem)
-
-"""
-@post.route('/createTopic', methods=['GET', 'POST'])
-def createTopic():
-    branchtype = 'topic'
-    form = BranchForm()
-    if form.validate_on_submit():
-        newTopic = Topic(parentBranch=form.parentBranch.data, className=form.branchName.data)
-        db.session.add(newTopic)
-        db.session.commit()
-        return redirect(url_for('post.newPost'))
-    return render_template('post/createBranch.html', form=form, branchtype=branchtype)
-"""
