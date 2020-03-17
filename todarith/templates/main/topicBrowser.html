@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>Topic Browser</h1>
+  {% for topic in topics %}
+  <h2>{{ topic.topicName }}</h2>
+  {% for sub in topic.subtopics %}
+    <p>{{ sub.topicName }}</p>
+  {% endfor %}
+  {% endfor %}
+{% endblock content %}

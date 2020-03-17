@@ -52,12 +52,10 @@ class Problem(CRUDMixin, db.Model):
 class Topic(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     topicName = db.Column(db.String(100), nullable=False)
-    #next columnshould be a list of topic id's that belong underneath the topic
-    #ex. calculus is main topic and differentiation is a subTopic
-    ##parentTopic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
-    ##subTopics = db.relationship('Topic', backref='subTopic', lazy=True)
-    #next col should be a list of problems that belong directly to the topic and don't fall into subtopic category
     problems = db.relationship('Problem', backref='topic', lazy=True)
+    parentTopic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=True)
+    subtopics = db.relationship('Topic', backref=db.backref('parentTopic', remote_side=[id]), lazy=True)
+
 
 """
 class CustomList(CRUDMixin, db.Model):

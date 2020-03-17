@@ -2,30 +2,52 @@
 {% block content %}
   <h1>Explore</h1>
   <p>This page is for displaying random math problems or new problems</p>
+  <div class="cardContainer">
   {% for problem in problems %}
-    <div id="problemCard">
-
-      <div id="cardHeader" class="cardSection">
-        <p id="topicName">Topic: {{ problem.topic.topicName }}</p>
-        <!-- Ratings might be numbers or be small bars that fill with color when their value increases-->
-        <div id="ratings">
-          <p id="timeRating">{{ problem.expectedTime }}</p>
-          <p id="difficultyRating">{{ problem.difficultyLevel }}</p>
-          <p id="confidenceRating">{{ problem.confirmedCorrect }}</p>
+    <div class="card">
+      <div id="questionPart" class="grid-element">
+        <p class="partTitle">Question</p>
+        <p id="questionContent"><a href="{{ url_for('post.viewProblem', problem_id=problem.id) }}">{{ problem.question }}</a></p>
+      </div>
+      <div id="imagePart" class="grid-element">
+        <div id="imagePlaceholder">
         </div>
       </div>
-
-      <div id="cardBody" class="cardSection">
-        <p id="questionContent"><a href="{{ url_for('post.viewProblem', problem_id=problem.id) }}">Question: {{ problem.question }}</a></p>
+      <div id="topicPart" class="grid-element">
+        <p class="partTitle">Topic</p>
+        <p id="topicContent">{{ problem.topic.topicName }}</p>
       </div>
-
-      <div id="cardFooter" class="cardSection">
-        <p id="hiddenAnswer">Answer: {{ problem.answer }}</p>
-        <p id="problemAuthor">Author: {{ problem.poster.username }}</p>
-        <p id="dateCreated">Date Created: Unavailable</p>
+      <div id="answerPart" class="grid-element">
+        <p class="partTitle">Answer</p>
+        <p id="answerContent">{{ problem.answer }}</p>
       </div>
-
+      <div id="authorPart" class="grid-element">
+        <p class="partTitle">Author</p>
+        <p id="authorContent">{{ problem.poster.username }}</p>
+      </div>
+      <div id="statsPart" class="grid-element">
+        <div id="statsBox">
+          <div id="checks" class="statsSection">
+            <p class="statLabel">Checks</p>
+            <div id="checksBar" class="statsBar">
+            </div>
+            <p class="statDesc">{{ problem.confirmedCorrect }}</p>
+          </div>
+          <div id="difficulty" class="statsSection">
+            <p class="statLabel">Difficulty</p>
+            <div id="difficultyBar" class="statsBar">
+            </div>
+            <p class="statDesc">{{ problem.difficultyLevel }}</p>
+          </div>
+          <div id="time" class="statsSection">
+            <p class="statLabel">Estimated Time</p>
+            <div id="timeBar" class="statsBar">
+            </div>
+            <p class="statDesc">{{ problem.expectedTime }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   {% endfor %}
-
+  </div>
 {% endblock content %}
