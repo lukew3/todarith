@@ -4,7 +4,7 @@ from flask import (
 #from flask import Blueprint, request, render_template
 from todarith import db
 #from todarith.mod_auth.forms import LoginForm
-from todarith.models import Problem
+from todarith.models import Problem, Topic
 from todarith.mod_main import main
 
 
@@ -17,3 +17,8 @@ def landing():
 def explore():
     problems = Problem.query.all()
     return render_template('main/explore.html', problems=problems)
+
+@main.route('/topicBrowser')
+def topicBrowser():
+    topics = Topic.query.all()
+    return render_template('main/topicBrowser.html', topics=topics)
