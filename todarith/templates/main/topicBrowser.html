@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
   <h1>Topic Browser</h1>
-  <h2>{{ currentTopic.topicName }}</h2>
+  <h2><a href="{{ url_for('main.viewTopic', topicId=currentTopic.id) }}">{{ currentTopic.topicName }}</a></h2>
   <p><a href="{{ url_for('main.topicBrowser', topic_id=lastID) }}">Go back to parent</a></p>
   {% for topic in subtopics %}
     <p><a href="{{ url_for('main.topicBrowser', topic_id=topic.id) }}">{{ topic.topicName }}</a></p>
