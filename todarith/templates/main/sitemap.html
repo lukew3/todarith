@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>TodArith Map</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-  </head>
-  <body>
-
-
-    <h1>List of pages</h1>
+{% extends "layout.html" %}
+{% block content %}
+  <h1>List of pages</h1>
+  <div id="sitemapList">
     <ul>
       <li><h5>Main</h5></li> &nbsp;
       <li><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Topic Browser</a></li> &nbsp;
@@ -27,7 +21,5 @@
       <li><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
       <li><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
     </ul>
-
-
-  </body>
-</html>
+  </div>
+{% endblock content %}

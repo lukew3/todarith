@@ -5,7 +5,7 @@ from todarith.mod_post.forms import QuestionForm, TopicForm
 from todarith.mod_post import post
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
-from todarith.mod_post.postProc import checkAll
+from todarith.mod_post.postProc import checkAll, checkTopicExists
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
@@ -63,7 +63,11 @@ def createTopic():
     form.parentTopic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
     if request.method == 'POST':
         topicName = form.topicName.data
-        parentID = form.parentTopic.data
+        if form.parentTopic.data == None:
+            parentID = 1
+        else:
+            parentID = form.parentTopic.data
+
         if checkTopicExists(topicName)==True:
             if form.validate():
                 print('Validate: True')
