@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>TodArith</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-  </head>
-  <body>
 
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('main.siteMap') }}">Sitemap</a></li> &nbsp;
-        <li><a href="{{ url_for('post.createTopic') }}">Create A Topic</a></li> &nbsp;
-        <li><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Topic Browser</a></li> &nbsp;
-        <li><a href="{{ url_for('main.landing') }}">Landing</a></li> &nbsp;
-        <li><a href="{{ url_for('post.newPost') }}">Submit New Problem</a></li> &nbsp;
-        <li><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
-        <li><a href="{{ url_for('search.search_page') }}">Search</a></li> &nbsp;
-        {% if current_user.is_authenticated %}
-          <li><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
-        {% else %}
-          <li><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
-          <li><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
-        {% endif %}
-      </ul>
-    </nav>
+<head>
+  <title>TodArith</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
 
-    {% block content %}
-    {% endblock %}
+<body>
 
-  </body>
+  <nav>
+    <a href="{{ url_for('main.landing') }}">Todarith</a>
+    <ul>
+      <li><a href="{{ url_for('main.siteMap') }}">Sitemap</a></li> &nbsp;
+      <li><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Browse Topics</a></li> &nbsp;
+      <li><a href="{{ url_for('post.newPost') }}">Add Problem</a></li> &nbsp;
+      <li><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
+      <li><a href="{{ url_for('search.search_page') }}">Search</a></li> &nbsp;
+      {% if current_user.is_authenticated %}
+        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
+      {% else %}
+        <li><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
+        <li><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
+      {% endif %}
+    </ul>
+  </nav>
+
+  {% block content %}
+  {% endblock %}
+
+</body>
+
 </html>

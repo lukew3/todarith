@@ -17,12 +17,7 @@ def landing():
 def explore():
     problems = Problem.query.all()
     return render_template('main/explore.html', problems=problems)
-"""
-@main.route('/topicBrowser')
-def topicBrowser():
-    topics = Topic.query.all()
-    return render_template('main/topicBrowser.html', topics=topics)
-"""
+
 @main.route('/topicBrowser/<int:topic_id>')
 def topicBrowser(topic_id):
     currentTopic = Topic.query.filter_by(id=topic_id).first()
@@ -36,3 +31,9 @@ def topicBrowser(topic_id):
 @main.route('/sitemap')
 def siteMap():
     return render_template('main/sitemap.html')
+
+@main.route('/topic/<int:topicId>')
+def viewTopic(topicId):
+    problems = Problem.query.filter_by(topic_id=topicId).all()
+    topic = Topic.query.filter_by(id=topicId).first()
+    return render_template('main/viewTopic.html', topic=topic, problems=problems)
