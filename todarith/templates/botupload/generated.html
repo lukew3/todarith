@@ -2,8 +2,12 @@
 {% block content %}
 <h3>In theory, there should be a table below that shows all of the problems that were just added</h3>
 <h4>Right now it just shows a list of all problems that were passed through, not necessarily uploaded</h4>
-{% for item in list %}
-
+<h3>{{ upCount }} unique problems added</h3>
+{% for item in upList %}
+<p>{{ item }}</p>
+{% endfor %}
+<h3>{{ dupCount }} duplicate problems not added</h3>
+{% for item in dupList %}
 <p>{{ item }}</p>
 {% endfor %}
 {% endblock content %}

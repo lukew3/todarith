@@ -33,8 +33,7 @@ def newPost():
                     poster_id=poster,
                     confirmedCorrect=None,
                     difficultyLevel=None,
-                    expectedTime=None,
-                    otherTags=None
+                    expectedTime=None
                 )
             else:
                 print(form.errors)
@@ -45,8 +44,7 @@ def newPost():
                     poster_id=poster,
                     confirmedCorrect=None,
                     difficultyLevel=None,
-                    expectedTime=None,
-                    otherTags=None
+                    expectedTime=None
                 )
             return redirect(url_for('main.explore'))
         else:

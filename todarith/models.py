@@ -3,13 +3,7 @@ from flask import current_app
 from flask_login import UserMixin
 from todarith.database import db, CRUDMixin
 from todarith.extensions import bcrypt
-"""from todarith import login_manager
 
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-"""
 
 class User(CRUDMixin, db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,28 +22,6 @@ class User(CRUDMixin, db.Model, UserMixin):
         return f"User('{self.id}', '{self.username}', '{self.email}')"
 
 
-class Problem(CRUDMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(1000), nullable=False)
-    answer = db.Column(db.String(1000), nullable=False)
-    topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
-    poster_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) #user id of the person who posted it
-    #should either be a boolean that says if confirmed or not or be a number
-    #maybe be a number that says how many people have confirmed correct
-    confirmedCorrect = db.Column(db.String(1000), nullable=True)#should be nullable=False
-    #The problems difficulty level, not sure how that will be judged, maybe by students independently
-    difficultyLevel = db.Column(db.String(1000), nullable=True) #time in minutes, could be intervals of 1,2,3,5,10,15
-    # The expected time to solve if basic understanding is assumed
-    #could be judged by how long students spend on the page until it is solved
-    #make sure that they are active and extra long data is not included
-    expectedTime = db.Column(db.String(1000), nullable=True)
-    #other tags can be included like AP style, conceptual, application, or word problem
-    otherTags = db.Column(db.String(1000), nullable=True)
-
-    def __repr__(self):
-        return f"Problem('{self.question}', '{self.answer}', '{self.topic}')"
-
-
 class Topic(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     topicName = db.Column(db.String(100), nullable=False)
@@ -57,10 +29,33 @@ class Topic(CRUDMixin, db.Model):
     parentTopic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=True)
     subtopics = db.relationship('Topic', backref=db.backref('parentTopic', remote_side=[id]), lazy=True)
 
+    def __repr__(self):
+        return f"Problem('{self.id}', '{self.topicName}')"
 
-"""
-class CustomList(CRUDMixin, db.Model):
+
+clistproblems = db.Table('clistproblems',
+    db.Column('problem_id', db.Integer, db.ForeignKey('problem.id'), primary_key=True),
+    db.Column('customList_id', db.Integer, db.ForeignKey('customlist.id'), primary_key=True)
+)
+
+
+class Customlist(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     listName = db.Column(db.String(100), nullable=False)
-    problems = db.Column(db.String(100), nullable=False) # should be array with references to problems
-"""
+    problems = db.relationship('Problem', secondary=clistproblems, lazy='subquery',
+        backref=db.backref('customLists', lazy=True))
+
+
+class Problem(CRUDMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(1000), nullable=False)
+    answer = db.Column(db.String(1000), nullable=False)
+    topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
+    poster_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) #user id of the person who posted it
+    confirmedCorrect = db.Column(db.String(1000), nullable=True)
+    difficultyLevel = db.Column(db.String(1000), nullable=True)
+    expectedTime = db.Column(db.String(1000), nullable=True)
+    #otherTags = db.Column(db.String(1000), nullable=True)
+
+    def __repr__(self):
+        return f"Problem('{self.question}', '{self.answer}', '{self.topic}')"
