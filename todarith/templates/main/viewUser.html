@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>View User</h1>
+  <h2>You are viewing: {{ username }}</h2>
+  <!--
+  <p>Score: {{ score }}</p>
+  -->
+  <table>
+    <tr>
+      <th>Problem</th>
+      <th>Answer</th>
+      <th>Topic</th>
+      <th>Author</th>
+      <th>Checks</th>
+      <th>Difficulty</th>
+      <th>Length</th>
+    </tr>
+    {% for problem in userproblems %}
+    <tr>
+      <td id="questiondata"><a href="{{ url_for('post.viewProblem', problem_id=problem.id) }}">{{ problem.question }}</a></td>
+      <td id="answer">{{ problem.answer }}</td>
+      <td id="topic">{{ problem.topic.topicName }}</td>
+      <td id="author">{{ problem.poster.username }}</td>
+      <td id="checks">{{ problem.confirmedCorrect }}</td>
+      <td id="difficulty">{{ problem.difficultyLevel }}</td>
+      <td id="time">{{ problem.expectedTime }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock content %}
