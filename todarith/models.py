@@ -55,6 +55,7 @@ class Problem(CRUDMixin, db.Model):
     confirmedCorrect = db.Column(db.String(1000), nullable=True)
     difficultyLevel = db.Column(db.String(1000), nullable=True)
     expectedTime = db.Column(db.String(1000), nullable=True)
+    hasSolution = db.Column(db.Boolean(), nullable=False)
     #otherTags = db.Column(db.String(1000), nullable=True)
 
     def __repr__(self):

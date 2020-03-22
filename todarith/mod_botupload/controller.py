@@ -32,7 +32,8 @@ def generate():
                 poster_id=1,
                 confirmedCorrect=None,
                 difficultyLevel=None,
-                expectedTime=None
+                expectedTime=None,
+                hasSolution=True
             )
             uploadedList.append(tup)
         else:

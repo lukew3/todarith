@@ -30,3 +30,14 @@ def checkTopicExists(topic):
         return True
     else:
         return False
+
+def checkSpam(prob, ans):
+    #Not necessary yet since no word problems
+    #should be ai, learns from set of "problems", with vulgar language or other content that shouldn't appear in a math problem
+    pass
+
+def checkSolved(ans):
+    if ans!="":
+        return True
+    else:
+        return False
