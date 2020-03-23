@@ -4,7 +4,7 @@ from flask import (
 #from flask import Blueprint, request, render_template
 from todarith import db
 #from todarith.mod_auth.forms import LoginForm
-from todarith.models import Problem, Topic
+from todarith.models import Problem, Topic, User
 from todarith.mod_main import main
 
 
@@ -37,3 +37,9 @@ def viewTopic(topicId):
     problems = Problem.query.filter_by(topic_id=topicId).all()
     topic = Topic.query.filter_by(id=topicId).first()
     return render_template('main/viewTopic.html', topic=topic, problems=problems)
+
+@main.route('/user/<int:userId>')
+def viewUser(userId):
+    userproblems = Problem.query.filter_by(poster_id=userId).all()
+    username = (User.query.filter_by(id=userId).first()).username
+    return render_template('main/viewUser.html', userproblems=userproblems, username=username)

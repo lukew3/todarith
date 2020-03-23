@@ -7,6 +7,8 @@
       <li><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Topic Browser</a></li> &nbsp;
       <li><a href="{{ url_for('main.landing') }}">Landing</a></li> &nbsp;
       <li><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
+      <li><a href="{{ url_for('main.viewUser', userId=1) }}">View User</a></li> &nbsp;
+      <li><a href="{{ url_for('main.viewTopic', topicId=1) }}">View Topic</a></li> &nbsp;
       <li><a href="{{ url_for('main.siteMap') }}">SiteMap</a></li> &nbsp;
 
       <li><h5>Post</h5></li> &nbsp;
@@ -20,6 +22,10 @@
       <li><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
       <li><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
       <li><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
+
+      <li><h5>Bot Upload</h5></li> &nbsp
+      <li><a href="{{ url_for('botupload.generate') }}">Run The Bot</a></li> &nbsp;
+
     </ul>
   </div>
 {% endblock content %}

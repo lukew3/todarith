@@ -5,7 +5,7 @@ from todarith.mod_post.forms import QuestionForm, TopicForm
 from todarith.mod_post import post
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
-from todarith.mod_post.postProc import checkAll, checkTopicExists
+from todarith.mod_post.postProc import checkAll, checkTopicExists, checkSolved
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
@@ -19,34 +19,36 @@ def newPost():
     form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
 
     if request.method == 'POST':
+        print(form.answer.data)
         print(form.topic.data)
         prob = form.question.data
         ans = form.answer.data
-        if (checkAll(prob, ans)==True):
+        solved = checkSolved(ans)
+        if (solved==False or checkAll(prob, ans)==True):
             if form.validate():
                 print('Validate: True')
                 #print(Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data))
                 Problem.create(
-                    question=form.question.data,
-                    answer=form.answer.data,
+                    question=prob,
+                    answer=ans,
                     topic_id=form.topic.data,
                     poster_id=poster,
                     confirmedCorrect=None,
                     difficultyLevel=None,
                     expectedTime=None,
-                    otherTags=None
+                    hasSolution=solved
                 )
             else:
                 print(form.errors)
                 Problem.create(
-                    question=form.question.data,
-                    answer=form.answer.data,
+                    question=prob,
+                    answer=ans,
                     topic_id=form.topic.data,
                     poster_id=poster,
                     confirmedCorrect=None,
                     difficultyLevel=None,
                     expectedTime=None,
-                    otherTags=None
+                    hasSolution=solved
                 )
             return redirect(url_for('main.explore'))
         else:

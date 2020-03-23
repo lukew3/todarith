@@ -23,7 +23,7 @@
       </div>
       <div id="authorPart" class="grid-element">
         <p class="partTitle">Author</p>
-        <p id="authorContent">{{ problem.poster.username }}</p>
+        <p id="authorContent"><a href="{{ url_for('main.viewUser', userId=problem.poster.id) }}">{{ problem.poster.username }}</a></p>
       </div>
       <div id="statsPart" class="grid-element">
         <div id="statsBox">

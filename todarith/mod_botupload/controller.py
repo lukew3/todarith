@@ -12,6 +12,10 @@ from todarith.mod_botupload.postProc import checkAll, checkTopicExists
 
 @botupload.route('/', methods=['GET', 'POST'])
 def generate():
+    uploaded_count = 0
+    duplicate_count = 0
+    uploadedList = []
+    duplicateList = []
     list = generator.singleDigitAddition()
     prob=""
     ans=""
@@ -20,6 +24,7 @@ def generate():
             prob=tup[0]
             ans=tup[1]
         if (checkAll(prob, ans)==True):
+            uploaded_count += 1
             Problem.create(
                 question=prob,
                 answer=ans,
@@ -28,6 +33,11 @@ def generate():
                 confirmedCorrect=None,
                 difficultyLevel=None,
                 expectedTime=None,
-                otherTags=None
+                hasSolution=True
             )
-    return(render_template("botupload/generated.html", list=list))
+            uploadedList.append(tup)
+        else:
+            duplicate_count += 1
+            duplicateList.append(tup)
+
+    return(render_template("botupload/generated.html", dupList=duplicateList, upList = uploadedList, upCount = uploaded_count, dupCount = duplicate_count))
