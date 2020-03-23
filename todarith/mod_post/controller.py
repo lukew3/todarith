@@ -19,9 +19,12 @@ def newPost():
     form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
 
     if request.method == 'POST':
-        print(form.answer.data)
-        print(form.topic.data)
-        prob = form.question.data
+        #print(form.answer.data)
+        #print(form.topic.data)
+        print(request.form.get('problem'))
+        prob = request.form.get('mf')
+        print(prob)
+        """
         ans = form.answer.data
         solved = checkSolved(ans)
         if (solved==False or checkAll(prob, ans)==True):
@@ -53,6 +56,7 @@ def newPost():
             return redirect(url_for('main.explore'))
         else:
             return ('<h1>Incorrect Problem Solution set</h1>')
+        """
     return render_template('post/newpost.html', form=form)
 
 @post.route('/edit')
