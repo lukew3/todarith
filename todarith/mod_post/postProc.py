@@ -2,7 +2,7 @@
 from todarith.models import Problem, Topic
 
 def checkAll(prob, ans):
-    if checkEq(prob, ans) and checkRep(prob, ans):
+    if checkRep(prob, ans): # and checkEq(prob, ans)
         return True
     else:
         return False
@@ -15,12 +15,12 @@ def checkEq(prob, ans):
     else:
         return False
 
-def checkRep(prob, ans):
-    print(Problem.query.filter_by(question=prob).all())
+def checkOriginal(prob, ans):
+    #print(Problem.query.filter_by(question=prob).all())
     if Problem.query.filter_by(question=prob).all() == []:
-        print("Problem already exists")
         return True
     else:
+        print("Problem already exists")
         return False
 
 
