@@ -2,6 +2,8 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mathlive/mathlive.core.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mathlive/mathlive.css') }}">
+<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 <style>
   .mathfield {
             border: 1px solid #ddd;
@@ -16,13 +18,28 @@
 {% endblock head %}
 
 {% block content %}
+<script type=text/javascript>
+  $(function() {
+    $('button#btn_submit').bind('click', function() {
+      console.log("activated")
+      $.getJSON($SCRIPT_ROOT + '/post/_get_problem_input', {
+        problem: problemInput,
+        answer: answerInput
+      }, function(data) {
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+</script>
 
 <div class="formBox" id="problemForm">
-  <form method="POST">
-    <div name="problem" id="problem" class="mathfield">f(x)= </div>
-    <input type="text" name="problem2" id="problem2">
+  <form method="POST" action="">
+    <label for="problem">Problem: </label>
+    <div name="problem" id="problem" class="mathfield">2 </div>
+    <label for="answer">Answer: </label>
+    <div name="answer" id="answer" class="mathfield">2 </div>
     <button id='btn_submit' type="submit" name="button">Submit</button>
-    <div name='output' id='output'></div>
   </form>
 </div>
 
@@ -30,17 +47,21 @@
 
 <script src="../../static/mathlive/mathlive.js"></script>
 <script type="module">
-          import MathLive from 'https://unpkg.com/mathlive/dist/mathlive.mjs';
-          MathLive.renderMathInDocument();
-          MathLive.makeMathField('mathfield');
+  import MathLive from 'https://unpkg.com/mathlive/dist/mathlive.mjs';
+  MathLive.renderMathInDocument();
+  MathLive.makeMathField('mathfield');
 </script>
 <script>
-    const problem = MathLive.makeMathField('problem', {
-        onContentDidChange: problem => {
-            document.getElementById('output').innerHTML = problem.$text();
-            document.getElementById('problem2').innerHTML = problem.$text();
-        }
-    });
+  const problem = MathLive.makeMathField('problem', {
+      onContentDidChange: problem => {
+          problemInput = problem.$text();
+      }
+  });
+  const answer = MathLive.makeMathField('answer', {
+      onContentDidChange: answer => {
+          answerInput = answer.$text();
+      }
+  });
 </script>
 
 {% endblock content %}

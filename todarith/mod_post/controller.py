@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for, jsonify
 from todarith.database import db
 from todarith.models import User, Problem, Topic
 from todarith.mod_post.forms import QuestionForm, TopicForm
@@ -7,13 +7,23 @@ from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from todarith.mod_post.postProc import checkAll, checkTopicExists, checkSolved
 
+@post.route('/_get_problem_input')
+def get_problem_input():
+    problem = request.args.get('problem', "", type=str)
+    answer = request.args.get('answer', 0, type=str)
+    print("Problem:" + problem)
+    print("Answer:" + answer)
+    #b = request.args.get('b', 0, type=int)
+    return jsonify(result=problem + answer)
+
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
-
     if request.method == 'POST':
-        prob_var = request.form.get('problem2')
-        print(prob_var)
+        if 'problem' in request.form:
+            print("Problem found")
+
         return redirect(url_for('post.newPost'))
+
     return render_template('post/newpost.html')
 
 @post.route('/edit')
