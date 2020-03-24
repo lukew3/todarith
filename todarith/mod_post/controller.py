@@ -10,54 +10,11 @@ from todarith.mod_post.postProc import checkAll, checkTopicExists, checkSolved
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
 
-    if current_user.is_authenticated:
-        poster = current_user.id
-    else:
-        poster = 1
-
-    form = QuestionForm()
-    form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
-
     if request.method == 'POST':
-        #print(form.answer.data)
-        #print(form.topic.data)
-        print(request.form.get('problem'))
-        prob = request.form.get('mf')
-        print(prob)
-        """
-        ans = form.answer.data
-        solved = checkSolved(ans)
-        if (solved==False or checkAll(prob, ans)==True):
-            if form.validate():
-                print('Validate: True')
-                #print(Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data))
-                Problem.create(
-                    question=prob,
-                    answer=ans,
-                    topic_id=form.topic.data,
-                    poster_id=poster,
-                    confirmedCorrect=None,
-                    difficultyLevel=None,
-                    expectedTime=None,
-                    hasSolution=solved
-                )
-            else:
-                print(form.errors)
-                Problem.create(
-                    question=prob,
-                    answer=ans,
-                    topic_id=form.topic.data,
-                    poster_id=poster,
-                    confirmedCorrect=None,
-                    difficultyLevel=None,
-                    expectedTime=None,
-                    hasSolution=solved
-                )
-            return redirect(url_for('main.explore'))
-        else:
-            return ('<h1>Incorrect Problem Solution set</h1>')
-        """
-    return render_template('post/newpost.html', form=form)
+        prob_var = request.form.get('problem2')
+        print(prob_var)
+        return redirect(url_for('post.newPost'))
+    return render_template('post/newpost.html')
 
 @post.route('/edit')
 def edit():
