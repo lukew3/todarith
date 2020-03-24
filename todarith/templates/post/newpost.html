@@ -35,10 +35,10 @@
 
 <div class="formBox" id="problemForm">
   <form method="POST" action="/post/new">
-    <label for="problem">Problem: </label>
-    <div name="problem" id="problem" class="mathfield">2 </div>
-    <label for="answer">Answer: </label>
-    <div name="answer" id="answer" class="mathfield">2 </div>
+    <label for="problemInputBox">Problem: </label>
+    <div name="problemInputBox" id="problemInputBox" class="mathfield"></div>
+    <label for="answerInputBox">Answer: </label>
+    <div name="answerInputBox" id="answerInputBox" class="mathfield"></div>
     <button id='btn_submit' type="submit" name="button">Submit</button>
   </form>
 </div>
@@ -53,13 +53,13 @@
   MathLive.makeMathField('mathfield');
 </script>
 <script>
-  const problem = MathLive.makeMathField('problem', {
-      onContentDidChange: problem => {
+  const problem = MathLive.makeMathField('problemInputBox', {
+      onContentDidChange: problemInputBox => {
           problemInput = problem.$text();
       }
   });
-  const answer = MathLive.makeMathField('answer', {
-      onContentDidChange: answer => {
+  const answer = MathLive.makeMathField('answerInputBox', {
+      onContentDidChange: answerInputBox => {
           answerInput = answer.$text();
       }
   });
