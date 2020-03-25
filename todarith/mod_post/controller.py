@@ -7,19 +7,30 @@ from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from todarith.mod_post.postProc import checkAll, checkTopicExists, checkSolved, checkOriginal
 
+
+@post.route("/new", methods=['GET', 'POST'])
+def newPost():
+    return render_template('post/newpost.html')
+
 @post.route('/_get_problem_input')
 def get_problem_input():
     prob = request.args.get('problem', "", type=str)
-    ans = request.args.get('answer', 0, type=str)
+    ans = request.args.get('answer', "", type=str)
     print("Problem:" + prob)
     print("Answer:" + ans)
+
     solved = checkSolved(ans)
+    if current_user.is_authenticated:
+        poster = current_user.id
+    else:
+        poster = 1
+    #form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
     if checkOriginal(prob, ans):
         Problem.create(
             question=prob,
             answer=ans,
             topic_id=1,
-            poster_id=1,
+            poster_id=poster,
             confirmedCorrect=None,
             difficultyLevel=None,
             expectedTime=None,
@@ -29,9 +40,6 @@ def get_problem_input():
     else:
         return jsonify(result="Problem \"" + prob + "=" + ans + "\" was not added")
 
-@post.route("/new", methods=['GET', 'POST'])
-def newPost():
-    return render_template('post/newpost.html')
 
 @post.route('/edit')
 def edit():

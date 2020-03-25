@@ -63,9 +63,6 @@ nav {
 
 
 
-
-
-
 #problemCard{
   display: flex;
   flex-direction: column;
@@ -238,4 +235,9 @@ nav {
 #authorContent {
   font-size: 2em;
   margin: 0 auto;
+}
+
+
+.mathfield {
+  text-align: left;
 }
