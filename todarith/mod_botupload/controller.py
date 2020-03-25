@@ -16,7 +16,7 @@ def generate():
     duplicate_count = 0
     uploadedList = []
     duplicateList = []
-    list = generator.singleDigitAddition()
+    list = generator.main()
     prob=""
     ans=""
     for tup in list:

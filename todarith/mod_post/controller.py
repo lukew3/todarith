@@ -1,59 +1,45 @@
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for, jsonify
 from todarith.database import db
 from todarith.models import User, Problem, Topic
 from todarith.mod_post.forms import QuestionForm, TopicForm
 from todarith.mod_post import post
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
-from todarith.mod_post.postProc import checkAll, checkTopicExists, checkSolved
+from todarith.mod_post.postProc import checkAll, checkTopicExists, checkSolved, checkOriginal
+
 
 @post.route("/new", methods=['GET', 'POST'])
 def newPost():
+    return render_template('post/newpost.html')
 
+@post.route('/_get_problem_input')
+def get_problem_input():
+    prob = request.args.get('problem', "", type=str)
+    ans = request.args.get('answer', "", type=str)
+    print("Problem:" + prob)
+    print("Answer:" + ans)
+
+    solved = checkSolved(ans)
     if current_user.is_authenticated:
         poster = current_user.id
     else:
         poster = 1
+    #form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
+    if checkOriginal(prob, ans):
+        Problem.create(
+            question=prob,
+            answer=ans,
+            topic_id=1,
+            poster_id=poster,
+            confirmedCorrect=None,
+            difficultyLevel=None,
+            expectedTime=None,
+            hasSolution=solved
+        )
+        return jsonify(result="Problem \"" + prob + "=" + ans + "\" added")
+    else:
+        return jsonify(result="Problem \"" + prob + "=" + ans + "\" was not added")
 
-    form = QuestionForm()
-    form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
-
-    if request.method == 'POST':
-        print(form.answer.data)
-        print(form.topic.data)
-        prob = form.question.data
-        ans = form.answer.data
-        solved = checkSolved(ans)
-        if (solved==False or checkAll(prob, ans)==True):
-            if form.validate():
-                print('Validate: True')
-                #print(Problem(question=form.question.data, answer=form.answer.data, topic=form.topic.data))
-                Problem.create(
-                    question=prob,
-                    answer=ans,
-                    topic_id=form.topic.data,
-                    poster_id=poster,
-                    confirmedCorrect=None,
-                    difficultyLevel=None,
-                    expectedTime=None,
-                    hasSolution=solved
-                )
-            else:
-                print(form.errors)
-                Problem.create(
-                    question=prob,
-                    answer=ans,
-                    topic_id=form.topic.data,
-                    poster_id=poster,
-                    confirmedCorrect=None,
-                    difficultyLevel=None,
-                    expectedTime=None,
-                    hasSolution=solved
-                )
-            return redirect(url_for('main.explore'))
-        else:
-            return ('<h1>Incorrect Problem Solution set</h1>')
-    return render_template('post/newpost.html', form=form)
 
 @post.route('/edit')
 def edit():
