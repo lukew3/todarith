@@ -13,7 +13,7 @@
       <th>Difficulty</th>
       <th>Length</th>
     </tr>
-    {% for problem in problems %}
+    {% for problem in problems.items %}
     <tr>
       <td id="questiondata"><a href="{{ url_for('post.viewProblem', problem_id=problem.id) }}">{{ problem.question }}</a></td>
       <td id="answer">{{ problem.answer }}</td>
@@ -25,5 +25,16 @@
     </tr>
     {% endfor %}
   </table>
+  {% for page_num in problems.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if problems.page == page_num %}
+        <a class="btn btn-info mb-4" href="{{ url_for('main.viewTopic', page=page_num, topicId=topic.id) }}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('main.viewTopic', page=page_num, topicId=topic.id) }}">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
 
 {% endblock content %}
