@@ -29,6 +29,12 @@
 
   {% block content %}
   {% endblock %}
+  <script src="../static/mathlive/mathlive.js"></script>
+  <script type="module">
+    import MathLive from 'https://unpkg.com/mathlive/dist/mathlive.mjs';
+    MathLive.renderMathInDocument();
+    MathLive.makeMathField('mathfield');
+  </script>
 </body>
 
 </html>

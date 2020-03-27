@@ -52,3 +52,10 @@ def viewUser(userId):
     username = (User.query.filter_by(id=userId).first()).username
     thisUserId = (User.query.filter_by(id=userId).first()).id
     return render_template('main/viewUser.html', problems=problems, username=username, thisUserId=thisUserId)
+
+@main.route('/solveProblems/<int:topicId>')
+def solveProblems(topicId):
+    page = request.args.get('page', 1, type=int)
+    problems = Problem.query.filter_by(topic_id=topicId, hasSolution=False).paginate(page=page, per_page=50)
+    topic = Topic.query.filter_by(id=topicId).first()
+    return render_template('main/solveProblems.html', topic=topic, problems=problems)

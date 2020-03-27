@@ -49,7 +49,7 @@ class Customlist(CRUDMixin, db.Model):
 class Problem(CRUDMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(1000), nullable=False)
-    answer = db.Column(db.String(1000), nullable=False)
+    answer = db.Column(db.String(1000), nullable=True)
     topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
     poster_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) #user id of the person who posted it
     confirmedCorrect = db.Column(db.String(1000), nullable=True)
