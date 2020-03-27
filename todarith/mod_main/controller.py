@@ -59,3 +59,7 @@ def solveProblems(topicId):
     problems = Problem.query.filter_by(topic_id=topicId, hasSolution=False).paginate(page=page, per_page=50)
     topic = Topic.query.filter_by(id=topicId).first()
     return render_template('main/solveProblems.html', topic=topic, problems=problems)
+
+@main.route('/quizmaker')
+def quizMaker():
+    return render_template('main/quizMaker.html')

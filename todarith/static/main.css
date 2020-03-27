@@ -7,13 +7,13 @@ a {
   padding: 10px;
   font-size: 1.7em;
 }
-ul {
+#navList {
   list-style-type: none;
   margin: 0;
   padding: 0;
   float: right;
 }
-li {
+#navElement {
   display: inline;
 }
 nav {
