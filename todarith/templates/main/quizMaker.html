@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>QuizMaker</h1>
+  <p>What do you want the content of the quiz to be?</p>
+  <ul>
+    <li>Topic</li>
+    <li>User-created set</li>
+  </ul>
+  <p>How many problems on the quiz?</p>
+  <ul>
+    <li>10</li>
+    <li>20</li>
+    <li>50</li>
+    <li>Custom</li>
+  </ul>
+  <p>Which kind of problems do you want?</p>
+  <ul>
+    <li>Difficulty:<ul>
+      <li>Easy</li>
+      <li>Medium</li>
+      <li>Hard</li>
+    </ul></li>
+    <li>Length per problem:#or you could have length for the whole test and then calculate length per problem<ul>
+      <li><1 min</li>
+      <li>1-3min</li>
+      <li>3-10 min</li>
+      <li>10-15 mins</li>
+    </ul></li>
+  <p>Font size</p>
+    <p>input box for font-size: default 12</p>
+{% endblock content %}

@@ -12,23 +12,29 @@
 
   <nav>
     <a href="{{ url_for('main.landing') }}">Todarith</a>
-    <ul>
-      <li><a href="{{ url_for('main.siteMap') }}">Sitemap</a></li> &nbsp;
-      <li><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Browse Topics</a></li> &nbsp;
-      <li><a href="{{ url_for('post.newPost') }}">Add Problem</a></li> &nbsp;
-      <li><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
-      <li><a href="{{ url_for('search.search_page') }}">Search</a></li> &nbsp;
+    <ul id="navList">
+      <li id="navElement"><a href="{{ url_for('main.siteMap') }}">Sitemap</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Browse Topics</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('post.newPost') }}">Add Problem</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('search.search_page') }}">Search</a></li> &nbsp;
       {% if current_user.is_authenticated %}
-        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
+        <li id="navElement"><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
       {% else %}
-        <li><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
-        <li><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
+        <li id="navElement"><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
+        <li id="navElement"><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
       {% endif %}
     </ul>
   </nav>
 
   {% block content %}
   {% endblock %}
+  <script src="../static/mathlive/mathlive.js"></script>
+  <script type="module">
+    import MathLive from 'https://unpkg.com/mathlive/dist/mathlive.mjs';
+    MathLive.renderMathInDocument();
+    MathLive.makeMathField('mathfield');
+  </script>
 </body>
 
 </html>

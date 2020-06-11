@@ -3,7 +3,7 @@
   <h1>Explore</h1>
   <p>This page is for displaying random math problems or new problems</p>
   <div class="cardContainer">
-  {% for problem in problems %}
+  {% for problem in problems.items %}
     <div class="card">
       <div id="questionPart" class="grid-element">
         <p class="partTitle">Question</p>
@@ -50,4 +50,15 @@
     </div>
   {% endfor %}
   </div>
+  {% for page_num in problems.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if problems.page == page_num %}
+        <a class="btn btn-info mb-4" href="{{ url_for('main.explore', page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('main.explore', page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
 {% endblock content %}

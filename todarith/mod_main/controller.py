@@ -15,7 +15,13 @@ def landing():
 
 @main.route('/explore')
 def explore():
-    problems = Problem.query.all()
+    #page = request.args.get('page', 1, type=int)
+    #posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    #return render_template('home.html', posts=posts)
+
+    page = request.args.get('page', 1, type=int)
+    problems = Problem.query.paginate(page=page, per_page=50)
+    #problems = Problem.query.all()
     return render_template('main/explore.html', problems=problems)
 
 @main.route('/topicBrowser/<int:topic_id>')
@@ -34,12 +40,26 @@ def siteMap():
 
 @main.route('/topic/<int:topicId>')
 def viewTopic(topicId):
-    problems = Problem.query.filter_by(topic_id=topicId).all()
+    page = request.args.get('page', 1, type=int)
+    problems = Problem.query.filter_by(topic_id=topicId).paginate(page=page, per_page=50)
     topic = Topic.query.filter_by(id=topicId).first()
     return render_template('main/viewTopic.html', topic=topic, problems=problems)
 
 @main.route('/user/<int:userId>')
 def viewUser(userId):
-    userproblems = Problem.query.filter_by(poster_id=userId).all()
+    page = request.args.get('page', 1, type=int)
+    problems = Problem.query.filter_by(poster_id=userId).paginate(page=page, per_page=50)
     username = (User.query.filter_by(id=userId).first()).username
-    return render_template('main/viewUser.html', userproblems=userproblems, username=username)
+    thisUserId = (User.query.filter_by(id=userId).first()).id
+    return render_template('main/viewUser.html', problems=problems, username=username, thisUserId=thisUserId)
+
+@main.route('/solveProblems/<int:topicId>')
+def solveProblems(topicId):
+    page = request.args.get('page', 1, type=int)
+    problems = Problem.query.filter_by(topic_id=topicId, hasSolution=False).paginate(page=page, per_page=50)
+    topic = Topic.query.filter_by(id=topicId).first()
+    return render_template('main/solveProblems.html', topic=topic, problems=problems)
+
+@main.route('/quizmaker')
+def quizMaker():
+    return render_template('main/quizMaker.html')
