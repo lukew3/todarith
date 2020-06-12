@@ -1,3 +1,120 @@
+/* || Colors */
+/*
+:root {
+  --redish: #ed5466;
+  --green: #e74c3c;
+  --yellow: #C9C243;
+  --orange: #FFA644;
+  --red: #3498db;
+}
+call with "var(--blue)" or similar
+*/
+
+/* || basics */
+
+body {
+  background-color: #121d28;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+/* || Navbar formatting */
+
+nav {
+  width: 100%;
+}
+
+#navTitle {
+  font-size: 3em;
+  padding: 20px;
+}
+
+nav ul {
+    overflow: hidden;
+    float: right;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    list-style: none;
+    float: left;
+    text-align: center;
+    font-size: 2em;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* || Landing page specific */
+
+#titleGroup {
+  position: absolute;
+  top: 25%;
+  width: 50%;
+  left:25%;
+  text-align: center;
+}
+
+#landingTitle {
+  font-size: 5em;
+}
+
+#landingButton {
+  font-size: 2.5em;
+  background-color: #ed5466;
+  margin-left: 21%;
+  width: 50%;
+  padding: 2%;
+}
+
+/* || landing page layout */
+
+#landingInformationGrid {
+  position: absolute;
+  top: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 33% 33% 33%;
+}
+
+.landingSemisection {
+  padding: 20px;
+}
+.ssTitle {
+  position: relative;
+  top: 25%;
+  font-size: 5em;
+}
+
+.ssDesc {
+  font-size: 2.5em;
+}
+
+@media (min-width: 620px) {
+  #st2 {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  #sd2 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 620px) {
+  #landingInformationGrid {
+    grid-template-columns: 100%;
+    grid-template-rows: 25% 25% 25% 25% 25% 25%;
+  }
+}
+
+/*
 body {
   background-color: #f57b51;
 }
@@ -241,3 +358,4 @@ nav {
 .mathfield {
   text-align: left;
 }
+*/

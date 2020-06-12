@@ -4,6 +4,8 @@
 <head>
   <title>TodArith</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   {% block head %}
   {% endblock %}
 </head>
@@ -11,7 +13,7 @@
 <body>
 
   <nav>
-    <a href="{{ url_for('main.landing') }}">Todarith</a>
+    <a id="navTitle" href="{{ url_for('main.landing') }}">Todarith</a>
     <ul id="navList">
       <li id="navElement"><a href="{{ url_for('main.siteMap') }}">Sitemap</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Browse Topics</a></li> &nbsp;
@@ -24,11 +26,30 @@
         <li id="navElement"><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
         <li id="navElement"><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
       {% endif %}
+      <!--
+      <li id="navElement"> This is the menu icon
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </li> &nbsp;
+      -->
     </ul>
   </nav>
 
   {% block content %}
   {% endblock %}
+  <!--
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  </script>
+-->
   <script src="../static/mathlive/mathlive.js"></script>
   <script type="module">
     import MathLive from 'https://unpkg.com/mathlive/dist/mathlive.mjs';
