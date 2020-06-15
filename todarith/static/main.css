@@ -162,6 +162,56 @@ nav ul li {
   }
 }
 
+/* || Landing page svgs */
+
+.landingSvg {
+  position: absolute;
+  height: 40%;
+}
+#plusSVG {
+  fill: #ea7424;
+  position: absolute;
+  top: 20%;
+  left:-10%;
+}
+#minusSVG {
+  fill: #0dd2b0;
+}
+#multiplySVG {
+  fill:#1aaad9;
+  top: 70%;
+  left: 20%;
+}
+#divideSVG {
+  fill:#be3ca7;
+  top: 55%;
+  right: 10%;
+}
+#piSVG {
+  fill:#ea7424;
+  height: 20%;
+  top: 120%;
+  left: 0%;
+}
+#sumSVG {
+  fill:#0dd2b0;
+  height: 40%;
+  top: 130%;
+  right: 10%;
+}
+#deltaSVG {
+  fill:#1aaad9;
+  height: 30%;
+  top: 170%;
+  left: 30%;
+}
+
+@media (max-width: 620px) {
+  .landingSvg {
+    display: none;
+  }
+}
+
 /*
 body {
   background-color: #f57b51;
