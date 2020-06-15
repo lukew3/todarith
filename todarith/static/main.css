@@ -170,12 +170,15 @@ nav ul li {
 }
 #plusSVG {
   fill: #ea7424;
-  position: absolute;
   top: 20%;
   left:-10%;
 }
 #minusSVG {
   fill: #0dd2b0;
+  position: absolute;
+  height: 15%;
+  top: 20%;
+  right: 5%;
 }
 #multiplySVG {
   fill:#1aaad9;
