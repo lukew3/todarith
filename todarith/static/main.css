@@ -28,6 +28,12 @@ a {
 /* || Navbar formatting */
 
 nav {
+  background-color: rgba(18,29,40,0.5);
+  margin: none;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 99;
   width: 100%;
   overflow: hidden;
 }
@@ -71,19 +77,19 @@ nav ul li {
 }
 
 @media screen and (max-width: 1400px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {position: fixed;}
   .topnav.responsive ul li .icon {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 6;
+    top: 6;
   }
   .topnav.responsive ul li a {
     float: none;
-    display: inline-block;
+    display: block;
     text-align: left;
   }
   .topnav.responsive ul {
-    background-color: grey;
+    background-color: rgba(18,29,40,0.5);
   }
 
 }
