@@ -24,6 +24,7 @@ a {
   text-decoration: none;
 }
 
+
 /* || Navbar formatting */
 
 nav {
@@ -160,6 +161,12 @@ nav ul li {
     grid-template-columns: 100%;
     grid-template-rows: 25% 25% 25% 25% 25% 25%;
   }
+  .ssTitle {
+    font-size: 3.5em;
+  }
+  .ssDesc {
+    font-size: 2em;
+  }
 }
 
 /* || Landing page svgs */
@@ -234,6 +241,7 @@ nav ul li {
   margin: 0;
 }
 .rightSideGradientBox {
+  border-radius: 15px;
   position: absolute;
   background-color: grey;
   height: 80vh;
@@ -243,6 +251,9 @@ nav ul li {
 }
 
 /* || db/ask page */
+#askGradientBox {
+  background-image: linear-gradient(to top right, #be3ca7, #0dd2b0);
+}
 .formBox {
   position: relative;
   height: 80%;
@@ -251,6 +262,54 @@ nav ul li {
   left: 10%;
 }
 
+.formGroup {
+  width: 100%;
+  border-bottom: 2px solid white;
+}
+.formLabel {
+  width: 20%;
+}
+.mathquillField {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .leftSideContainer {
+    top: 95%;
+    width: 90%;
+  }
+  .leftSideHeadline { font-size: 3em; }
+  .rightSideGradientBox {
+    width: 90vw;
+  }
+}
+
+/* || Login and register form formatting */
+.authFormBox {
+  background-color: grey;
+  width: 15%;
+  position: absolute;
+  left: 37.5%;
+  top: 25%;
+  height: 40%;
+  padding: 5%;
+}
+.form-control {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid white;
+  color: white;
+}
+#authFormLabel {
+  position: relative;
+  top: -10%;
+  font-size: 3em;
+}
+.form-group {
+  margin: 2%;
+}
+
+/*
 .formBox .form-group {
   position: relative;
 }
