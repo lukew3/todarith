@@ -6,7 +6,16 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='mathquill/mathquill.css') }}"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='mathquill/mathquill.js') }}"></script>
+  <script>
+    var MQ = MathQuill.getInterface(2);
+  </script>
+
   {% block head %}
   {% endblock %}
 </head>
@@ -17,10 +26,10 @@
     <a id="navTitle" href="{{ url_for('main.landing') }}">Todarith</a>
     <ul id="navList">
       <li id="navElement"><a href="{{ url_for('main.siteMap') }}">Sitemap</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Browse Topics</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('post.newPost') }}">Add Problem</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('moddb.ask') }}">Ask</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('moddb.answer') }}">Answer</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('moddb.add') }}">Add</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('search.search_page') }}">Search</a></li> &nbsp;
       {% if current_user.is_authenticated %}
         <li id="navElement"><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
       {% else %}
@@ -35,13 +44,39 @@
     </ul>
   </nav>
 
+
   {% block content %}
   {% endblock %}
 
-  <footer>
+  <!--
+  <footer id="footer">
     This is the footer
+    <div id="footer_Info">
+    </div>
+    <div id="footer_Sitemap">
+      <div id="footer_About" class="footer_Section">
+        <h2 class="footerSubtitle">About</h2>
+        <hr>
+        <h3 class="footerSec_Link"><a href="#">Something</a></h3>
+      </div>
+      <div id="footer_Database" class="footer_Section">
+        <h2 class="footerSubtitle">Database</h2>
+        <hr>
+        <h3 class="footerSec_Link"><a href="#">Something</a></h3>
+      </div>
+      <div id="footer_Generate" class="footer_Section">
+        <h2 class="footerSubtitle">Generate</h2>
+        <hr>
+        <h3 class="footerSec_Link"><a href="#">Something</a></h3>
+      </div>
+      <div id="footer_Learn" class="footer_Section">
+        <h2 class="footerSubtitle">Learn</h2>
+        <hr>
+        <h3 class="footerSec_Link"><a href="#">Something</a></h3>
+      </div>
+    </div>
   </footer>
-
+-->
   <script>
     function navHamburger() {
       var x = document.getElementById("myTopnav");

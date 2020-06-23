@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="formBox">
-  <h1>Sign up for Todarith</h1>
+<div class="authFormBox">
+  <h1 id="authFormLabel">Sign up for Todarith</h1>
   <div class="login-page">
     <div class="form">
       <form method="POST" action="">
@@ -59,7 +59,7 @@
               {% endif %}
         </div>
         <div class="form-group">
-          {{ form.submit(class="btn btn-outline-info") }}
+          {{ form.submit(class="authSubmit btn btn-outline-info") }}
         </div>
       </form>
       <div class="border-top pt-3">

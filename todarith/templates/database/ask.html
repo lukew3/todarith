@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+
+{% endblock head %}
+
+{% block content %}
+
+  <div class="leftSideContainer">
+    <h1 class="leftSideHeadline">Ask Us A Math Problem!</h1>
+    <h3 class="leftSideDescription">After submitting this form, we will search our database
+    for your problem and attempt to give you the answer. If we don't have it or can't solve it, we will
+  have it answered by our community as soon as possible.</h3>
+  </div>
+
+  <div id="askGradientBox" class="rightSideGradientBox">
+    <div class="formBox">
+      <form>
+        <div class="formGroup">
+          <p class="formLabel">Problem</p>
+          <span id="problem" class="mathquillField"></span>
+        </div>
+        <div class="formGroup">
+          <p class="formLabel">Category(Optional)</p>
+          <span id="category" class="mathquillField"></span>
+        </div>
+        <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
+      </form>
+    </div>
+    <p id="foundStatus"></p>
+    <p id="answer"></p>
+  </div>
+
+  <script>
+      function probSubmit() {
+        document.getElementsByClassName(formBox).style.height = 20%;
+
+      }
+  </script>
+
+
+  <script>
+    var problemSpan = document.getElementById('problem');
+    var problemMathField = MQ.MathField(problemSpan, {
+      handlers: {
+        edit: function() {
+          enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
+        }
+      }
+    });
+
+    var categorySpan = document.getElementById('category');
+    var categoryMathField = MQ.MathField(categorySpan, {
+      handlers: {
+        edit: function() {
+          enteredCategory = categoryMathField.latex(); // Get entered math in LaTeX format
+        }
+      }
+    });
+  </script>
+
+  <script type=text/javascript>
+    var enteredProblem, enteredAnswer, enteredCategory;
+    $(function() {
+      $('button#btn_submit').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/_get_problem_input', {
+          problem: enteredProblem,
+          category: enteredCategory
+        }, function(data) {
+          $("#answer").text(data.answer);
+        });
+        return false;
+      });
+    });
+  </script>
+{% endblock content %}

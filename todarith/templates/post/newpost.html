@@ -19,6 +19,10 @@
 
 {% block content %}
 <script type=text/javascript>
+  var enteredAnswer = "";
+  var enteredProblem = "";
+  var enteredCategory = "";
+
   $(function() {
     $('button#btn_submit').bind('click', function() {
       console.log("activated")

@@ -13,6 +13,7 @@ from todarith.mod_main import main
 from todarith.mod_post import post
 from todarith.mod_search import search
 from todarith.mod_botupload import botupload
+from todarith.mod_database import moddb
 
 from todarith.models import User, Problem
 
@@ -33,6 +34,7 @@ def create_app(config_class=Config):
     from todarith.errors.handlers import errors
     from todarith.mod_main.controller import main
     from todarith.mod_post.controller import post
+    from todarith.mod_database.controller import moddb
 
     return app
 
@@ -50,6 +52,7 @@ def register_blueprints(app):
     app.register_blueprint(post, url_prefix='/post')
     app.register_blueprint(search, url_prefix='/search')
     app.register_blueprint(botupload, url_prefix='/botupload')
+    app.register_blueprint(moddb, url_prefix='/db')
 
 def register_extensions(app):
     bcrypt.init_app(app)
