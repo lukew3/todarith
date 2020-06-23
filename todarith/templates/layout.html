@@ -15,7 +15,7 @@
   <script>
     var MQ = MathQuill.getInterface(2);
   </script>
-  
+
   {% block head %}
   {% endblock %}
 </head>
@@ -26,10 +26,10 @@
     <a id="navTitle" href="{{ url_for('main.landing') }}">Todarith</a>
     <ul id="navList">
       <li id="navElement"><a href="{{ url_for('main.siteMap') }}">Sitemap</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Browse Topics</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('post.newPost') }}">Add Problem</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('moddb.ask') }}">Ask</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('moddb.answer') }}">Answer</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('moddb.add') }}">Add</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('search.search_page') }}">Search</a></li> &nbsp;
       {% if current_user.is_authenticated %}
         <li id="navElement"><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
       {% else %}

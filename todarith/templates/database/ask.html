@@ -8,13 +8,12 @@
 {% endblock head %}
 
 {% block content %}
+
   <div class="leftSideContainer">
-    <h1 class="leftSideHeadline">Thanks for contributing!</h1>
-    <h3 class="leftSideDescription">This form will add your problem to the already massive
-      Todarith database. Your contribution will aid in
-advancing the teaching power of ai! If you want to
-upload a large amount of problems at one time, consider
- uploading via spreadsheet (linked here).</h3>
+    <h1 class="leftSideHeadline">Ask Us A Math Problem!</h1>
+    <h3 class="leftSideDescription">After submitting this form, we will search our database
+    for your problem and attempt to give you the answer. If we don't have it or can't solve it, we will
+  have it answered by our community as soon as possible.</h3>
   </div>
 
   <div id="askGradientBox" class="rightSideGradientBox">
@@ -25,21 +24,19 @@ upload a large amount of problems at one time, consider
           <span id="problem" class="mathquillField"></span>
         </div>
         <div class="formGroup">
-          <p class="formLabel">Answer</p>
-          <span id="answer" class="mathquillField"></span>
-        </div>
-        <div class="formGroup">
-          <p class="formLabel">Category</p>
+          <p class="formLabel">Category(Optional)</p>
           <span id="category" class="mathquillField"></span>
         </div>
         <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
       </form>
     </div>
-    <p id="result"></p>
+    <p id="foundStatus"></p>
+    <p id="answer"></p>
   </div>
 
   <script>
       function probSubmit() {
+        document.getElementsByClassName(formBox).style.height = 20%;
 
       }
   </script>
@@ -51,15 +48,6 @@ upload a large amount of problems at one time, consider
       handlers: {
         edit: function() {
           enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
-        }
-      }
-    });
-
-    var answerSpan = document.getElementById('answer');
-    var answerMathField = MQ.MathField(answerSpan, {
-      handlers: {
-        edit: function() {
-          enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
         }
       }
     });
@@ -81,10 +69,9 @@ upload a large amount of problems at one time, consider
         console.log("activated")
         $.getJSON($SCRIPT_ROOT + '/db/_get_problem_input', {
           problem: enteredProblem,
-          answer: enteredAnswer,
           category: enteredCategory
         }, function(data) {
-          $("#result").text(data.result);
+          $("#answer").text(data.answer);
         });
         return false;
       });

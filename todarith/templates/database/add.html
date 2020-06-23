@@ -8,14 +8,16 @@
 {% endblock head %}
 
 {% block content %}
+<div class="leftSideContainer">
+  <h1 class="leftSideHeadline">Thanks for contributing!</h1>
+  <h3 class="leftSideDescription">This form will add your problem to the already massive
+    Todarith database. Your contribution will aid in
+advancing the teaching power of ai! If you want to
+upload a large amount of problems at one time, consider
+uploading via spreadsheet (linked here).</h3>
+</div>
 
-  <div class="leftSideContainer">
-    <h1 class="leftSideHeadline">Help Answer Problems</h1>
-    <h3 class="leftSideDescription">On this page you can solve user-submitted
-    problems</h3>
-  </div>
-
-  <div id="answerGradientBox" class="rightSideGradientBox">
+  <div id="askGradientBox" class="rightSideGradientBox">
     <div class="formBox">
       <form>
         <div class="formGroup">
@@ -23,22 +25,20 @@
           <span id="problem" class="mathquillField"></span>
         </div>
         <div class="formGroup">
-          <p class="formLabel">Category(Optional)</p>
+          <p class="formLabel">Answer</p>
+          <span id="answer" class="mathquillField"></span>
+        </div>
+        <div class="formGroup">
+          <p class="formLabel">Category</p>
           <span id="category" class="mathquillField"></span>
         </div>
         <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
       </form>
     </div>
-    <p id="foundStatus"></p>
-    <p id="answer"></p>
+    <p id="result"></p>
   </div>
 
-  <script>
-      function probSubmit() {
-        document.getElementsByClassName(formBox).style.height = 20%;
 
-      }
-  </script>
 
 
   <script>
@@ -47,6 +47,15 @@
       handlers: {
         edit: function() {
           enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
+        }
+      }
+    });
+
+    var answerSpan = document.getElementById('answer');
+    var answerMathField = MQ.MathField(answerSpan, {
+      handlers: {
+        edit: function() {
+          enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
         }
       }
     });
@@ -68,9 +77,10 @@
         console.log("activated")
         $.getJSON($SCRIPT_ROOT + '/db/_get_problem_input', {
           problem: enteredProblem,
+          answer: enteredAnswer,
           category: enteredCategory
         }, function(data) {
-          $("#answer").text(data.answer);
+          $("#result").text(data.result);
         });
         return false;
       });

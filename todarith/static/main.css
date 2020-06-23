@@ -309,6 +309,10 @@ nav ul li {
   margin: 2%;
 }
 
+/* || Answer page */
+#answerGradientBox {
+  background-image: linear-gradient(to top right, #ea7424, #1aaad9);
+}
 /*
 .formBox .form-group {
   position: relative;

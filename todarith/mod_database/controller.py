@@ -6,7 +6,7 @@ from todarith.models import Problem, Topic, User
 from todarith.mod_database.forms import AskForm
 from flask_login import current_user, login_required
 from todarith.mod_database import moddb
-
+from todarith.mod_database.functions import getDBAnswer
 
 # Set the route and accepted methods
 @moddb.route('/')
@@ -17,15 +17,12 @@ def browse():
 def ask():
     return render_template('database/ask.html')
 
-
 @moddb.route('/_get_problem_input')
 def get_problem_input():
     #print("Somethings")
     prob = request.args.get('problem', "", type=str)
-    ans = request.args.get('answer', "", type=str)
     cat = request.args.get('category', "", type=str)
     print("Problem:" + prob)
-    print("Answer:" + ans)
     print("Category:" + cat)
 
     #solved = checkSolved(ans)
@@ -34,5 +31,27 @@ def get_problem_input():
     else:
         poster = 1
     #form.topic.choices = [(row.id, row.topicName) for row in Topic.query.all()]
+    dbAns = getDBAnswer(prob)
+    print(dbAns)
+    solution = dbAns
+    if dbAns=="unavailable":
+        Problem.create(
+            question=prob,
+            answer="unsolved",
+            topic_id=1,
+            poster_id=poster,
+            correctnessRating=0,
+            difficultyLevel=None,
+            expectedTime=None,
+            hasSolution=False
+        )
+    #return jsonify(result="Problem \"" + prob + "=" + ans + "\" was not added")
+    return jsonify(answer="The answer is: " + solution)
 
-    return jsonify(result="Problem \"" + prob + "=" + ans + "\" was not added")
+@moddb.route('/add', methods=['GET', 'POST'])
+def add():
+    return render_template('database/add.html')
+
+@moddb.route('/answer', methods=['GET', 'POST'])
+def answer():
+    return render_template('database/answer.html')
