@@ -54,4 +54,39 @@ def add():
 
 @moddb.route('/answer', methods=['GET', 'POST'])
 def answer():
-    return render_template('database/answer.html')
+    unsolved = db.session.query(Problem).filter_by(hasSolution=False).all()
+    print(unsolved)
+    if unsolved != []:
+        problem = unsolved[0]
+    else:
+        return render_template('database/ask.html')
+    print(problem)
+    return render_template('database/answer.html', problem=problem)
+
+@moddb.route('/_get_answer_input')
+def get_answer_input():
+    prob = request.args.get('problem', "", type=str)
+    ans = request.args.get('answer', "", type=str)
+    print("Problem:" + prob)
+    print("Answer:" + ans)
+
+    if current_user.is_authenticated:
+        poster = current_user.id
+    else:
+        poster = 1
+
+    currentProblem = db.session.query(Problem).filter_by(question=prob).first()
+
+    currentProblem.update(
+        answer = ans,
+        hasSolution = True,
+        correctnessRating = currentProblem.correctnessRating + 1
+    )
+
+    unsolved = db.session.query(Problem).filter_by(hasSolution=False).all()
+    if unsolved != []:
+        nextProblem = unsolved[0]
+    else:
+        return render_template('database/ask.html')
+    #return jsonify(result="Problem \"" + prob + "=" + ans + "\" was not added")
+    return jsonify(problem=nextProblem.question, answer="", category=nextProblem.topic.topicName)

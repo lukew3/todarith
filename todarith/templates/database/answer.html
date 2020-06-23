@@ -16,15 +16,26 @@
   </div>
 
   <div id="answerGradientBox" class="rightSideGradientBox">
+    <h2>Category</h2>
+    <h1>Mathematics</h1>
+    <div id="modeSelector">
+      <div id="cardSvg"></div>
+      <div id="tableSvg"></div>
+    </div>
+
     <div class="formBox">
       <form>
         <div class="formGroup">
           <p class="formLabel">Problem</p>
-          <span id="problem" class="mathquillField"></span>
+          <span id="problem" class="mathquillField">{{ problem.question }}</span>
+        </div>
+        <div class="formGroup">
+          <p class="formLabel">Answer</p>
+          <span id="answer" class="mathquillField"></span>
         </div>
         <div class="formGroup">
           <p class="formLabel">Category(Optional)</p>
-          <span id="category" class="mathquillField"></span>
+          <span id="category" class="mathquillField">{{ problem.topic.topicName }}</span>
         </div>
         <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
       </form>
@@ -42,35 +53,66 @@
 
 
   <script>
-    var problemSpan = document.getElementById('problem');
-    var problemMathField = MQ.MathField(problemSpan, {
-      handlers: {
-        edit: function() {
-          enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
+    makeMathFields()
+    function makeMathFields() {
+      var problemSpan = document.getElementById('problem');
+      problemMathField = MQ.MathField(problemSpan, {
+        handlers: {
+          edit: function() {
+            enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
+          }
         }
-      }
-    });
+      });
 
-    var categorySpan = document.getElementById('category');
-    var categoryMathField = MQ.MathField(categorySpan, {
-      handlers: {
-        edit: function() {
-          enteredCategory = categoryMathField.latex(); // Get entered math in LaTeX format
+      var answerSpan = document.getElementById('answer');
+      answerMathField = MQ.MathField(answerSpan, {
+        handlers: {
+          edit: function() {
+            enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
+          }
         }
-      }
-    });
+      });
+
+      var categorySpan = document.getElementById('category');
+      categoryMathField = MQ.MathField(categorySpan, {
+        handlers: {
+          edit: function() {
+            enteredCategory = categoryMathField.latex(); // Get entered math in LaTeX format
+          }
+        }
+      });
+    }
   </script>
 
   <script type=text/javascript>
+    var problemMathField, answerMathField, categoryMathField;
     var enteredProblem, enteredAnswer, enteredCategory;
     $(function() {
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/_get_problem_input', {
-          problem: enteredProblem,
+        $.getJSON($SCRIPT_ROOT + '/db/_get_answer_input', {
+          problem: problemMathField.latex(),
+          answer: enteredAnswer,
           category: enteredCategory
         }, function(data) {
-          $("#answer").text(data.answer);
+          console.log("Done")
+          //makeMathFields();
+          //mathField.clearSelection();
+          //mathField.write(' - 1');
+          problemMathField.select();
+          //problemMathField.clearSelection();
+          problemMathField.write(data.problem);
+          answerMathField.select();
+          //answerMathField.clearSelection();
+          answerMathField.write(data.answer);
+          categoryMathField.select();
+          //categoryMathField.clearSelection();
+          categoryMathField.write(data.category);
+
+          //$("#problem").text(data.problem);
+          //$("#answer").text(data.answer);
+          //$("#category").text(data.category);
+
         });
         return false;
       });
