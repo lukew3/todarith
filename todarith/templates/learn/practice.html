@@ -28,7 +28,7 @@
     </div>
     <div>
       <h2>Problem</h2>
-      <h2>ProblemContents</h2>
+      <h2 id="practiceProblem">ProblemContents</h2>
       <h2>Answer</h2>
       <span id="answer" class="mathquillField"></span>
     </div>
@@ -36,7 +36,7 @@
     <div id="practiceStatsBox">
       <div>
         <h3>Streak</h3>
-        <h3 id="streakValue">0</h3>
+        <h3 id="streakValue">$$2\cdot4$$</h3>
       </div>
       <div>
         <h3>Score</h3>
@@ -51,7 +51,6 @@
     <button id='btn_submit' type="submit" name="button">Submit</button>
     <button id='btn_error' name="button">Report Error</button>
 
-
   </div>
 
   <script>
@@ -65,14 +64,38 @@
     });
   </script>
 
-  <script type=text/javascript>
+  <script>
+    var problems
+    var selectedCategory = 1;
+    var selectedDifficulty = 1;
+    var selectedTime = 1;
+    var problemIndex = 0;
+
+    $( window ).on( "load", function() {
+      $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_problems', {
+        category: selectedCategory,
+        difficulty: selectedDifficulty,
+        time: selectedTime
+      }, function(data) {
+        problems = data.problems;
+        console.log(problems)
+        //$("#practiceProblem").text("$$"+ problems[problemIndex]["problem"] + "$$");
+        prob = document.getElementById('practiceProblem');
+        katex.render((problems[problemIndex]["problem"]), prob, {
+          throwOnError: false
+        });
+        problemIndex++;
+      });
+      return false;
+    });
+
+
     var enteredAnswer;
     $(function() {
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/ask/_get_problem_input', {
-          problem: enteredProblem,
-          category: enteredCategory
+        $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_answer_input', {
+          answer: enteredAnswer
         }, function(data) {
           $("#answer").text(data.answer);
         });
