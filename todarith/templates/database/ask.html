@@ -67,7 +67,7 @@
     $(function() {
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/_get_problem_input', {
+        $.getJSON($SCRIPT_ROOT + '/db/ask/_get_problem_input', {
           problem: enteredProblem,
           category: enteredCategory
         }, function(data) {

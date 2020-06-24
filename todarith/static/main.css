@@ -252,7 +252,7 @@ nav ul li {
   background-color: grey;
   height: 80vh;
   width: 40vw;
-  top: 10vh;
+  top: 12vh;
   right: 5vw;
 }
 
@@ -315,50 +315,12 @@ nav ul li {
   margin: 2%;
 }
 
-/* || Answer page */
+/* || db/Answer page */
 #answerGradientBox {
   background-image: linear-gradient(to top right, #ea7424, #1aaad9);
 }
-/*
-.formBox .form-group {
-  position: relative;
-}
 
-.formBox .form-group .form-control {
-  width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #fff;
-  outline: none;
-  background: transparent;
+/* || db/add page */
+#addGradientBox {
+  background-image: linear-gradient(to top right, #0dd2b0, #be3ca7);
 }
-.formBox .form-group .form-control-label {
-  position: absolute;
-  top:0;
-  left: 0;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  pointer-events: none;
-  transition: .5s;
-}
-
-input:focus ~ label,
-input:valid ~ label {
-  top: -30px;
-  left: 0;
-  color: #03e9f4;
-  font-size: 12px;
-}
-/*
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label {
-  top: -20px;
-  left: 0;
-  color: #03e9f4;
-  font-size: 12px;
-}
-*/

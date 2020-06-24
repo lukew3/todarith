@@ -37,7 +37,9 @@
           <p class="formLabel">Category(Optional)</p>
           <span id="category" class="mathquillField">{{ problem.topic.topicName }}</span>
         </div>
+        <button id='btn_flag' name="button">Flag</button>
         <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
+        <button id='btn_skip' name="button">Skip</button>
       </form>
     </div>
     <p id="foundStatus"></p>
@@ -46,7 +48,6 @@
 
   <script>
       function probSubmit() {
-        document.getElementsByClassName(formBox).style.height = 20%;
 
       }
   </script>
@@ -87,32 +88,55 @@
   <script type=text/javascript>
     var problemMathField, answerMathField, categoryMathField;
     var enteredProblem, enteredAnswer, enteredCategory;
+
     $(function() {
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/_get_answer_input', {
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_get_answer_input', {
           problem: problemMathField.latex(),
           answer: enteredAnswer,
           category: enteredCategory
         }, function(data) {
-          console.log("Done")
-          //makeMathFields();
-          //mathField.clearSelection();
-          //mathField.write(' - 1');
           problemMathField.select();
-          //problemMathField.clearSelection();
           problemMathField.write(data.problem);
           answerMathField.select();
-          //answerMathField.clearSelection();
           answerMathField.write(data.answer);
           categoryMathField.select();
-          //categoryMathField.clearSelection();
           categoryMathField.write(data.category);
+        });
+        return false;
+      });
+    });
 
-          //$("#problem").text(data.problem);
-          //$("#answer").text(data.answer);
-          //$("#category").text(data.category);
+    $(function() {
+      $('button#btn_flag').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_flag_problem', {
+          problem: problemMathField.latex()
+        }, function(data) {
+          problemMathField.select();
+          problemMathField.write(data.problem);
+          answerMathField.select();
+          answerMathField.write(data.answer);
+          categoryMathField.select();
+          categoryMathField.write(data.category);
+        });
+        return false;
+      });
+    });
 
+    $(function() {
+      $('button#btn_skip').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_skip_problem', {
+          problem: problemMathField.latex()
+        }, function(data) {
+          problemMathField.select();
+          problemMathField.write(data.problem);
+          answerMathField.select();
+          answerMathField.write(data.answer);
+          categoryMathField.select();
+          categoryMathField.write(data.category);
         });
         return false;
       });
