@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+
+{% endblock head %}
+
+{% block content %}
+
+  <div class="leftSideContainer">
+    <h1 class="leftSideHeadline">Test your skills!</h1>
+    <h3 class="leftSideDescription"> Here you can test your knowledge and try
+      some practice problems. If you would rather have a formal test online go
+      HERE. If you would rather have a paper test go HERE.</h3>
+  </div>
+
+  <div id="practiceGradientBox" class="rightSideGradientBox">
+    <div id="practiceSettings">
+      category
+      difficulty
+      timeperproblem
+    </div>
+    <div id="modeSelector">
+      <div id="cardSvg"></div>
+      <div id="tableSvg"></div>
+    </div>
+    <div>
+      <h2>Problem</h2>
+      <h2>ProblemContents</h2>
+      <h2>Answer</h2>
+      <span id="answer" class="mathquillField"></span>
+    </div>
+
+    <div id="practiceStatsBox">
+      <div>
+        <h3>Streak</h3>
+        <h3 id="streakValue">0</h3>
+      </div>
+      <div>
+        <h3>Score</h3>
+        <h3 id="scoreValue">0/0</h3>
+      </div>
+      <div>
+        <h3>Time</h3>
+        <h3 id="timeValue">0:00</h3>
+      </div>
+    </div>
+
+    <button id='btn_submit' type="submit" name="button">Submit</button>
+    <button id='btn_error' name="button">Report Error</button>
+
+
+  </div>
+
+  <script>
+    var answerSpan = document.getElementById('answer');
+    var answerMathField = MQ.MathField(answerSpan, {
+      handlers: {
+        edit: function() {
+          enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
+        }
+      }
+    });
+  </script>
+
+  <script type=text/javascript>
+    var enteredAnswer;
+    $(function() {
+      $('button#btn_submit').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/ask/_get_problem_input', {
+          problem: enteredProblem,
+          category: enteredCategory
+        }, function(data) {
+          $("#answer").text(data.answer);
+        });
+        return false;
+      });
+    });
+  </script>
+{% endblock content %}
