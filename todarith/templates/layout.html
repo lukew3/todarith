@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
         onload="renderMathInElement(document.body);"></script>
-        
+
   <link rel="stylesheet" href="{{ url_for('static', filename='mathquill/mathquill.css') }}"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="{{ url_for('static', filename='mathquill/mathquill.js') }}"></script>
@@ -34,7 +34,8 @@
       <li id="navElement"><a href="{{ url_for('moddb.ask') }}">Ask</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('moddb.answer') }}">Answer</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('moddb.add') }}">Add</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
+      <!--<li id="navElement"><a href="{{ url_for('moddb.browse') }}">Browse</a></li> &nbsp;-->
+      <li id="navElement"><a href="{{ url_for('learn.practice') }}">Practice</a></li> &nbsp;
       {% if current_user.is_authenticated %}
         <li id="navElement"><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
       {% else %}
@@ -92,12 +93,7 @@
       }
     }
   </script>
-  <script src="../static/mathlive/mathlive.js"></script>
-  <script type="module">
-    import MathLive from 'https://unpkg.com/mathlive/dist/mathlive.mjs';
-    MathLive.renderMathInDocument();
-    MathLive.makeMathField('mathfield');
-  </script>
+
 </body>
 
 </html>

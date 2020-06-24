@@ -2,7 +2,7 @@
 
 {% block head %}
 
-<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
+
 <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 
 {% endblock head %}

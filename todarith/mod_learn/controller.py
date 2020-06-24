@@ -22,7 +22,7 @@ def practice_get_problems():
 
 @learn.route('/practice/_get_answer_input')
 def practice_get_answer_input():
-    ans = reqiest.args.get('answer', "", type=str)
+    ans = request.args.get('answer', "", type=str)
     if current_user.is_authenticated:
         poster = current_user.id
     else:

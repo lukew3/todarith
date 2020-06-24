@@ -2,9 +2,10 @@
 
 {% block head %}
 
-<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
-
+<!--
+<script type=text/javascript src="{{ url_for('static', filename='scripts/learn_practice.js') }}"></script>
+-->
 {% endblock head %}
 
 {% block content %}
@@ -17,90 +18,128 @@
   </div>
 
   <div id="practiceGradientBox" class="rightSideGradientBox">
-    <div id="practiceSettings">
-      category
-      difficulty
-      timeperproblem
-    </div>
-    <div id="modeSelector">
-      <div id="cardSvg"></div>
-      <div id="tableSvg"></div>
-    </div>
-    <div>
-      <h2>Problem</h2>
-      <h2 id="practiceProblem">ProblemContents</h2>
-      <h2>Answer</h2>
-      <span id="answer" class="mathquillField"></span>
-    </div>
+    <div id="practiceContentContainer">
+      <div id="practiceSettings">
+        <div class="practiceSettingsSection">
+          <h3 class="pracSetsLabel">Category: </h3>
+          <h3 id="catValue" class="pracSetsValue">somethings</h3>
+        </div>
+        <div class="practiceSettingsSection">
+          <h3 class="pracSetsLabel">Difficulty: </h3>
+          <h3 id="diffValue" class="pracSetsValue">somethings</h3>
+        </div>
+        <div class="practiceSettingsSection">
+          <h3 class="pracSetsLabel">Time: </h3>
+          <h3 id="timeValue" class="pracSetsValue">somethings</h3>
+        </div>
+      </div>
+      <div id="modeSelector">
+        <svg id="cardSelected" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.72 38"><defs><style>.cls-1{fill:none;stroke:#fff;stroke-miterlimit:10;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" x="0.5" y="0.5" width="37" height="37" rx="5.99"/><line class="cls-1" x1="45.5" y1="0.5" x2="45.5" y2="37.5"/><path class="cls-1" d="M29.68,7.37,19.58,5.9a2.6,2.6,0,0,0-1.72.35c.85.51,3.05.11,3.95,1.11s.69,3.6.69,4.73V25.72c0,1.36.23,3.87-.44,5.35-.34.75-.7,1-1.84,1.2l5.7.83a2.64,2.64,0,0,0,3-2.23l3-20.5A2.64,2.64,0,0,0,29.68,7.37Z"/><path class="cls-1" d="M19.85,32.5H9.65A2.64,2.64,0,0,1,7,29.85V9.15A2.64,2.64,0,0,1,9.65,6.5h10.2A2.64,2.64,0,0,1,22.5,9.15v20.7A2.64,2.64,0,0,1,19.85,32.5Z"/><line class="cls-1" x1="55.65" y1="8.37" x2="77.72" y2="8.37"/><line class="cls-1" x1="55.65" y1="15.46" x2="77.19" y2="15.46"/><line class="cls-1" x1="55.65" y1="22.55" x2="77.19" y2="22.55"/><line class="cls-1" x1="55.47" y1="29.63" x2="77.19" y2="29.63"/><line class="cls-1" x1="55.96" y1="7.9" x2="55.96" y2="29.77"/><line class="cls-1" x1="63.16" y1="8.23" x2="63.16" y2="29.77"/><line class="cls-1" x1="77.19" y1="8.37" x2="77.19" y2="30.13"/></g></g></svg>
+      </div>
+      <div id="practiceMain">
+        <h2>Problem</h2>
+        <span id="practiceProblem" class="practiceMathField">ProblemContents</span>
+        <h2>Answer</h2>
+        <span id="answer" class="mathquillField practiceMathField"></span>
+      </div>
 
-    <div id="practiceStatsBox">
-      <div>
-        <h3>Streak</h3>
-        <h3 id="streakValue">$$2\cdot4$$</h3>
+      <div id="practiceStatsBox">
+        <div class="practiceStatsSection">
+          <h3 class="pracStatsLabel">Streak:</h3>
+          <h3 id="streakValue" class="pracStatsValue">0</h3>
+        </div>
+        <div class="practiceStatsSection">
+          <h3 class="pracStatsLabel">Score:</h3>
+          <h3 id="scoreValue" class="pracStatsValue">0/0</h3>
+        </div>
+        <div class="practiceStatsSection">
+          <h3 class="pracStatsLabel">Time:</h3>
+          <h3 id="timeValue" class="pracStatsValue">0:00</h3>
+        </div>
       </div>
-      <div>
-        <h3>Score</h3>
-        <h3 id="scoreValue">0/0</h3>
-      </div>
-      <div>
-        <h3>Time</h3>
-        <h3 id="timeValue">0:00</h3>
-      </div>
-    </div>
 
-    <button id='btn_submit' type="submit" name="button">Submit</button>
-    <button id='btn_error' name="button">Report Error</button>
+      <button id='btn_submit' type="submit" name="button" onclick="checkAnswer()">Submit</button>
+      <button id='btn_error' name="button">Report Error</button>
+      <p id="recap"></p>
+    </div>
 
   </div>
 
-  <script>
-    var answerSpan = document.getElementById('answer');
-    var answerMathField = MQ.MathField(answerSpan, {
-      handlers: {
-        edit: function() {
-          enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
-        }
+<script>
+
+  var answerSpan = document.getElementById('answer');
+  var answerMathField = MQ.MathField(answerSpan, {
+    handlers: {
+      edit: function() {
+        enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
       }
+    }
+  });
+
+  var problems
+  var selectedCategory = 1;
+  var selectedDifficulty = 1;
+  var selectedTime = 1;
+  var problemIndex = 0;
+  var score = 0;
+  var ansCount = 0;
+  var streak = 0;
+  var time = 0;
+  prob = document.getElementById('practiceProblem');
+
+  $( window ).on( "load", function() {
+    $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_problems', {
+      category: selectedCategory,
+      difficulty: selectedDifficulty,
+      time: selectedTime
+    }, function(data) {
+      problems = data.problems;
+      console.log(problems)
+      //$("#practiceProblem").text("$$"+ problems[problemIndex]["problem"] + "$$");
+      katex.render((problems[problemIndex]["problem"]), prob, {
+        throwOnError: false
+      });
     });
-  </script>
+    return false;
+  });
 
-  <script>
-    var problems
-    var selectedCategory = 1;
-    var selectedDifficulty = 1;
-    var selectedTime = 1;
-    var problemIndex = 0;
+  function checkAnswer() {
+    if (enteredAnswer==problems[problemIndex]["answer"]) {
+      score++;
+      streak++;
+      document.getElementById('recap').innerHTML = ("Correct")
+    } else {
+      streak = 0;
+      document.getElementById('recap').innerHTML = ("Incorrect, the answer to " + problems[problemIndex]["problem"] + " was " + problems[problemIndex]["answer"] + ". You answered: " + enteredAnswer);
+    }
+    ansCount++;
+    problemIndex++;
+    updateProbStats();
+  }
+  function updateProbStats() {
+    katex.render((problems[problemIndex]["problem"]), prob, {
+      throwOnError: false
+    });
+    answerMathField.select();
+    answerMathField.write("");
+    document.getElementById('streakValue').innerHTML = streak;
+    document.getElementById('scoreValue').innerHTML = (score+"/"+ansCount);
 
-    $( window ).on( "load", function() {
-      $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_problems', {
-        category: selectedCategory,
-        difficulty: selectedDifficulty,
-        time: selectedTime
+  }
+
+  /*
+  var enteredAnswer;
+  $(function() {
+    $('button#btn_submit').bind('click', function() {
+      console.log("activated")
+      $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_answer_input', {
+        answer: enteredAnswer
       }, function(data) {
-        problems = data.problems;
-        console.log(problems)
-        //$("#practiceProblem").text("$$"+ problems[problemIndex]["problem"] + "$$");
-        prob = document.getElementById('practiceProblem');
-        katex.render((problems[problemIndex]["problem"]), prob, {
-          throwOnError: false
-        });
-        problemIndex++;
+        $("#answer").text(data.answer);
       });
       return false;
     });
-
-
-    var enteredAnswer;
-    $(function() {
-      $('button#btn_submit').bind('click', function() {
-        console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_answer_input', {
-          answer: enteredAnswer
-        }, function(data) {
-          $("#answer").text(data.answer);
-        });
-        return false;
-      });
-    });
-  </script>
+  });
+  */
+</script>
 {% endblock content %}

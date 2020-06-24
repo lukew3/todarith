@@ -12,6 +12,9 @@ call with "var(--blue)" or similar
 
 /* || basics */
 
+* {
+  margin: 0;
+}
 body {
   background-color: #121d28;
   color: white;
@@ -323,4 +326,55 @@ nav ul li {
 /* || db/add page */
 #addGradientBox {
   background-image: linear-gradient(to top right, #0dd2b0, #be3ca7);
+}
+
+/* || learn/practice page */
+#modeSelector {
+  position: absolute;
+  right: 5%;
+  top: 0;
+  width: 20%;
+}
+
+#practiceGradientBox {
+  background-image: linear-gradient(to top right, #e2ca4a, #1aaad9);
+}
+
+#practiceContentContainer {
+  position: relative;
+  margin-left: 10%;
+  margin-top: 5%;
+}
+#practiceMain {
+  position: relative;
+  margin-top: 10%;
+  width: 80%;
+}
+#practiceProblem {
+  font-size: 1.5em;
+}
+.practiceMathField {
+  position: relative;
+  border-bottom: 2px solid white;
+  display: block;
+  width: 100%;
+}
+.pracStatsLabel {
+  display: inline-block;
+}
+.pracStatsValue {
+  display: inline-block;
+}
+.pracSetsLabel {
+  font-size: 1.5em;
+  display: inline-block;
+}
+.pracSetsValue {
+  font-size: 2em;
+  display: inline-block;
+}
+
+/* || db/browse page */
+#browseGradientBox {
+  background-image: linear-gradient(to top right, #1aaad9, #0dd2b0);
 }
