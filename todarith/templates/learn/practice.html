@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <button id='btn_submit' type="submit" name="button" onclick="checkAnswer()">Submit</button>
+      <button id='btn_submit' type="submit" name="button">Submit</button>
       <button id='btn_error' name="button">Report Error</button>
       <p id="recap"></p>
     </div>
@@ -76,11 +76,10 @@
     }
   });
 
-  var problems
+  var usedProbs = [];
   var selectedCategory = 1;
   var selectedDifficulty = 1;
   var selectedTime = 1;
-  var problemIndex = 0;
   var score = 0;
   var ansCount = 0;
   var streak = 0;
@@ -88,15 +87,15 @@
   prob = document.getElementById('practiceProblem');
 
   $( window ).on( "load", function() {
-    $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_problems', {
+    $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_problem', {
+      usedProbs: usedProbs,
       category: selectedCategory,
       difficulty: selectedDifficulty,
       time: selectedTime
     }, function(data) {
-      problems = data.problems;
-      console.log(problems)
-      //$("#practiceProblem").text("$$"+ problems[problemIndex]["problem"] + "$$");
-      katex.render((problems[problemIndex]["problem"]), prob, {
+      problem = data.problem;
+      console.log(problem)
+      katex.render((problem["problem"]), prob, {
         throwOnError: false
       });
     });
@@ -104,42 +103,43 @@
   });
 
   function checkAnswer() {
-    if (enteredAnswer==problems[problemIndex]["answer"]) {
+    if (enteredAnswer==problem["answer"]) {
       score++;
       streak++;
       document.getElementById('recap').innerHTML = ("Correct")
     } else {
       streak = 0;
-      document.getElementById('recap').innerHTML = ("Incorrect, the answer to " + problems[problemIndex]["problem"] + " was " + problems[problemIndex]["answer"] + ". You answered: " + enteredAnswer);
+      document.getElementById('recap').innerHTML = ("Incorrect, the answer to " + problem["problem"] + " was " + problem["answer"] + ". You answered: " + enteredAnswer);
     }
     ansCount++;
-    problemIndex++;
-    updateProbStats();
+    usedProbs.push(problem["id"]);
+    console.log(usedProbs)
   }
+
   function updateProbStats() {
-    katex.render((problems[problemIndex]["problem"]), prob, {
+    katex.render((problem["problem"]), prob, {
       throwOnError: false
     });
     answerMathField.select();
     answerMathField.write("");
     document.getElementById('streakValue').innerHTML = streak;
     document.getElementById('scoreValue').innerHTML = (score+"/"+ansCount);
-
   }
 
-  /*
-  var enteredAnswer;
   $(function() {
     $('button#btn_submit').bind('click', function() {
       console.log("activated")
-      $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_answer_input', {
-        answer: enteredAnswer
+      $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_problem', {
+        usedProbs: usedProbs,
       }, function(data) {
-        $("#answer").text(data.answer);
+        checkAnswer()
+        problem = data.problem;
+        updateProbStats();
       });
       return false;
     });
   });
-  */
+
+
 </script>
 {% endblock content %}
