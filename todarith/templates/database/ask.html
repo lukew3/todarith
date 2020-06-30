@@ -2,7 +2,6 @@
 
 {% block head %}
 
-<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 
 {% endblock head %}
@@ -23,10 +22,10 @@
           <p class="formLabel">Problem</p>
           <span id="problem" class="mathquillField"></span>
         </div>
-        <div class="formGroup">
+        <!--<div class="formGroup">
           <p class="formLabel">Category(Optional)</p>
           <span id="category" class="mathquillField"></span>
-        </div>
+        </div>-->
         <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
       </form>
     </div>
