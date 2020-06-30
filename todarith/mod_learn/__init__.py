@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-search = Blueprint('search', __name__)
+learn = Blueprint('learn', __name__)
 
 from . import controller

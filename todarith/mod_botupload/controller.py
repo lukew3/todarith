@@ -30,7 +30,7 @@ def generate():
                 answer=ans,
                 topic_id=1,
                 poster_id=1,
-                confirmedCorrect=None,
+                correctnessRating=1,
                 difficultyLevel=None,
                 expectedTime=None,
                 hasSolution=True

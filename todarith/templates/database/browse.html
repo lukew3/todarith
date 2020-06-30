@@ -1,6 +1,23 @@
 {% extends "layout.html" %}
+
+{% block head %}
+
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+<!--
+<script type=text/javascript src="{{ url_for('static', filename='scripts/learn_practice.js') }}"></script>
+-->
+{% endblock head %}
+
 {% block content %}
-  <h1>Explore</h1>
-  <p>Browse the database</p>
+
+  <div class="leftSideContainer">
+    <h1 class="leftSideHeadline">Browse Problems!</h1>
+    <h3 class="leftSideDescription"> Here you can browse the database and see all
+      that todarith has to offer.</h3>
+  </div>
+
+  <div id="browseGradientBox" class="rightSideGradientBox">
+    
+  </div>
 
 {% endblock content %}

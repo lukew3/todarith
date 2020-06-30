@@ -17,7 +17,7 @@ upload a large amount of problems at one time, consider
 uploading via spreadsheet (linked here).</h3>
 </div>
 
-  <div id="askGradientBox" class="rightSideGradientBox">
+  <div id="addGradientBox" class="rightSideGradientBox">
     <div class="formBox">
       <form>
         <div class="formGroup">
@@ -28,10 +28,10 @@ uploading via spreadsheet (linked here).</h3>
           <p class="formLabel">Answer</p>
           <span id="answer" class="mathquillField"></span>
         </div>
-        <div class="formGroup">
-          <p class="formLabel">Category</p>
+        <!--<div class="formGroup">
+          <p class="formLabel">Category(Optional)</p>
           <span id="category" class="mathquillField"></span>
-        </div>
+        </div>-->
         <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
       </form>
     </div>
@@ -75,7 +75,7 @@ uploading via spreadsheet (linked here).</h3>
     $(function() {
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/_get_problem_input', {
+        $.getJSON($SCRIPT_ROOT + '/db/add/_get_problem_input', {
           problem: enteredProblem,
           answer: enteredAnswer,
           category: enteredCategory

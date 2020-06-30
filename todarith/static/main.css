@@ -12,6 +12,9 @@ call with "var(--blue)" or similar
 
 /* || basics */
 
+* {
+  margin: 0;
+}
 body {
   background-color: #121d28;
   color: white;
@@ -28,6 +31,12 @@ a {
 /* || Navbar formatting */
 
 nav {
+  background-color: rgba(18,29,40,0.5);
+  margin: none;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 99;
   width: 100%;
   overflow: hidden;
 }
@@ -71,19 +80,19 @@ nav ul li {
 }
 
 @media screen and (max-width: 1400px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {position: fixed;}
   .topnav.responsive ul li .icon {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 6;
+    top: 6;
   }
   .topnav.responsive ul li a {
     float: none;
-    display: inline-block;
+    display: block;
     text-align: left;
   }
   .topnav.responsive ul {
-    background-color: grey;
+    background-color: rgba(18,29,40,0.5);
   }
 
 }
@@ -184,7 +193,7 @@ nav ul li {
   fill: #0dd2b0;
   position: absolute;
   height: 15%;
-  top: 20%;
+  top: 15%;
   right: 5%;
 }
 #multiplySVG {
@@ -246,7 +255,7 @@ nav ul li {
   background-color: grey;
   height: 80vh;
   width: 40vw;
-  top: 10vh;
+  top: 12vh;
   right: 5vw;
 }
 
@@ -309,50 +318,63 @@ nav ul li {
   margin: 2%;
 }
 
-/* || Answer page */
+/* || db/Answer page */
 #answerGradientBox {
   background-image: linear-gradient(to top right, #ea7424, #1aaad9);
 }
-/*
-.formBox .form-group {
-  position: relative;
+
+/* || db/add page */
+#addGradientBox {
+  background-image: linear-gradient(to top right, #0dd2b0, #be3ca7);
 }
 
-.formBox .form-group .form-control {
-  width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #fff;
-  outline: none;
-  background: transparent;
-}
-.formBox .form-group .form-control-label {
+/* || learn/practice page */
+#modeSelector {
   position: absolute;
-  top:0;
-  left: 0;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  pointer-events: none;
-  transition: .5s;
+  right: 5%;
+  top: 0;
+  width: 20%;
 }
 
-input:focus ~ label,
-input:valid ~ label {
-  top: -30px;
-  left: 0;
-  color: #03e9f4;
-  font-size: 12px;
+#practiceGradientBox {
+  background-image: linear-gradient(to top right, #e2ca4a, #1aaad9);
 }
-/*
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label {
-  top: -20px;
-  left: 0;
-  color: #03e9f4;
-  font-size: 12px;
+
+#practiceContentContainer {
+  position: relative;
+  margin-left: 10%;
+  margin-top: 5%;
 }
-*/
+#practiceMain {
+  position: relative;
+  margin-top: 10%;
+  width: 80%;
+}
+#practiceProblem {
+  font-size: 1.5em;
+}
+.practiceMathField {
+  position: relative;
+  border-bottom: 2px solid white;
+  display: block;
+  width: 100%;
+}
+.pracStatsLabel {
+  display: inline-block;
+}
+.pracStatsValue {
+  display: inline-block;
+}
+.pracSetsLabel {
+  font-size: 1.5em;
+  display: inline-block;
+}
+.pracSetsValue {
+  font-size: 2em;
+  display: inline-block;
+}
+
+/* || db/browse page */
+#browseGradientBox {
+  background-image: linear-gradient(to top right, #1aaad9, #0dd2b0);
+}
