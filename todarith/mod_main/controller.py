@@ -4,7 +4,7 @@ from flask import (
 #from flask import Blueprint, request, render_template
 from todarith import db
 #from todarith.mod_auth.forms import LoginForm
-from todarith.models import Problem, Topic, User
+from todarith.models import Problem, Skill, User
 from todarith.mod_main import main
 
 

@@ -2,11 +2,11 @@ from flask import (
     current_app, request, redirect, url_for, render_template, flash, abort,
 )
 from todarith import db
-from todarith.models import Problem, Topic
+from todarith.models import Problem, Skill
 from todarith.mod_botupload import botupload
 from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
-from todarith.models import User, Problem, Topic
+from todarith.models import User, Problem, Skill
 from todarithgen import generator
 from todarith.mod_botupload.postProc import checkAll, checkTopicExists
 
@@ -28,7 +28,6 @@ def generate():
             Problem.create(
                 question=prob,
                 answer=ans,
-                topic_id=1,
                 poster_id=1,
                 correctnessRating=1,
                 difficultyLevel=None,

@@ -1,5 +1,5 @@
 #This file includes functions that check the validity of a problem
-from todarith.models import Problem, Topic
+from todarith.models import Problem, Skill
 
 def checkAll(prob, ans):
     if checkEq(prob, ans) and checkRep(prob, ans):

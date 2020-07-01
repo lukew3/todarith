@@ -1,6 +1,6 @@
 from flask import request, render_template, redirect, url_for, jsonify
 from todarith.database import db
-from todarith.models import User, Problem, Topic
+from todarith.models import User, Problem, Skill
 from todarith.mod_post.forms import QuestionForm, TopicForm
 from todarith.mod_post import post
 from flask_login import current_user, login_required

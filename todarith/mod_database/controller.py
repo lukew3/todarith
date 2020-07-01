@@ -2,7 +2,7 @@ from flask import request, render_template, redirect, url_for, jsonify
 #from flask import Blueprint, request, render_template
 from todarith import db
 #from todarith.mod_auth.forms import LoginForm
-from todarith.models import Problem, Topic, User
+from todarith.models import Problem, Skill, User
 from todarith.mod_database.forms import AskForm
 from flask_login import current_user, login_required
 from todarith.mod_database import moddb
@@ -37,7 +37,6 @@ def ask_get_problem_input():
         Problem.create(
             question=prob,
             answer="unsolved",
-            topic_id=1,
             poster_id=poster,
             correctnessRating=0,
             difficultyLevel=None,

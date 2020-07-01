@@ -1,6 +1,6 @@
 from flask import request, render_template, redirect, url_for, jsonify
 from todarith import db
-from todarith.models import Problem, Topic, User
+from todarith.models import Problem, Skill, User
 from flask_login import current_user, login_required
 from todarith.mod_learn import learn
 from random import random
