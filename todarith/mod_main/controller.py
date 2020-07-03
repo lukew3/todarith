@@ -36,6 +36,8 @@ def topicBrowser(topic_id):
 
 @main.route('/sitemap')
 def siteMap():
+    prob=Problem.query.filter_by(id=2300).first()
+    print(prob.skills)
     return render_template('main/sitemap.html')
 
 @main.route('/topic/<int:topicId>')

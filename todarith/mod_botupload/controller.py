@@ -2,7 +2,7 @@ from flask import (
     current_app, request, redirect, url_for, render_template, flash, abort,
 )
 from todarith import db
-from todarith.models import Problem, Skill
+from todarith.models import Problem, Skill, User
 from todarith.mod_botupload import botupload
 from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
@@ -25,6 +25,7 @@ def generate():
             ans=tup[1]
         if (checkAll(prob, ans)==True):
             uploaded_count += 1
+            myskill=Skill.query.filter_by(id=1).first()
             Problem.create(
                 question=prob,
                 answer=ans,
@@ -34,6 +35,8 @@ def generate():
                 expectedTime=None,
                 hasSolution=True
             )
+            thisProb = Problem.query.filter_by(question=prob).first()
+            thisProb.skills.append(myskill)
             uploadedList.append(tup)
         else:
             duplicate_count += 1

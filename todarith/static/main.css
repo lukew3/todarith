@@ -375,6 +375,25 @@ nav ul li {
 }
 
 /* || db/browse page */
-#browseGradientBox {
-  background-image: linear-gradient(to top right, #1aaad9, #0dd2b0);
+#browseCont {
+  position: fixed;
+  height: 90%;
+  width: 90%;
+  top: 10%;
+  left: 5%;
+  background-color: grey;
+}
+
+#paramCont {
+  height: 10%;
+  width: 90%;
+  top: 5%;
+  background-color: darkgrey;
+}
+
+#browseProbCont {
+  position: relative;
+  height: auto;
+  width: 90%;
+  top: 5%;
 }

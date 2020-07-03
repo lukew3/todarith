@@ -36,7 +36,8 @@ class Skill(CRUDMixin, db.Model):
         back_populates="skills")
 
     def __repr__(self):
-        return f"Problem('{self.id}', '{self.skillName}')"
+        return f"Skill('{self.id}', '{self.skillName}')"
+        #return f"Problem('{self.id}', '{self.skillName}', '{self.problems}')"
 
 clistproblems = db.Table('clistproblems',
     db.Column('problem_id', db.Integer, db.ForeignKey('problem.id'), primary_key=True),
@@ -64,7 +65,8 @@ class Problem(CRUDMixin, db.Model):
         "Skill",
         secondary=skillproblems,
         back_populates="problems")
-    #otherTags = db.Column(db.String(1000), nullable=True)
+    #source = db.Column(db.String(1000), nullable=True)
+    #explanation = db.Column(db.String(10000), nullable=True)
 
     def __repr__(self):
         return f"Problem('{self.question}', '{self.answer}')"

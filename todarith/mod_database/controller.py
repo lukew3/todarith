@@ -9,10 +9,17 @@ from todarith.mod_database import moddb
 from todarith.mod_database.functions import getDBAnswer
 from random import random
 
+from sqlalchemy import func
+
+
 # Set the route and accepted methods
-@moddb.route('/')
+@moddb.route('/', methods=['GET'])
 def browse():
-    return(render_template("database/browse.html"))
+    #stmt = Problem.query.filter_by(type="apples").order_by(func.random())
+    stmt = Problem.query.filter_by().order_by(func.random())
+    data = stmt.all() # execute the query
+    print(data)
+    return(render_template("database/browse.html", problems=data))
 
 
 
@@ -74,8 +81,6 @@ def add_get_problem_input():
             hasSolution=True
         )
         return jsonify(result="Problem " + prob + " added")
-
-
 
 
 @moddb.route('/answer', methods=['GET', 'POST'])
