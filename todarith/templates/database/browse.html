@@ -10,17 +10,6 @@
 
 {% block content %}
 
-  <!--
-  <div class="leftSideContainer">
-    <h1 class="leftSideHeadline">Browse Problems!</h1>
-    <h3 class="leftSideDescription"> Here you can browse the database and see all
-      that todarith has to offer.</h3>
-  </div>
-
-  <div id="browseGradientBox" class="rightSideGradientBox">
-
-  </div>
-  -->
   <div id="browseCont">
     <div id="paramCont">
 
@@ -31,15 +20,28 @@
         <a href="{{ url_for('post.viewProblem', problem_id=problem.id) }}">$${{ problem.question }}$$</a>
         {% for skill in problem.skills %}
         <div class="skillbox">
-          <a href="#">{{ skill.skillName }}</a>/div>
+          <a href="#">{{ skill.skillName }}</a>
         </div>
         {% endfor %}
-        <a href="{{ url_for('main.viewUser', user_id=problem.poster.id) }}">{{ problem.poster.username }}</a>
+        <a href="{{ url_for('main.viewUser', userId=problem.poster.id) }}">{{ problem.poster.username }}</a>
         <p>{{ problem.difficultyLevel }}</p>
         <p>{{ problem.expectedTime }}</p>
       </div>
       {% endfor %}
     </div>
+  </div>
+  <div id="pageNav">
+  {% for page_num in problems.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if problems.page == page_num %}
+        <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('moddb.browse', page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
   </div>
 
 {% endblock content %}

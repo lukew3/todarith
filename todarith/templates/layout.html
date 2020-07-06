@@ -34,6 +34,7 @@
       <li id="navElement"><a href="{{ url_for('moddb.ask') }}">Ask</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('moddb.answer') }}">Answer</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('moddb.add') }}">Add</a></li> &nbsp;
+            <li id="navElement"><a href="{{ url_for('moddb.browse') }}">Browse</a></li> &nbsp;
       <!--<li id="navElement"><a href="{{ url_for('moddb.browse') }}">Browse</a></li> &nbsp;-->
       <li id="navElement"><a href="{{ url_for('learn.practice') }}">Practice</a></li> &nbsp;
       {% if current_user.is_authenticated %}
@@ -54,10 +55,12 @@
   {% block content %}
   {% endblock %}
 
-  <!--
-  <footer id="footer">
-    This is the footer
+
+  <footer>
+
     <div id="footer_Info">
+      <h1 id="footer_siteTitle">Todarith</h1>
+      <h2 id="footer_copyright">Copyright 2020</h2>
     </div>
     <div id="footer_Sitemap">
       <div id="footer_About" class="footer_Section">
@@ -68,7 +71,11 @@
       <div id="footer_Database" class="footer_Section">
         <h2 class="footerSubtitle">Database</h2>
         <hr>
-        <h3 class="footerSec_Link"><a href="#">Something</a></h3>
+        <h3 class="footerSec_Link"><a href="{{ url_for('main.siteMap') }}">Sitemap</a></h3>
+        <h3 class="footerSec_Link"><a href="{{ url_for('moddb.ask') }}">Ask</a></h3>
+        <h3 class="footerSec_Link"><a href="{{ url_for('moddb.answer') }}">Answer</a></h3>
+        <h3 class="footerSec_Link"><a href="{{ url_for('moddb.add') }}">Add</a></h3>
+        <h3 class="footerSec_Link"><a href="{{ url_for('moddb.browse') }}">Browse</a></h3>
       </div>
       <div id="footer_Generate" class="footer_Section">
         <h2 class="footerSubtitle">Generate</h2>
@@ -82,7 +89,7 @@
       </div>
     </div>
   </footer>
--->
+
   <script>
     function navHamburger() {
       var x = document.getElementById("myTopnav");

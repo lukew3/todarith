@@ -134,11 +134,11 @@ nav ul li {
 /* || landing page layout */
 
 #landingInformationGrid {
-  position: absolute;
-  top: 92%;
+  margin-top: 50%;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 33% 33% 33%;
+  padding-bottom: 10%;
 }
 
 .landingSemisection {
@@ -182,46 +182,44 @@ nav ul li {
 
 .landingSvg {
   position: absolute;
-  height: 40%;
+  height: 40vh;
 }
 #plusSVG {
   fill: #ea7424;
-  top: 20%;
-  left:-10%;
+  top: 20vh;
+  left: -5vw;
 }
 #minusSVG {
+  height: 15vh;
   fill: #0dd2b0;
-  position: absolute;
-  height: 15%;
-  top: 15%;
-  right: 5%;
+  top: 20vh;
+  right: 0vw;
 }
 #multiplySVG {
   fill:#1aaad9;
-  top: 70%;
-  left: 20%;
+  top: 80%;
+  left: 15%;
 }
 #divideSVG {
   fill:#be3ca7;
   top: 55%;
-  right: 10%;
+  right: 15%;
 }
 #piSVG {
+  height: 20vh;
   fill:#ea7424;
-  height: 20%;
-  top: 120%;
-  left: 0%;
+  top: 125%;
+  left: 30%;
 }
 #sumSVG {
   fill:#0dd2b0;
-  height: 40%;
-  top: 130%;
-  right: 10%;
+  top: 150vh;
+  right: 10vw;
 }
 #deltaSVG {
   fill:#1aaad9;
-  height: 30%;
-  top: 170%;
+  height: 30vh;
+  top: 200%;
   left: 30%;
 }
 
@@ -231,13 +229,47 @@ nav ul li {
   }
 }
 
+/* ||  */
+footer {
+  background-color: orange;
+  height: 25vh;
+}
+#footer_Info {
+  position: relative;
+  height: 100%;
+  width: 33vw;
+}
+#footer_Sitemap {
+  position: relative;
+  display: grid;
+  margin-left: 33vw;
+  margin-top: -25vh;
+  height: 100%;
+  width: 66%;
+}
+.footer_Section {
+
+}
+#footer_About {
+  grid-column: 1;
+}
+#footer_Database {
+  grid-column: 2;
+}
+#footer_Generate {
+  grid-column: 3;
+}
+#footer_Learn {
+  grid-column: 4;
+}
 /* ||  Gradient box and description format*/
 .leftSideContainer {
-  position: absolute;
+  position: relative;
   height: 50vh;
   width: 40vw;
   top: 25vh;
   left: 5vw;
+  margin-bottom: 25%;
 }
 
 .leftSideHeadline {
@@ -250,6 +282,7 @@ nav ul li {
   margin: 0;
 }
 .rightSideGradientBox {
+  position: relative;
   border-radius: 15px;
   position: absolute;
   background-color: grey;
@@ -376,24 +409,41 @@ nav ul li {
 
 /* || db/browse page */
 #browseCont {
-  position: fixed;
   height: 90%;
   width: 90%;
   top: 10%;
-  left: 5%;
-  background-color: grey;
+  margin-left: 5%;
+  margin-top: 5%;
+
 }
 
 #paramCont {
+  position: relative;
+  display: block;
   height: 10%;
-  width: 90%;
-  top: 5%;
-  background-color: darkgrey;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 100%;
+  background-color: orange;
 }
 
 #browseProbCont {
   position: relative;
-  height: auto;
-  width: 90%;
-  top: 5%;
+  display: block;
+  top: 0%;
+  min-height: 100%;
+  background-color: green;
+  width: 100%;
+}
+
+.probCont {
+  position: relative;
+  background-color: red;
+  width: 100%;
+  height: 10vh;
+}
+
+#pageNav {
+  margin-top: 5%;
+  margin-left: 45%;
 }

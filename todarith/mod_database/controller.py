@@ -15,11 +15,9 @@ from sqlalchemy import func
 # Set the route and accepted methods
 @moddb.route('/', methods=['GET'])
 def browse():
-    #stmt = Problem.query.filter_by(type="apples").order_by(func.random())
-    stmt = Problem.query.filter_by().order_by(func.random())
-    data = stmt.all() # execute the query
-    print(data)
-    return(render_template("database/browse.html", problems=data))
+    page = request.args.get('page', 1, type=int)
+    problems = Problem.query.filter_by().paginate(page=page, per_page=50)
+    return(render_template("database/browse.html", problems=problems))
 
 
 
@@ -102,7 +100,7 @@ def getUnsolvedProb():
         nextProblem = unsolved[randIndex]
     else:
         return render_template('database/ask.html')
-    return jsonify(problem=nextProblem.question, answer="", category=nextProblem.topic.topicName)
+    return jsonify(problem=nextProblem.question, answer="")
 
 @moddb.route('/answer/_get_answer_input')
 def get_answer_input():
