@@ -11,6 +11,15 @@ from todarith.mod_main import main
 # Set the route and accepted methods
 @main.route('/')
 def landing():
+    """
+    myprob = Problem.query.filter_by(id=3).first()
+    myskill = Skill.query.filter_by(id=2).first()
+    if myskill not in myprob.skills:
+        myprob.skills.append(myskill)
+    #myprob.skills.remove(myskill)
+    print(myprob.skills)
+    db.session.commit()
+    """
     return(render_template("main/landing.html"))
 
 @main.route('/explore')
@@ -36,8 +45,8 @@ def topicBrowser(topic_id):
 
 @main.route('/sitemap')
 def siteMap():
-    prob=Problem.query.filter_by(id=2300).first()
-    print(prob.skills)
+    #prob=Problem.query.filter_by(id=2300).first()
+    #print(prob.skills)
     return render_template('main/sitemap.html')
 
 @main.route('/topic/<int:topicId>')

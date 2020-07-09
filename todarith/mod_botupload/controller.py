@@ -38,6 +38,7 @@ def generate():
             thisProb = Problem.query.filter_by(question=prob).first()
             thisProb.skills.append(myskill)
             uploadedList.append(tup)
+            db.session.commit()
         else:
             duplicate_count += 1
             duplicateList.append(tup)

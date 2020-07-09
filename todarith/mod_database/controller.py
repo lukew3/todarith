@@ -13,12 +13,34 @@ from sqlalchemy import func
 
 
 # Set the route and accepted methods
-@moddb.route('/', methods=['GET'])
-def browse():
+@moddb.route('/', methods=['GET', 'POST'])
+@moddb.route('/<string:getSkills>', methods=['GET'])
+def browse(getSkills='1'):
+    skills = getSkills.split('&')
+    giveSkills = []
+    for skill in skills:
+        giveSkills.append(Skill.query.filter_by(id=skill).first())
+    #giveSkills=Skill.query.filter_by(id=getSkills).all()
     page = request.args.get('page', 1, type=int)
     problems = Problem.query.filter_by().paginate(page=page, per_page=50)
-    return(render_template("database/browse.html", problems=problems))
+    return render_template("database/browse.html", problems=problems, skills=giveSkills)
 
+
+@moddb.route('/_get_skill_query', methods=['GET', 'POST'])
+def browse_get_skill_query():
+    print("Yes")
+    query = request.args.get('query', "", type=str)
+    allSkills = Skill.query.filter(Skill.skillName.ilike('%'+query+'%')).all()
+    returnSkill = Skill.query.filter(Skill.skillName.ilike('%'+query+'%')).first()
+    returnSkills = []
+    try:
+        for i in range(1,5):
+            returnSkills.append(allSkills[i])
+    except:
+        returnSkills = allSkills
+    #return jsonify(problems=[{'problem': problem.question, 'answer': problem.answer,} for problem in problems])
+    return jsonify(returnSkill={'name': returnSkill.skillName, 'id': returnSkill.id})
+    #return jsonify(returnSkills=[{'id': skill.id, 'name': skill.skillName,} for skill in returnSkills])
 
 
 @moddb.route('/ask', methods=['GET', 'POST'])
