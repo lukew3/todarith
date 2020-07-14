@@ -27,7 +27,7 @@
   <div id="browseCont">
 
     <div id="browseProbCont">
-      {% for problem in problems.items %}
+      {% for problem in problems %}
       <div class="probCont">
         <div class="questionCont">
           <a id="browse_prob" href="{{ url_for('post.viewProblem', problem_id=problem.id) }}">$${{ problem.question }}$$</a>
@@ -48,17 +48,11 @@
     </div>
   </div>
   <div id="pageNav">
-  {% for page_num in problems.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-    {% if page_num %}
-      {% if problems.page == page_num %}
-        <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=page_num) }}">{{ page_num }}</a>
-      {% else %}
-        <a class="btn btn-outline-info mb-4" href="{{ url_for('moddb.browse', page=page_num) }}">{{ page_num }}</a>
-      {% endif %}
-    {% else %}
-      ...
-    {% endif %}
-  {% endfor %}
+    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=1) }}"><<</a>
+    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=page-1) }}"><</a>
+    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=page) }}">{{ page }}</a>
+    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=page+1) }}">></a>
+    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=lastPage) }}">>></a>
   </div>
   <div id="addSkillPage">
     <div id="addSkillForm">
@@ -70,6 +64,7 @@
       <button id="browse_addSkillBtn" onclick="addSkill()">Add</button>
     </div>
   </div>
+
   <script>
     selectedSkillId=0;
 

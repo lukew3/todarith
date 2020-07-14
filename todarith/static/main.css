@@ -552,3 +552,8 @@ footer {
   bottom: 0;
   right: 0
 }
+#browse_queryResult {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+}

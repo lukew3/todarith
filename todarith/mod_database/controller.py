@@ -12,23 +12,53 @@ from random import random
 from sqlalchemy import func
 
 
+from sqlalchemy.orm import sessionmaker
+Session = sessionmaker()
+session = Session()
+
 # Set the route and accepted methods
 @moddb.route('/', methods=['GET', 'POST'])
 @moddb.route('/<string:getSkills>', methods=['GET'])
 def browse(getSkills='1'):
-    skills = getSkills.split('&')
-    giveSkills = []
-    for skill in skills:
-        giveSkills.append(Skill.query.filter_by(id=skill).first())
-    #giveSkills=Skill.query.filter_by(id=getSkills).all()
-    page = request.args.get('page', 1, type=int)
-    problems = Problem.query.filter_by().paginate(page=page, per_page=50)
-    return render_template("database/browse.html", problems=problems, skills=giveSkills)
+    skillIds = getSkills.split('&')
+    skills = []
+    for skill in skillIds:
+        skills.append(Skill.query.filter_by(id=skill).first())
+    print(skills)
 
+    if len(skills)==1:
+        allProbs = skills[0].problems
+    else:
+        allProbs = []
+        for skill in skills:
+            problems = skill.problems
+            for prob in problems:
+                #should be an exception somewhere here that stops from searching all problems in math skill
+                fits = True
+                for skill in skills:
+                    if skill not in prob.skills:
+                        fits = False
+
+                if (fits==True) and (prob not in allProbs):
+                    allProbs.append(prob)
+
+        #allProbs = list(dict.fromkeys(allProbs)) #remove duplicates
+    print(allProbs)
+
+    page = request.args.get('page', 1, type=int)
+    per_page=50
+    problems = paginate(allProbs, page, per_page)
+    lastPage= int(len(allProbs)/per_page)
+    return render_template("database/browse.html", problems=problems, skills=skills, page=page, lastPage=lastPage)
+
+def paginate(list, page, per_page):
+    start = (page-1)*per_page
+    end = start+per_page
+    problems = list[start:end]
+    return problems
 
 @moddb.route('/_get_skill_query', methods=['GET', 'POST'])
 def browse_get_skill_query():
-    print("Yes")
     query = request.args.get('query', "", type=str)
     allSkills = Skill.query.filter(Skill.skillName.ilike('%'+query+'%')).all()
     returnSkill = Skill.query.filter(Skill.skillName.ilike('%'+query+'%')).first()
