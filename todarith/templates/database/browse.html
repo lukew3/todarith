@@ -34,7 +34,7 @@
         </div>
         {% for skill in problem.skills %}
         <div class="skillBox">
-          <a href="#">{{ skill.skillName }}</a>
+          <!--<a href="#">{{ skill.skillName }}</a>-->
         </div>
         {% endfor %}
         <a class="browse_author" href="{{ url_for('main.viewUser', userId=problem.poster.id) }}">{{ problem.poster.username }}</a>
@@ -48,11 +48,11 @@
     </div>
   </div>
   <div id="pageNav">
-    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=1) }}"><<</a>
-    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=page-1) }}"><</a>
-    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=page) }}">{{ page }}</a>
-    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=page+1) }}">></a>
-    <a class="btn btn-info mb-4" href="{{ url_for('moddb.browse', page=lastPage) }}">>></a>
+    <a class="btn btn-info mb-4" onclick="firstPage()" href="javascript:void(0);"><<</a>
+    <a class="btn btn-info mb-4" onclick="previousPage()" href="javascript:void(0);"><</a>
+    <a class="btn btn-info mb-4" href="">{{ page }}</a>
+    <a class="btn btn-info mb-4" onclick="nextPage()" href="javascript:void(0);">></a>
+    <a class="btn btn-info mb-4" onclick="lastPage()" href="javascript:void(0);">>></a>
   </div>
   <div id="addSkillPage">
     <div id="addSkillForm">
@@ -67,7 +67,11 @@
 
   <script>
     selectedSkillId=0;
-
+    page = {{ page }}
+    lastPageNum = {{ lastPage }}
+    if (page == undefined) {
+      page = 1;
+    }
     function removeSkill(skillID) {
         oldURL = (window.location.pathname).substring(4)
         newURL = oldURL.replace("&"+skillID.toString()+"&", '');
@@ -107,15 +111,35 @@
       $.getJSON($SCRIPT_ROOT + '/db/_get_skill_query', {
         query: query,
       }, function(data) {
-        //console.log(data.returnSkills);
-        //queryResults = data.returnSkills;
-        console.log(data.returnSkill);
-        queryResult = data.returnSkill;
-          document.getElementById('browse_queryResult').innerHTML = (queryResult.name)
-          selectedSkillId = queryResult.id;
+        console.log(data.returnSkills);
+        queryResults = data.returnSkills;
+          document.getElementById('browse_queryResult').innerHTML = (queryResults[0].name)
+          selectedSkillId = queryResults[0].id;
           console.log(selectedSkillId)
       });
 
+    }
+    function firstPage() {
+      oldURL = window.location.href;
+      newURL = oldURL.split("?")[0] + "?page=" + 1;
+      window.location.href = newURL;
+    }
+    function previousPage() {
+      oldURL = window.location.href;
+      if (page != 1) {
+        window.location.href = oldURL.split("?")[0] + "?page=" + (page-1);
+      }
+    }
+    function nextPage() {
+      oldURL = window.location.href;
+      if (page != lastPageNum) {
+        window.location.href = oldURL.split("?")[0] + "?page=" + (parseInt(page)+1);
+      }
+    }
+    function lastPage() {
+      oldURL = window.location.href;
+      newURL = oldURL.split("?")[0] + "?page=" + lastPageNum;
+      window.location.href = newURL;
     }
 
   </script>

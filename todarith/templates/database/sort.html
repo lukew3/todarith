@@ -1,5 +1,114 @@
 {% extends "layout.html" %}
+
+{% block head %}
+
+
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+
+{% endblock head %}
+
 {% block content %}
-  <h1>Edit Post</h1>
-  <p>This page is for editing posts</p>
+
+  <div class="leftSideContainer">
+    <h1 class="leftSideHeadline">Help Sort Problems</h1>
+    <h3 class="leftSideDescription">On this page you can add skills to problems
+    so that other people can find problems easily</h3>
+  </div>
+
+  <div id="sortGradientBox" class="rightSideGradientBox">
+    <p class="formLabel">Problem</p>
+    <p>{{ problem.question }}</p>
+
+    <p class="formLabel">Answer</p>
+    <p>{{ problem.answer }}</p>
+
+    <p>Skills:</p>
+    <div id="sortProbSkills">
+      {% for skill in problem.skills %}
+        <div id="skillCard_{{ skill.id }}" class="browse_skillCard">
+          <a id="browse_SkillName" href="{{ url_for('moddb.browse', getSkills=skill.id ) }}">{{ skill.skillName }}</a>
+          <svg class="sortSkillButton" onclick="removeSkill({{ skill.id }})" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"/></svg>
+        </div>
+      {% endfor %}
+    </div>
+    <input type="text" id="sort_addSkillQuery" oninput="queryEdited()" placeholder="Search For A Skill"></input>
+    <button id='btn_add' onclick="addSkill()">Add</button>
+    <button id='btn_add' onclick="addSkill()">Create New Skill</button>
+    <div id="sort_skillList">
+      <h1 id="sort_queryResult"></h1>
+    </div>
+
+    <div id="sortButtons">
+      <button id='btn_flag' name="button">Flag</button>
+      <button id='btn_submit' type="submit" name="button">Submit</button>
+      <button id='btn_skip' name="button">Skip</button>
+    </div>
+  </div>
+
+
+  <script type=text/javascript>
+    var selectedSkillId = 0;
+    $(function() {
+      $('button#btn_submit').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_get_answer_input', {
+          //nothing yet
+        }, function(data) {
+          //nothing yet
+        });
+        return false;
+      });
+    });
+
+    $(function() {
+      $('button#btn_flag').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_flag_problem', {
+          //nada
+        }, function(data) {
+          //nope
+        });
+        return false;
+      });
+    });
+
+    $(function() {
+      $('button#btn_skip').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_skip_problem', {
+          //zip
+        }, function(data) {
+          //zada
+        });
+        return false;
+      });
+    });
+
+    function removeSkill() {
+    }
+
+    function addSkill() {
+      console.log(selectedSkillId + " added")
+      $.getJSON($SCRIPT_ROOT + '/db/_add_skill', {
+        probId: probId,
+        skillId: skillId,
+      }, function(data) {
+
+      });
+    }
+    function queryEdited() {
+      const queryBox = document.querySelector('#sort_addSkillQuery');
+      console.log("Query is: " + queryBox.value)
+      query = queryBox.value
+      $.getJSON($SCRIPT_ROOT + '/db/_get_skill_query', {
+        query: query,
+      }, function(data) {
+        console.log(data.returnSkills);
+        queryResults = data.returnSkills;
+          document.getElementById('sort_queryResult').innerHTML = (queryResults[0].name)
+          selectedSkillId = queryResults[0].id;
+          console.log(selectedSkillId)
+      });
+    }
+  </script>
 {% endblock content %}

@@ -63,14 +63,14 @@ def browse_get_skill_query():
     allSkills = Skill.query.filter(Skill.skillName.ilike('%'+query+'%')).all()
     returnSkill = Skill.query.filter(Skill.skillName.ilike('%'+query+'%')).first()
     returnSkills = []
-    try:
-        for i in range(1,5):
+    if len(allSkills) > 3:
+        for i in range(1,3):
             returnSkills.append(allSkills[i])
-    except:
-        returnSkills = allSkills
+    else:
+        returnSkills=allSkills
     #return jsonify(problems=[{'problem': problem.question, 'answer': problem.answer,} for problem in problems])
-    return jsonify(returnSkill={'name': returnSkill.skillName, 'id': returnSkill.id})
-    #return jsonify(returnSkills=[{'id': skill.id, 'name': skill.skillName,} for skill in returnSkills])
+    #return jsonify(returnSkill={'name': returnSkill.skillName, 'id': returnSkill.id})
+    return jsonify(returnSkills=[{'id': skill.id, 'name': skill.skillName,} for skill in returnSkills])
 
 
 @moddb.route('/ask', methods=['GET', 'POST'])
@@ -141,7 +141,7 @@ def answer():
         print(randIndex)
         problem = unsolved[randIndex]
     else:
-        return render_template('database/ask.html')
+        return render_template('database/noanswer.html')
     return render_template('database/answer.html', problem=problem)
 
 def getUnsolvedProb():
@@ -151,7 +151,7 @@ def getUnsolvedProb():
         print(randIndex)
         nextProblem = unsolved[randIndex]
     else:
-        return render_template('database/ask.html')
+        return redirect(url_for('moddb.answer'))
     return jsonify(problem=nextProblem.question, answer="")
 
 @moddb.route('/answer/_get_answer_input')
@@ -186,3 +186,12 @@ def flag_problem():
 @moddb.route('/answer/_skip_problem')
 def skip_problem():
     return getUnsolvedProb()
+
+@moddb.route('/sort')
+def sort():
+    problem = Problem.query.filter_by().first()
+    return render_template('database/sort.html', problem=problem)
+"""
+@moddb.route('/db/_add_skill')
+def add_skill():
+"""
