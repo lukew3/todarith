@@ -105,7 +105,7 @@
     $(function() {
       $('button#btn_flag').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/answer/_flag_problem', {
+        $.getJSON($SCRIPT_ROOT + '/db/_flag_problem', {
           problem: problemMathField.latex()
         }, function(data) {
           problemMathField.select();
@@ -122,7 +122,7 @@
     $(function() {
       $('button#btn_skip').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/answer/_skip_problem', {
+        $.getJSON($SCRIPT_ROOT + '/db/_skip_problem', {
           problem: problemMathField.latex()
         }, function(data) {
           problemMathField.select();

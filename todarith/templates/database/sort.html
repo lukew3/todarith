@@ -25,10 +25,23 @@
     <p>Skills:</p>
     <div id="sortProbSkills">
       {% for skill in problem.skills %}
-        <div id="skillCard_{{ skill.id }}" class="browse_skillCard">
-          <a id="browse_SkillName" href="{{ url_for('moddb.browse', getSkills=skill.id ) }}">{{ skill.skillName }}</a>
-          <svg class="sortSkillButton" onclick="removeSkill({{ skill.id }})" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"/></svg>
+      <div id="skillCard_{{ skill.id }}" class="browse_skillCard">
+        <a id="browse_SkillName" href="{{ url_for('moddb.browse', getSkills=skill.id ) }}">{{ skill.skillName }}</a>
+        <img
+          class="removeSkillSvg"
+          onclick="removeSkill({{ skill.id }}, {{ problem.id }})"
+          href="#"
+          src="../static/images/x.svg"/>
+      </div>
+
+      <template>
+        <div id="skillCard_skillId" class="browse_skillCard">
+          <a id="browse_SkillName" href="">skillName</a>
+          <img class="removeSkillSvg"
+            onclick="removeSkill(skillId, problemId)"
+            src="../static/images/x.svg"/>
         </div>
+      </template>
       {% endfor %}
     </div>
     <input type="text" id="sort_addSkillQuery" oninput="queryEdited()" placeholder="Search For A Skill"></input>
@@ -51,7 +64,7 @@
     $(function() {
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/answer/_get_answer_input', {
+        $.getJSON($SCRIPT_ROOT + '/db/sort/_submit_sort', {
           //nothing yet
         }, function(data) {
           //nothing yet
@@ -63,7 +76,7 @@
     $(function() {
       $('button#btn_flag').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/answer/_flag_problem', {
+        $.getJSON($SCRIPT_ROOT + '/db/_flag_problem', {
           //nada
         }, function(data) {
           //nope
@@ -75,7 +88,7 @@
     $(function() {
       $('button#btn_skip').bind('click', function() {
         console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/answer/_skip_problem', {
+        $.getJSON($SCRIPT_ROOT + '/db/_skip_problem', {
           //zip
         }, function(data) {
           //zada
@@ -84,17 +97,58 @@
       });
     });
 
-    function removeSkill() {
+    function removeSkill(skillId, probId) {
+      $.getJSON($SCRIPT_ROOT + '/db/_add_skill', {
+        skillId: skillId,
+        probId: probId,
+      }, function(data) {
+        console.log("Skill Removed");
+      });
     }
 
     function addSkill() {
       console.log(selectedSkillId + " added")
+      if ({{ problem.id }} != undefined ) {
+        probId = {{ problem.id }}
+      } else {
+        console.log("huh")
+      }
       $.getJSON($SCRIPT_ROOT + '/db/_add_skill', {
         probId: probId,
-        skillId: skillId,
+        skillId: selectedSkillId,
       }, function(data) {
+        var temp, item, a, i;
+        temp = document.getElementsByTagName("template")[0];
+        //get the div element from the template:
 
+        item = temp.content.querySelector("div");
+        a = item.content.querySelector("a");
+        i = item.content.querySelector("img");
+
+        a.textContent = "name"
+        document.body.appendChild(item);
+        /*
+        var tag = document.createElement("div");
+        tag.classList.add("browse_skillCard");
+        tag.id = "skillCard_number";
+
+        var innertag1 = document.createElement("a");
+        innertag1.id = "browse_SkillName";
+        innertag1.setAttribute('href', "");
+        var text1 = document.createTextNode("");
+        innertag1.appendChild(text1)
+
+        var innertag2 = document.createElement("svg");
+        var text = document.createTextNode("Tutorix is the best e-learning platform");
+        tag.appendChild(text);
+
+        var skillsCont = document.getElementById("sortProbSkills");
+        skillsCont.appendChild(tag);
+        */
+        console.log("yep");
       });
+
+
     }
     function queryEdited() {
       const queryBox = document.querySelector('#sort_addSkillQuery');
