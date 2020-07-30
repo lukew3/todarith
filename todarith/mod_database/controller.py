@@ -16,6 +16,30 @@ from sqlalchemy.orm import sessionmaker
 Session = sessionmaker()
 session = Session()
 
+#functions
+def getProb(type):
+    if type=="solve":
+        probList = db.session.query(Problem).filter_by(hasSolution=False).all()
+    elif type=="sort":
+        #probList = db.session.query(Problem).filter_by(humanSorted=False).all()
+        probList = db.session.query(Problem).filter_by().all()
+    if probList != []:
+        randIndex = int(random()*(len(probList)))
+        print(randIndex)
+        nextProblem = probList[randIndex]
+    else:
+        return redirect(url_for('moddb.answer'))
+    if type=="solve":
+        return jsonify(problem=nextProblem.question, answer="")
+    elif type=="sort":
+        return jsonify(id=nextProblem.id, problem=nextProblem.question, answer=nextProblem.answer)
+
+def paginate(list, page, per_page):
+    start = (page-1)*per_page
+    end = start+per_page
+    problems = list[start:end]
+    return problems
+#BROWSE
 # Set the route and accepted methods
 @moddb.route('/', methods=['GET', 'POST'])
 @moddb.route('/<string:getSkills>', methods=['GET'])
@@ -51,12 +75,6 @@ def browse(getSkills='1'):
     lastPage= int(len(allProbs)/per_page)
     return render_template("database/browse.html", problems=problems, skills=skills, page=page, lastPage=lastPage)
 
-def paginate(list, page, per_page):
-    start = (page-1)*per_page
-    end = start+per_page
-    problems = list[start:end]
-    return problems
-
 @moddb.route('/_get_skill_query', methods=['GET', 'POST'])
 def browse_get_skill_query():
     query = request.args.get('query', "", type=str)
@@ -72,7 +90,7 @@ def browse_get_skill_query():
     #return jsonify(returnSkill={'name': returnSkill.skillName, 'id': returnSkill.id})
     return jsonify(returnSkills=[{'id': skill.id, 'name': skill.skillName,} for skill in returnSkills])
 
-
+#ASK
 @moddb.route('/ask', methods=['GET', 'POST'])
 def ask():
     return render_template('database/ask.html')
@@ -102,8 +120,7 @@ def ask_get_problem_input():
         )
     return jsonify(answer="The answer is: " + solution)
 
-
-
+#ADD
 @moddb.route('/add', methods=['GET', 'POST'])
 def add():
     return render_template('database/add.html')
@@ -144,16 +161,6 @@ def answer():
         return render_template('database/noanswer.html')
     return render_template('database/answer.html', problem=problem)
 
-def getUnsolvedProb():
-    unsolved = db.session.query(Problem).filter_by(hasSolution=False).all()
-    if unsolved != []:
-        randIndex = int(random()*(len(unsolved)))
-        print(randIndex)
-        nextProblem = unsolved[randIndex]
-    else:
-        return redirect(url_for('moddb.answer'))
-    return jsonify(problem=nextProblem.question, answer="")
-
 @moddb.route('/answer/_get_answer_input')
 def get_answer_input():
     prob = request.args.get('problem', "", type=str)
@@ -168,9 +175,12 @@ def get_answer_input():
         hasSolution = True,
         correctnessRating = currentProblem.correctnessRating + 1
     )
-    return getUnsolvedProb()
+    if getProb("solve") == None:
+        return render_template('database/noanswer.html')
+    else:
+        return getProb("solve")
 
-@moddb.route('/answer/_flag_problem')
+@moddb.route('/_flag_problem')
 def flag_problem():
     prob = request.args.get('problem', "", type=str)
     if current_user.is_authenticated:
@@ -181,17 +191,40 @@ def flag_problem():
     currentProblem.update(
         correctnessRating = currentProblem.correctnessRating - 1
     )
-    return getUnsolvedProb()
+    return getProb("Solve")
 
-@moddb.route('/answer/_skip_problem')
+@moddb.route('/_skip_problem')
 def skip_problem():
-    return getUnsolvedProb()
+    return getProb("solve")
 
+#SORT
 @moddb.route('/sort')
 def sort():
     problem = Problem.query.filter_by().first()
     return render_template('database/sort.html', problem=problem)
-"""
-@moddb.route('/db/_add_skill')
+
+@moddb.route('/sort/_submit_sort')
+def submit_sort():
+    return getProb("sort")
+
+@moddb.route('/_add_skill')
 def add_skill():
-"""
+    skillId = request.args.get('skillId', 0, type=int)
+    probId = request.args.get('probId', 0, type=int)
+    prob = Problem.query.filter_by(id=probId).first()
+    skill = Skill.query.filter_by(id=skillId).first()
+    #prob.update(skills = skills.append(skill))
+    prob.skills.append(skill)
+    db.session.commit()
+    return ""
+
+@moddb.route('/_remove_skill')
+def remove_skill():
+    skillId = request.args.get('skillId', 0, type=int)
+    probId = request.args.get('probId', 0, type=int)
+    prob = Problem.query.filter_by(id=probId).first()
+    skill = Skill.query.filter_by(id=skillId).first()
+
+    prob.skills.remove(skill)
+    db.session.commit()
+    return ""
