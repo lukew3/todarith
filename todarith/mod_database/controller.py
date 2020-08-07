@@ -216,7 +216,7 @@ def add_skill():
     #prob.update(skills = skills.append(skill))
     prob.skills.append(skill)
     db.session.commit()
-    return ""
+    return jsonify(name=skill.skillName, id=skill.id)
 
 @moddb.route('/_remove_skill')
 def remove_skill():

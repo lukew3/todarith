@@ -23,27 +23,17 @@
     <p>{{ problem.answer }}</p>
 
     <p>Skills:</p>
-    <div id="sortProbSkills">
-      {% for skill in problem.skills %}
-      <div id="skillCard_{{ skill.id }}" class="browse_skillCard">
-        <a id="browse_SkillName" href="{{ url_for('moddb.browse', getSkills=skill.id ) }}">{{ skill.skillName }}</a>
-        <img
-          class="removeSkillSvg"
-          onclick="removeSkill({{ skill.id }}, {{ problem.id }})"
-          href="#"
-          src="../static/images/x.svg"/>
-      </div>
 
-      <template>
-        <div id="skillCard_skillId" class="browse_skillCard">
-          <a id="browse_SkillName" href="">skillName</a>
-          <img class="removeSkillSvg"
-            onclick="removeSkill(skillId, problemId)"
-            src="../static/images/x.svg"/>
-        </div>
-      </template>
+    <ul id="skillsList">
+      {% for skill in problem.skills %}
+        <li id="sortSkill_{{ skill.id }}">{{ skill.skillName }} <a style="color: blue" href="#" onclick="removeSkill({{ skill.id }}, {{ problem.id }})">remove</a></li>
       {% endfor %}
-    </div>
+      <template>
+        <li>asdf
+        </li>
+      </template>
+    </ul>
+
     <input type="text" id="sort_addSkillQuery" oninput="queryEdited()" placeholder="Search For A Skill"></input>
     <button id='btn_add' onclick="addSkill()">Add</button>
     <button id='btn_add' onclick="addSkill()">Create New Skill</button>
@@ -60,6 +50,27 @@
 
 
   <script type=text/javascript>
+    var curProbId = {{ problem.id }};
+    function displaySkill(name, id) {
+      console.log("started");
+
+      var temp = document.querySelector('template').content;
+      // Update something in the template DOM.
+
+      var li = temp.querySelector('li');
+      var text_to_change = li.childNodes[0];
+      text_to_change.nodeValue = name;
+      li.id = "sortSkill_" + id;
+      if (li.childNodes[1] != undefined) {
+        li.removeChild(li.childNodes[1])
+      }
+      var a = document.createElement("a");
+      a.innerHTML = '<a style="color: blue" href="#" onclick="removeSkill(' + id.toString() + ', ' + curProbId.toString() + ')"> remove</a>';
+      li.appendChild(a);
+      document.querySelector('#skillsList').appendChild(document.importNode(temp, true));
+
+    }
+
     var selectedSkillId = 0;
     $(function() {
       $('button#btn_submit').bind('click', function() {
@@ -98,12 +109,15 @@
     });
 
     function removeSkill(skillId, probId) {
-      $.getJSON($SCRIPT_ROOT + '/db/_add_skill', {
+      console.log("remove began")
+      $.getJSON($SCRIPT_ROOT + '/db/_remove_skill', {
         skillId: skillId,
         probId: probId,
       }, function(data) {
-        console.log("Skill Removed");
       });
+      skillListItem= document.getElementById("sortSkill_" + skillId.toString())
+      skillListItem.parentNode.removeChild(skillListItem);
+      console.log("Skill Removed");
     }
 
     function addSkill() {
@@ -117,34 +131,7 @@
         probId: probId,
         skillId: selectedSkillId,
       }, function(data) {
-        var temp, item, a, i;
-        temp = document.getElementsByTagName("template")[0];
-        //get the div element from the template:
-
-        item = temp.content.querySelector("div");
-        a = item.content.querySelector("a");
-        i = item.content.querySelector("img");
-
-        a.textContent = "name"
-        document.body.appendChild(item);
-        /*
-        var tag = document.createElement("div");
-        tag.classList.add("browse_skillCard");
-        tag.id = "skillCard_number";
-
-        var innertag1 = document.createElement("a");
-        innertag1.id = "browse_SkillName";
-        innertag1.setAttribute('href', "");
-        var text1 = document.createTextNode("");
-        innertag1.appendChild(text1)
-
-        var innertag2 = document.createElement("svg");
-        var text = document.createTextNode("Tutorix is the best e-learning platform");
-        tag.appendChild(text);
-
-        var skillsCont = document.getElementById("sortProbSkills");
-        skillsCont.appendChild(tag);
-        */
+        displaySkill(data.name, data.id);
         console.log("yep");
       });
 
