@@ -118,8 +118,8 @@
 
     function addSkill() {
       console.log(selectedSkillId + " added")
-      if ({{ problem.id }} != undefined ) {
-        probId = {{ problem.id }}
+      if (curProbId != undefined ) {
+        probId = curProbId;
       } else {
         console.log("no skill selected")
       }

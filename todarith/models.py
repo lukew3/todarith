@@ -36,7 +36,7 @@ class Skill(CRUDMixin, db.Model):
         back_populates="skills")
 
     def __repr__(self):
-        return f"Skill('{self.id}', '{self.skillName}')"
+        return f"Skill('{self.id}', '{self.skillName}', '{self.problems}')"
         #return f"Problem('{self.id}', '{self.skillName}', '{self.problems}')"
 
 clistproblems = db.Table('clistproblems',

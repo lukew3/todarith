@@ -25,7 +25,7 @@ def getProb(type):
         probList = db.session.query(Problem).filter_by().all()
     if probList != []:
         randIndex = int(random()*(len(probList)))
-        print(randIndex)
+        #print(randIndex)
         nextProblem = probList[randIndex]
     else:
         return redirect(url_for('moddb.answer'))
@@ -67,8 +67,7 @@ def browse(getSkills='1'):
                 if (fits==True) and (prob not in allProbs):
                     allProbs.append(prob)
 
-        #allProbs = list(dict.fromkeys(allProbs)) #remove duplicates
-    print(allProbs)
+    #print(allProbs)
 
     page = request.args.get('page', 1, type=int)
     per_page=50
@@ -87,8 +86,6 @@ def browse_get_skill_query():
             returnSkills.append(allSkills[i])
     else:
         returnSkills=allSkills
-    #return jsonify(problems=[{'problem': problem.question, 'answer': problem.answer,} for problem in problems])
-    #return jsonify(returnSkill={'name': returnSkill.skillName, 'id': returnSkill.id})
     return jsonify(returnSkills=[{'id': skill.id, 'name': skill.skillName,} for skill in returnSkills])
 
 #ASK
@@ -100,14 +97,14 @@ def ask():
 def ask_get_problem_input():
     prob = request.args.get('problem', "", type=str)
     cat = request.args.get('category', "", type=str)
-    print("Problem:" + prob)
-    print("Category:" + cat)
+    #print("Problem:" + prob)
+    #print("Category:" + cat)
     if current_user.is_authenticated:
         poster = current_user.id
     else:
         poster = 1
     dbAns = getDBAnswer(prob)
-    print(dbAns)
+    #print(dbAns)
     solution = dbAns
     if dbAns=="unavailable":
         Problem.create(
@@ -217,6 +214,8 @@ def add_skill():
     #prob.update(skills = skills.append(skill))
     prob.skills.append(skill)
     db.session.commit()
+    print(prob)
+    #print(prob.skills)
     return jsonify(name=skill.skillName, id=skill.id)
 
 @moddb.route('/_create_skill')
