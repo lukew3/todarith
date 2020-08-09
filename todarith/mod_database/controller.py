@@ -29,10 +29,11 @@ def getProb(type):
         nextProblem = probList[randIndex]
     else:
         return redirect(url_for('moddb.answer'))
+
     if type=="solve":
         return jsonify(problem=nextProblem.question, answer="")
     elif type=="sort":
-        return jsonify(id=nextProblem.id, problem=nextProblem.question, answer=nextProblem.answer)
+        return jsonify(id=nextProblem.id, problem=nextProblem.question, answer=nextProblem.answer, skills=[{'skillId': skill.id, 'skillName': skill.skillName,} for skill in nextProblem.skills])
 
 def paginate(list, page, per_page):
     start = (page-1)*per_page
@@ -203,8 +204,8 @@ def sort():
     problem = Problem.query.filter_by().first()
     return render_template('database/sort.html', problem=problem)
 
-@moddb.route('/sort/_submit_sort')
-def submit_sort():
+@moddb.route('/sort/_next_problem')
+def sort_next_problem():
     return getProb("sort")
 
 @moddb.route('/_add_skill')
@@ -217,6 +218,15 @@ def add_skill():
     prob.skills.append(skill)
     db.session.commit()
     return jsonify(name=skill.skillName, id=skill.id)
+
+@moddb.route('/_create_skill')
+def create_skill():
+    skillName = request.args.get('skillName', type=str)
+    Skill.create(
+        skillName=skillName
+    )
+    skill = Skill.query.filter_by(skillName=skillName).first()
+    return jsonify(skillName=skill.skillName, id=skill.id)
 
 @moddb.route('/_remove_skill')
 def remove_skill():

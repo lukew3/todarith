@@ -17,10 +17,10 @@
 
   <div id="sortGradientBox" class="rightSideGradientBox">
     <p class="formLabel">Problem</p>
-    <p>{{ problem.question }}</p>
+    <p id="sort_problem">{{ problem.question }}</p>
 
     <p class="formLabel">Answer</p>
-    <p>{{ problem.answer }}</p>
+    <p id="sort_answer">{{ problem.answer }}</p>
 
     <p>Skills:</p>
 
@@ -28,35 +28,33 @@
       {% for skill in problem.skills %}
         <li id="sortSkill_{{ skill.id }}">{{ skill.skillName }} <a style="color: blue" href="#" onclick="removeSkill({{ skill.id }}, {{ problem.id }})">remove</a></li>
       {% endfor %}
-      <template>
-        <li>asdf
-        </li>
-      </template>
     </ul>
+
+    <template>
+      <li>asdf
+      </li>
+    </template>
 
     <input type="text" id="sort_addSkillQuery" oninput="queryEdited()" placeholder="Search For A Skill"></input>
     <button id='btn_add' onclick="addSkill()">Add</button>
-    <button id='btn_add' onclick="addSkill()">Create New Skill</button>
+    <button id='btn_createSkill' onclick="createSkill()">Create New Skill</button>
     <div id="sort_skillList">
       <h1 id="sort_queryResult"></h1>
     </div>
 
     <div id="sortButtons">
       <button id='btn_flag' name="button">Flag</button>
-      <button id='btn_submit' type="submit" name="button">Submit</button>
-      <button id='btn_skip' name="button">Skip</button>
+      <button id='btn_next' name="button">Next</button>
     </div>
   </div>
 
 
   <script type=text/javascript>
     var curProbId = {{ problem.id }};
+    var selectedSkillId = 0;
+
     function displaySkill(name, id) {
-      console.log("started");
-
       var temp = document.querySelector('template').content;
-      // Update something in the template DOM.
-
       var li = temp.querySelector('li');
       var text_to_change = li.childNodes[0];
       text_to_change.nodeValue = name;
@@ -68,25 +66,10 @@
       a.innerHTML = '<a style="color: blue" href="#" onclick="removeSkill(' + id.toString() + ', ' + curProbId.toString() + ')"> remove</a>';
       li.appendChild(a);
       document.querySelector('#skillsList').appendChild(document.importNode(temp, true));
-
     }
-
-    var selectedSkillId = 0;
-    $(function() {
-      $('button#btn_submit').bind('click', function() {
-        console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/sort/_submit_sort', {
-          //nothing yet
-        }, function(data) {
-          //nothing yet
-        });
-        return false;
-      });
-    });
 
     $(function() {
       $('button#btn_flag').bind('click', function() {
-        console.log("activated")
         $.getJSON($SCRIPT_ROOT + '/db/_flag_problem', {
           //nada
         }, function(data) {
@@ -97,12 +80,25 @@
     });
 
     $(function() {
-      $('button#btn_skip').bind('click', function() {
-        console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/_skip_problem', {
+      $('button#btn_next').bind('click', function() {
+        $.getJSON($SCRIPT_ROOT + '/db/sort/_next_problem', {
           //zip
         }, function(data) {
-          //zada
+          console.log(data)
+           document.getElementById("sort_problem").innerHTML = data.problem;
+           document.getElementById("sort_answer").innerHTML = data.answer;
+           curProbId = data.id;
+
+           //Clear skills and add new ones
+           document.getElementById("skillsList").innerHTML = "";
+           skills = data.skills
+           console.log(skills)
+           console.log(data.skills[0].skillName)
+           skillsLen = Object.keys(data.skills).length
+           //console.log("Length is: " + Object.keys(data.skills).length)
+           for (i = 0; i < skillsLen; i++) {
+             displaySkill(data.skills[i].skillName, data.skills[i].skillId);
+           }
         });
         return false;
       });
@@ -125,7 +121,7 @@
       if ({{ problem.id }} != undefined ) {
         probId = {{ problem.id }}
       } else {
-        console.log("huh")
+        console.log("no skill selected")
       }
       $.getJSON($SCRIPT_ROOT + '/db/_add_skill', {
         probId: probId,
@@ -134,9 +130,17 @@
         displaySkill(data.name, data.id);
         console.log("yep");
       });
-
-
     }
+
+    function createSkill() {
+      $.getJSON($SCRIPT_ROOT + '/db/_create_skill', {
+        skillName: document.querySelector('#sort_addSkillQuery').value,
+      }, function(data) {
+        selectedSkillId = data.id;
+        addSkill()
+      });
+    }
+
     function queryEdited() {
       const queryBox = document.querySelector('#sort_addSkillQuery');
       console.log("Query is: " + queryBox.value)
