@@ -2,7 +2,6 @@
 
 {% block head %}
 
-<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 
 {% endblock head %}
@@ -20,65 +19,38 @@ uploading via spreadsheet (linked here).</h3>
   <div id="addGradientBox" class="rightSideGradientBox">
     <div class="formBox">
       <form>
+        <!--
         <div class="formGroup">
           <p class="formLabel">Problem</p>
-          <span id="problem" class="mathquillField"></span>
+          <input type="text" id="add_problemInput" class="underline_input">
         </div>
         <div class="formGroup">
           <p class="formLabel">Answer</p>
-          <span id="answer" class="mathquillField"></span>
+          <input type="text" id="add_answerInput" class="underline_input">
         </div>
-        <!--<div class="formGroup">
-          <p class="formLabel">Category(Optional)</p>
-          <span id="category" class="mathquillField"></span>
-        </div>-->
-        <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
+        -->
+        <p class="formLabel">Problem</p>
+        <input type="text" id="add_problemInput" class="underline_input">
+        <p class="formLabel">Answer</p>
+        <input type="text" id="add_answerInput" class="underline_input">
+        <button id='btn_submit' type='button'>Submit</button>
       </form>
     </div>
     <p id="result"></p>
   </div>
 
 
-
-
-  <script>
-    var problemSpan = document.getElementById('problem');
-    var problemMathField = MQ.MathField(problemSpan, {
-      handlers: {
-        edit: function() {
-          enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
-        }
-      }
-    });
-
-    var answerSpan = document.getElementById('answer');
-    var answerMathField = MQ.MathField(answerSpan, {
-      handlers: {
-        edit: function() {
-          enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
-        }
-      }
-    });
-
-    var categorySpan = document.getElementById('category');
-    var categoryMathField = MQ.MathField(categorySpan, {
-      handlers: {
-        edit: function() {
-          enteredCategory = categoryMathField.latex(); // Get entered math in LaTeX format
-        }
-      }
-    });
-  </script>
-
   <script type=text/javascript>
+    var probCont = document.getElementById("add_problemInput");
+    var ansCont = document.getElementById("add_answerInput")
+
     var enteredProblem, enteredAnswer, enteredCategory;
     $(function() {
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
         $.getJSON($SCRIPT_ROOT + '/db/add/_get_problem_input', {
-          problem: enteredProblem,
-          answer: enteredAnswer,
-          category: enteredCategory
+          problem: probCont.value,
+          answer: ansCont.value
         }, function(data) {
           $("#result").text(data.result);
         });

@@ -27,19 +27,16 @@
       <form>
         <div class="formGroup">
           <p class="formLabel">Problem</p>
-          <span id="problem" class="mathquillField">{{ problem.question }}</span>
+          <h3 id="answer_problem">{{ problem.question }}</h3>
+          <!--<input type="text" id="answer_problemInput" class="underline_input" placeholder="{{ problem.question }}">-->
         </div>
         <div class="formGroup">
           <p class="formLabel">Answer</p>
-          <span id="answer" class="mathquillField"></span>
+          <input type="text" id="answer_answerInput" class="underline_input">
         </div>
-        <div class="formGroup">
-          <p class="formLabel">Category(Optional)</p>
-          <span id="category" class="mathquillField">SKILL HERE</span>
-        </div>
-        <button id='btn_flag' name="button">Flag</button>
-        <button id='btn_submit' type="submit" name="button">Submit</button>
-        <button id='btn_skip' name="button">Skip</button>
+        <button id='btn_flag' type="button">Flag</button>
+        <button id='btn_submit' type='button'>Submit</button>
+        <button id='btn_skip' type="button">Skip</button>
       </form>
     </div>
     <p id="foundStatus"></p>
@@ -47,56 +44,19 @@
   </div>
 
 
-  <script>
-    makeMathFields()
-    function makeMathFields() {
-      var problemSpan = document.getElementById('problem');
-      problemMathField = MQ.MathField(problemSpan, {
-        handlers: {
-          edit: function() {
-            enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
-          }
-        }
-      });
-
-      var answerSpan = document.getElementById('answer');
-      answerMathField = MQ.MathField(answerSpan, {
-        handlers: {
-          edit: function() {
-            enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
-          }
-        }
-      });
-
-      var categorySpan = document.getElementById('category');
-      categoryMathField = MQ.MathField(categorySpan, {
-        handlers: {
-          edit: function() {
-            enteredCategory = categoryMathField.latex(); // Get entered math in LaTeX format
-          }
-        }
-      });
-    }
-  </script>
-
   <script type=text/javascript>
-    var problemMathField, answerMathField, categoryMathField;
-    var enteredProblem, enteredAnswer, enteredCategory;
+    var probCont = document.getElementById("answer_problem");
+    var ansCont = document.getElementById("answer_answerInput");
 
     $(function() {
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
         $.getJSON($SCRIPT_ROOT + '/db/answer/_get_answer_input', {
-          problem: problemMathField.latex(),
-          answer: enteredAnswer,
-          category: enteredCategory
+          problem: probCont.innerHTML,
+          answer: ansCont.value
         }, function(data) {
-          problemMathField.select();
-          problemMathField.write(data.problem);
-          answerMathField.select();
-          answerMathField.write(data.answer);
-          categoryMathField.select();
-          categoryMathField.write(data.category);
+          probCont.innerHTML = data.problem;
+          ansCont.value = data.answer;
         });
         return false;
       });
@@ -106,14 +66,10 @@
       $('button#btn_flag').bind('click', function() {
         console.log("activated")
         $.getJSON($SCRIPT_ROOT + '/db/_flag_problem', {
-          problem: problemMathField.latex()
+          problem: probCont.innerHTML
         }, function(data) {
-          problemMathField.select();
-          problemMathField.write(data.problem);
-          answerMathField.select();
-          answerMathField.write(data.answer);
-          categoryMathField.select();
-          categoryMathField.write(data.category);
+          probCont.innerHTML = data.problem;
+          ansCont.value = data.answer;
         });
         return false;
       });
@@ -123,14 +79,10 @@
       $('button#btn_skip').bind('click', function() {
         console.log("activated")
         $.getJSON($SCRIPT_ROOT + '/db/_skip_problem', {
-          problem: problemMathField.latex()
+          problem: probCont.innerHTML
         }, function(data) {
-          problemMathField.select();
-          problemMathField.write(data.problem);
-          answerMathField.select();
-          answerMathField.write(data.answer);
-          categoryMathField.select();
-          categoryMathField.write(data.category);
+          probCont.innerHTML = data.problem;
+          ansCont.value = data.answer;
         });
         return false;
       });

@@ -70,7 +70,7 @@ def browse(getSkills='1'):
     #print(allProbs)
 
     page = request.args.get('page', 1, type=int)
-    per_page=50
+    per_page=25
     problems = paginate(allProbs, page, per_page)
     lastPage= int(len(allProbs)/per_page)
     return render_template("database/browse.html", problems=problems, skills=skills, page=page, lastPage=lastPage)
@@ -116,6 +116,8 @@ def ask_get_problem_input():
             expectedTime=None,
             hasSolution=False
         )
+        (Problem.query.filter_by(question=prob).first()).skills.append(Skill.query.filter_by(id=skillId).first())
+        db.session.commit()
     return jsonify(answer="The answer is: " + solution)
 
 #ADD
@@ -127,7 +129,7 @@ def add():
 def add_get_problem_input():
     prob = request.args.get('problem', "", type=str)
     ans = request.args.get('answer', "", type=str)
-    cat = request.args.get('category', "", type=str)
+    #cat = request.args.get('category', "", type=str)
     if current_user.is_authenticated:
         poster = current_user.id
     else:
@@ -138,13 +140,14 @@ def add_get_problem_input():
         Problem.create(
             question=prob,
             answer=ans,
-            topic_id=1,
             poster_id=poster,
             correctnessRating=0,
             difficultyLevel=None,
             expectedTime=None,
             hasSolution=True
         )
+        (Problem.query.filter_by(question=prob).first()).skills.append(Skill.query.filter_by(id=skillId).first())
+        db.session.commit()
         return jsonify(result="Problem " + prob + " added")
 
 
@@ -153,7 +156,7 @@ def answer():
     unsolved = db.session.query(Problem).filter_by(hasSolution=False).all()
     if unsolved != []:
         randIndex = int(random()*(len(unsolved)))
-        print(randIndex)
+        #print(randIndex)
         problem = unsolved[randIndex]
     else:
         return render_template('database/noanswer.html')
@@ -161,6 +164,7 @@ def answer():
 
 @moddb.route('/answer/_get_answer_input')
 def get_answer_input():
+    print("this worked")
     prob = request.args.get('problem', "", type=str)
     ans = request.args.get('answer', "", type=str)
     if current_user.is_authenticated:
@@ -181,10 +185,6 @@ def get_answer_input():
 @moddb.route('/_flag_problem')
 def flag_problem():
     prob = request.args.get('problem', "", type=str)
-    if current_user.is_authenticated:
-        poster = current_user.id
-    else:
-        poster = 1
     currentProblem = db.session.query(Problem).filter_by(question=prob).first()
     currentProblem.update(
         correctnessRating = currentProblem.correctnessRating - 1

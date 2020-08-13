@@ -18,26 +18,21 @@
   <div id="askGradientBox" class="rightSideGradientBox">
     <div class="formBox">
       <form>
-        <div class="formGroup">
-          <p class="formLabel">Problem</p>
-          <span id="problem" class="mathquillField"></span>
-        </div>
-        <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
+        <!--<div class="formGroup">
+        </div>-->
+        <p class="formLabel">Problem</p>
+        <input type="text" id="ask_problemInput" name="askInput">
+        <button id='btn_submit' type="submit" name="button">Submit</button>
       </form>
     </div>
     <p id="foundStatus"></p>
     <p id="answer"></p>
   </div>
 
-  <script>
-      function probSubmit() {
-        document.getElementsByClassName(formBox).style.height = 20%;
-
-      }
-  </script>
 
 
   <script>
+    /*
     var problemSpan = document.getElementById('problem');
     var problemMathField = MQ.MathField(problemSpan, {
       handlers: {
@@ -46,15 +41,9 @@
         }
       }
     });
-
-    var categorySpan = document.getElementById('category');
-    var categoryMathField = MQ.MathField(categorySpan, {
-      handlers: {
-        edit: function() {
-          enteredCategory = categoryMathField.latex(); // Get entered math in LaTeX format
-        }
-      }
-    });
+    */
+    var problemInput = document.getElementById('ask_problemInput');
+    //enteredProblem = problemInput.value;
   </script>
 
   <script type=text/javascript>
@@ -63,7 +52,7 @@
       $('button#btn_submit').bind('click', function() {
         console.log("activated")
         $.getJSON($SCRIPT_ROOT + '/db/ask/_get_problem_input', {
-          problem: enteredProblem,
+          problem: document.getElementById('ask_problemInput').value,
           category: enteredCategory
         }, function(data) {
           $("#answer").text(data.answer);
