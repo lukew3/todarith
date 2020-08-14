@@ -17,18 +17,19 @@ Session = sessionmaker()
 session = Session()
 
 #functions
-def getProb(type):
+def getProb(type, skillId):
     if type=="solve":
-        probList = db.session.query(Problem).filter_by(hasSolution=False).all()
+        print(skillId)
+        probList = db.session.query(Problem).filter(Problem.skills.any(Skill.id.in_([skillId])), Problem.hasSolution==False).all()
+        print(probList)
     elif type=="sort":
-        #probList = db.session.query(Problem).filter_by(humanSorted=False).all()
         probList = db.session.query(Problem).filter_by().all()
+
     if probList != []:
         randIndex = int(random()*(len(probList)))
-        #print(randIndex)
         nextProblem = probList[randIndex]
     else:
-        return redirect(url_for('moddb.answer'))
+        return jsonify(id=0, problem="No unsolved problems found for this skill", answer="")
 
     if type=="solve":
         return jsonify(problem=nextProblem.question, answer="")
@@ -40,6 +41,22 @@ def paginate(list, page, per_page):
     end = start+per_page
     problems = list[start:end]
     return problems
+
+def skillFilter(skills):
+    #Accepts a list of skills and returns a list of Problems that include all of the skills in the list
+    allProbs = []
+    for skill in skills:
+        problems = skill.problems
+        for prob in problems:
+            #should be an exception somewhere here that stops from searching all problems in math skill
+            fits = True
+            for skill in skills:
+                if skill not in prob.skills:
+                    fits = False
+            if (fits==True) and (prob not in allProbs):
+                allProbs.append(prob)
+    return allProbs
+
 #BROWSE
 # Set the route and accepted methods
 @moddb.route('/', methods=['GET', 'POST'])
@@ -54,25 +71,14 @@ def browse(getSkills='1'):
     if len(skills)==1:
         allProbs = skills[0].problems
     else:
-        allProbs = []
-        for skill in skills:
-            problems = skill.problems
-            for prob in problems:
-                #should be an exception somewhere here that stops from searching all problems in math skill
-                fits = True
-                for skill in skills:
-                    if skill not in prob.skills:
-                        fits = False
-
-                if (fits==True) and (prob not in allProbs):
-                    allProbs.append(prob)
-
-    #print(allProbs)
+        allProbs = skillFilter(skills)
 
     page = request.args.get('page', 1, type=int)
     per_page=25
     problems = paginate(allProbs, page, per_page)
     lastPage= int(len(allProbs)/per_page)
+    if int(len(allProbs)%per_page) != 0:
+        lastPage += 1
     return render_template("database/browse.html", problems=problems, skills=skills, page=page, lastPage=lastPage)
 
 @moddb.route('/_get_skill_query', methods=['GET', 'POST'])
@@ -97,14 +103,11 @@ def ask():
 def ask_get_problem_input():
     prob = request.args.get('problem', "", type=str)
     cat = request.args.get('category', "", type=str)
-    #print("Problem:" + prob)
-    #print("Category:" + cat)
     if current_user.is_authenticated:
         poster = current_user.id
     else:
         poster = 1
     dbAns = getDBAnswer(prob)
-    #print(dbAns)
     solution = dbAns
     if dbAns=="unavailable":
         Problem.create(
@@ -116,8 +119,10 @@ def ask_get_problem_input():
             expectedTime=None,
             hasSolution=False
         )
-        (Problem.query.filter_by(question=prob).first()).skills.append(Skill.query.filter_by(id=skillId).first())
+        curProb = Problem.query.filter_by(question=prob).first()
+        curProb.skills.append(Skill.query.filter_by(id=1).first())
         db.session.commit()
+
     return jsonify(answer="The answer is: " + solution)
 
 #ADD
@@ -146,21 +151,24 @@ def add_get_problem_input():
             expectedTime=None,
             hasSolution=True
         )
-        (Problem.query.filter_by(question=prob).first()).skills.append(Skill.query.filter_by(id=skillId).first())
+        prob = Problem.query.filter_by(question=prob).first()
+        prob.skills.append(Skill.query.filter_by(id=1).first())
         db.session.commit()
         return jsonify(result="Problem " + prob + " added")
 
 
 @moddb.route('/answer', methods=['GET', 'POST'])
 def answer():
-    unsolved = db.session.query(Problem).filter_by(hasSolution=False).all()
+    skills = Skill.query.filter_by().all()
+    unsolved = db.session.query(Problem).filter(Problem.skills.any(Skill.id.in_([1])), Problem.hasSolution==False).all()
+    print(unsolved)
     if unsolved != []:
         randIndex = int(random()*(len(unsolved)))
         #print(randIndex)
         problem = unsolved[randIndex]
     else:
         return render_template('database/noanswer.html')
-    return render_template('database/answer.html', problem=problem)
+    return render_template('database/answer.html', problem=problem, skills=skills)
 
 @moddb.route('/answer/_get_answer_input')
 def get_answer_input():
@@ -177,10 +185,15 @@ def get_answer_input():
         hasSolution = True,
         correctnessRating = currentProblem.correctnessRating + 1
     )
-    if getProb("solve") == None:
+    if getProb("solve", 1) == None:
         return render_template('database/noanswer.html')
     else:
-        return getProb("solve")
+        return getProb("solve", 1)
+
+@moddb.route('/answer/_skill_select')
+def answer_skill_select():
+    skillId = request.args.get('skillId', 1, type=int)
+    return getProb("solve", skillId)
 
 @moddb.route('/_flag_problem')
 def flag_problem():
@@ -189,11 +202,11 @@ def flag_problem():
     currentProblem.update(
         correctnessRating = currentProblem.correctnessRating - 1
     )
-    return getProb("Solve")
+    return getProb("Solve", 1)
 
 @moddb.route('/_skip_problem')
 def skip_problem():
-    return getProb("solve")
+    return getProb("solve", 1)
 
 #SORT
 @moddb.route('/sort')
@@ -203,7 +216,7 @@ def sort():
 
 @moddb.route('/sort/_next_problem')
 def sort_next_problem():
-    return getProb("sort")
+    return getProb("sort", 1)
 
 @moddb.route('/_add_skill')
 def add_skill():

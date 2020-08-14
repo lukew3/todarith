@@ -16,8 +16,13 @@
   </div>
 
   <div id="answerGradientBox" class="rightSideGradientBox">
-    <h2>Category</h2>
-    <h1>Mathematics</h1>
+    <h2>Skill</h2>
+    <select id="answer_skillSelector" onchange="getSkillProbs(this)">
+      <!--<option value="math">math</option>-->
+      {% for skill in skills %}
+        <option value="{{ skill.id }}">{{ skill.skillName }}</option>
+      {% endfor %}
+    </select>
     <div id="modeSelector">
       <div id="cardSvg"></div>
       <div id="tableSvg"></div>
@@ -87,5 +92,16 @@
         return false;
       });
     });
+
+    function getSkillProbs(selectObject) {
+      var value = selectObject.value;
+      $.getJSON($SCRIPT_ROOT + '/db/answer/_skill_select', {
+        skillId: value
+      }, function(data) {
+        probCont.innerHTML = data.problem;
+        ansCont.value = data.answer;
+      });
+      console.log(value);
+    }
   </script>
 {% endblock content %}
