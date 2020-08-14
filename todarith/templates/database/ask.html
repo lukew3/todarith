@@ -33,15 +33,35 @@
     var enteredProblem, enteredAnswer, enteredCategory;
     $(function() {
       $('button#btn_submit').bind('click', function() {
-        console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/ask/_get_problem_input', {
-          problem: document.getElementById('ask_problemInput').value,
-          category: enteredCategory
-        }, function(data) {
-          $("#answer").text(data.answer);
-        });
+        var ansAttempt = attemptSolve(document.getElementById('ask_problemInput').value);
+        if (ansAttempt != "") {
+          $.getJSON($SCRIPT_ROOT + '/db/ask/_add_solved', {
+            problem: document.getElementById('ask_problemInput').value,
+            answer: ansAttempt
+          }, function(data) {
+            $("#answer").text("The answer is: " + data.answer);
+          });
+        }
+        else {
+          $.getJSON($SCRIPT_ROOT + '/db/ask/_get_problem_input', {
+            problem: document.getElementById('ask_problemInput').value,
+            category: enteredCategory
+          }, function(data) {
+            $("#answer").text(data.answer);
+          });
+        }
         return false;
       });
     });
+
+    function attemptSolve(input) {
+      var answer = "";
+
+      try { answer = math.evaluate(input).toString(); }
+      catch(err) { console.log(err.message); }
+
+      console.log(answer);
+      return answer;
+    }
   </script>
 {% endblock content %}

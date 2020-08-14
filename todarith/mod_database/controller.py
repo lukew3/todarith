@@ -19,9 +19,7 @@ session = Session()
 #functions
 def getProb(type, skillId):
     if type=="solve":
-        print(skillId)
         probList = db.session.query(Problem).filter(Problem.skills.any(Skill.id.in_([skillId])), Problem.hasSolution==False).all()
-        print(probList)
     elif type=="sort":
         probList = db.session.query(Problem).filter_by().all()
 
@@ -125,6 +123,31 @@ def ask_get_problem_input():
 
     return jsonify(answer="The answer is: " + solution)
 
+@moddb.route('/ask/_add_solved')
+def ask_add_solved():
+    prob = request.args.get('problem', "", type=str)
+    ans = request.args.get('answer', "", type=str)
+    #cat = request.args.get('category', "", type=str)
+    if current_user.is_authenticated:
+        poster = current_user.id
+    else:
+        poster = 1
+    if db.session.query(Problem).filter_by(question=prob).first() != None:
+        pass
+    else:
+        Problem.create(
+            question=prob,
+            answer=ans,
+            poster_id=poster,
+            correctnessRating=0,
+            difficultyLevel=None,
+            expectedTime=None,
+            hasSolution=True
+        )
+        curProb = Problem.query.filter_by(question=prob).first()
+        curProb.skills.append(Skill.query.filter_by(id=1).first())
+        db.session.commit()
+    return jsonify(answer=ans)
 #ADD
 @moddb.route('/add', methods=['GET', 'POST'])
 def add():
@@ -151,8 +174,8 @@ def add_get_problem_input():
             expectedTime=None,
             hasSolution=True
         )
-        prob = Problem.query.filter_by(question=prob).first()
-        prob.skills.append(Skill.query.filter_by(id=1).first())
+        curProb = Problem.query.filter_by(question=prob).first()
+        curProb.skills.append(Skill.query.filter_by(id=1).first())
         db.session.commit()
         return jsonify(result="Problem " + prob + " added")
 
@@ -161,7 +184,6 @@ def add_get_problem_input():
 def answer():
     skills = Skill.query.filter_by().all()
     unsolved = db.session.query(Problem).filter(Problem.skills.any(Skill.id.in_([1])), Problem.hasSolution==False).all()
-    print(unsolved)
     if unsolved != []:
         randIndex = int(random()*(len(unsolved)))
         #print(randIndex)
@@ -172,7 +194,6 @@ def answer():
 
 @moddb.route('/answer/_get_answer_input')
 def get_answer_input():
-    print("this worked")
     prob = request.args.get('problem', "", type=str)
     ans = request.args.get('answer', "", type=str)
     if current_user.is_authenticated:
@@ -227,7 +248,6 @@ def add_skill():
     #prob.update(skills = skills.append(skill))
     prob.skills.append(skill)
     db.session.commit()
-    print(prob)
     #print(prob.skills)
     return jsonify(name=skill.skillName, id=skill.id)
 
