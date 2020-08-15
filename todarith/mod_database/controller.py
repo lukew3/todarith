@@ -8,7 +8,7 @@ from flask_login import current_user, login_required
 from todarith.mod_database import moddb
 from todarith.mod_database.functions import getDBAnswer
 from random import random
-
+from Naked.toolshed.shell import execute_js, muterun_js, run_js #run nodejs scripts
 from sqlalchemy import func
 
 
@@ -65,7 +65,6 @@ def browse(getSkills='1'):
     skills = []
     for skill in skillIds:
         skills.append(Skill.query.filter_by(id=skill).first())
-    print(skills)
 
     if len(skills)==1:
         allProbs = skills[0].problems
@@ -101,7 +100,6 @@ def ask():
 @moddb.route('/ask/_get_problem_input')
 def ask_get_problem_input():
     prob = request.args.get('problem', "", type=str)
-    cat = request.args.get('category', "", type=str)
     if current_user.is_authenticated:
         poster = current_user.id
     else:
@@ -109,20 +107,37 @@ def ask_get_problem_input():
     dbAns = getDBAnswer(prob)
     solution = dbAns
     if dbAns=="unavailable":
+        calcAns = attemptSolve(prob)
+        if calcAns=="unsolved":
+            hasSol=False
+        else:
+            hasSol=True
         Problem.create(
             question=prob,
-            answer="unsolved",
+            answer=calcAns,
             poster_id=poster,
             correctnessRating=0,
             difficultyLevel=None,
             expectedTime=None,
-            hasSolution=False
+            hasSolution=hasSol
         )
         curProb = Problem.query.filter_by(question=prob).first()
         curProb.skills.append(Skill.query.filter_by(id=1).first())
         db.session.commit()
-
+        solution = calcAns
     return jsonify(answer="The answer is: " + solution)
+
+def attemptSolve(prob):
+    response = muterun_js('todarith/static/mathsteps/index.js', prob)
+    print("ERROR: " + str(response.stderr))
+    print("RESPONSE WAS: " + str(response.stdout) )
+    out = str(response.stdout)
+    if out=="b'\\n'":
+        return "unsolved"
+    else:
+        ans = out[2:-3]
+        print(ans)
+        return ans
 
 @moddb.route('/ask/_add_solved')
 def ask_add_solved():
@@ -187,7 +202,6 @@ def answer():
     unsolved = db.session.query(Problem).filter(Problem.skills.any(Skill.id.in_([1])), Problem.hasSolution==False).all()
     if unsolved != []:
         randIndex = int(random()*(len(unsolved)))
-        #print(randIndex)
         problem = unsolved[randIndex]
     else:
         return render_template('database/noanswer.html')
@@ -249,7 +263,6 @@ def add_skill():
     #prob.update(skills = skills.append(skill))
     prob.skills.append(skill)
     db.session.commit()
-    #print(prob.skills)
     return jsonify(name=skill.skillName, id=skill.id)
 
 @moddb.route('/_create_skill')
