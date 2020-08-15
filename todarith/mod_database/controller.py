@@ -41,6 +41,7 @@ def paginate(list, page, per_page):
     return problems
 
 def skillFilter(skills):
+    #REPLACE THIS ASAP, the process is slow and inefficient, even with only two skills
     #Accepts a list of skills and returns a list of Problems that include all of the skills in the list
     allProbs = []
     for skill in skills:
