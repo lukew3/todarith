@@ -128,7 +128,7 @@ def ask_get_problem_input():
     return jsonify(answer="The answer is: " + solution)
 
 def attemptSolve(prob):
-    response = muterun_js('todarith/static/mathsteps/index.js', prob)
+    response = muterun_js('todarith/static/mathsteps2/index.js', prob)
     print("ERROR: " + str(response.stderr))
     print("RESPONSE WAS: " + str(response.stdout) )
     out = str(response.stdout)
