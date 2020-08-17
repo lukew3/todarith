@@ -58,6 +58,7 @@ class Problem(CRUDMixin, db.Model):
     answer = db.Column(db.String(1000), nullable=True)
     poster_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) #user id of the person who posted it
     correctnessRating = db.Column(db.Integer, nullable=False)
+    sortRating = db.Column(db.Integer, nullable=False)
     difficultyLevel = db.Column(db.String(1000), nullable=True)
     expectedTime = db.Column(db.String(1000), nullable=True)
     hasSolution = db.Column(db.Boolean(), nullable=False)

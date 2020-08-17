@@ -10,7 +10,7 @@ from todarith.mod_database.functions import getDBAnswer
 from random import random
 from Naked.toolshed.shell import execute_js, muterun_js, run_js #run nodejs scripts
 from sqlalchemy import func
-
+from todarith.mod_database.aisort import aiSort
 
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker()
@@ -117,6 +117,7 @@ def ask_get_problem_input():
             answer=calcAns,
             poster_id=poster,
             correctnessRating=0,
+            sortRating=0,
             difficultyLevel=None,
             expectedTime=None,
             hasSolution=hasSol
@@ -156,6 +157,7 @@ def ask_add_solved():
             answer=ans,
             poster_id=poster,
             correctnessRating=0,
+            sortRating=0,
             difficultyLevel=None,
             expectedTime=None,
             hasSolution=True
@@ -186,6 +188,7 @@ def add_get_problem_input():
             answer=ans,
             poster_id=poster,
             correctnessRating=0,
+            sortRating=0,
             difficultyLevel=None,
             expectedTime=None,
             hasSolution=True
@@ -284,3 +287,47 @@ def remove_skill():
     prob.skills.remove(skill)
     db.session.commit()
     return ""
+
+@moddb.route('/prepSort')
+def prepSort():
+    probs = Problem.query.filter_by().all()
+    probsCont = []
+    probsSkill = []
+    for prob in probs:
+        print(prob.question + " " + str(prob.skills[1].id))
+        probsCont.append(prob.question)
+        probsSkill.append(str(prob.skills[1].id))
+    questions = " ".join(probsCont)
+    skills = " ".join(probsSkill)
+    print(questions)
+    print(skills)
+
+    with open('questions.txt', 'w') as filehandle:
+        for listitem in probsCont:
+            filehandle.write('%s\n' % listitem)
+
+    with open('skills.txt', 'w') as filehandle:
+        for listitem in probsSkill:
+            filehandle.write('%s\n' % listitem)
+
+    return render_template('main/sitemap.html')
+    #aiSort()
+
+@moddb.route('/aisort')
+def aisort():
+    questions= []
+    skills = []
+
+    with open('questions.txt', 'r') as filehandle:
+        for line in filehandle:
+            currentPlace = line[:-1]
+            questions.append(currentPlace)
+
+    with open('skills.txt', 'r') as filehandle:
+        for line in filehandle:
+            currentPlace = line[:-1]
+            skills.append(currentPlace)
+    print(questions)
+    print(skills)
+    aiSort(questions, skills)
+    return render_template('main/sitemap.html')
