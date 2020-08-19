@@ -10,7 +10,7 @@ from todarith.mod_database.functions import getDBAnswer
 from random import random
 from Naked.toolshed.shell import execute_js, muterun_js, run_js #run nodejs scripts
 from sqlalchemy import func
-from todarith.mod_database.aisort import aiSort
+from todarith.mod_database.aisort import createModel, aiSort
 
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker()
@@ -250,7 +250,7 @@ def skip_problem():
 #SORT
 @moddb.route('/sort')
 def sort():
-    problem = Problem.query.filter_by().first()
+    problem = Problem.query.filter_by(sortRating=0).first()
     return render_template('database/sort.html', problem=problem)
 
 @moddb.route('/sort/_next_problem')
@@ -262,8 +262,8 @@ def add_skill():
     skillId = request.args.get('skillId', 0, type=int)
     probId = request.args.get('probId', 0, type=int)
     prob = Problem.query.filter_by(id=probId).first()
+    prob.sortRating = 1
     skill = Skill.query.filter_by(id=skillId).first()
-    #prob.update(skills = skills.append(skill))
     prob.skills.append(skill)
     db.session.commit()
     return jsonify(name=skill.skillName, id=skill.id)
@@ -294,6 +294,8 @@ def prepSort():
     probsCont = []
     probsSkill = []
     for prob in probs:
+        print(prob.question)
+        print(prob.id)
         print(prob.question + " " + str(prob.skills[1].id))
         probsCont.append(prob.question)
         probsSkill.append(str(prob.skills[1].id))
@@ -302,32 +304,37 @@ def prepSort():
     print(questions)
     print(skills)
 
-    with open('questions.txt', 'w') as filehandle:
-        for listitem in probsCont:
-            filehandle.write('%s\n' % listitem)
-
-    with open('skills.txt', 'w') as filehandle:
-        for listitem in probsSkill:
-            filehandle.write('%s\n' % listitem)
+    with open('trainingData.txt', 'w') as filehandle:
+        for i in range(len(probsCont)):
+            filehandle.write('%s\n' % probsCont[i])
+            filehandle.write('%s\n' % probsSkill[i])
 
     return render_template('main/sitemap.html')
-    #aiSort()
 
-@moddb.route('/aisort')
-def aisort():
+
+@moddb.route('/makeModel')
+def makeModel():
     questions= []
     skills = []
 
-    with open('questions.txt', 'r') as filehandle:
+    with open('trainingData.txt', 'r') as filehandle:
+        skillLine = False
         for line in filehandle:
             currentPlace = line[:-1]
-            questions.append(currentPlace)
+            if skillLine == True:
+                skills.append(currentPlace)
+            else:
+                questions.append(currentPlace)
+            skillLine = not skillLine
 
-    with open('skills.txt', 'r') as filehandle:
-        for line in filehandle:
-            currentPlace = line[:-1]
-            skills.append(currentPlace)
-    print(questions)
-    print(skills)
-    aiSort(questions, skills)
+    createModel(questions, skills)
+    return render_template('main/sitemap.html')
+
+@moddb.route('/aisort')
+def aisort():
+    input = '202+7'
+    output = int(aiSort(input))
+    outputSkill = Skill.query.filter_by(id=output).first()
+
+    print("Skill for {} was {}".format(input, outputSkill.skillName))
     return render_template('main/sitemap.html')

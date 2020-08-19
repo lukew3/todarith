@@ -34,7 +34,7 @@ def generate():
                 answer=ans,
                 poster_id=1,
                 correctnessRating=1,
-                sortRating=0,
+                sortRating=1,
                 difficultyLevel=None,
                 expectedTime=None,
                 hasSolution=True
