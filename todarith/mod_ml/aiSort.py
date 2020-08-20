@@ -15,7 +15,7 @@ def createModel(l1, l2):
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
     model.fit(train_problems, train_skills, epochs=1000)
-    model.save('models/v1')
+    model.save('models/sort/v1')
 
 def mathEncoder(mathString):
     mathDict = {
@@ -48,7 +48,7 @@ def mathEncoder(mathString):
     return encoded_math
 
 def aiSort(inputString):
-    model = keras.models.load_model('models/v1')
+    model = keras.models.load_model('models/sort/v1')
     probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
     predictions = probability_model.predict([mathEncoder(inputString)])
     print(predictions[0])
