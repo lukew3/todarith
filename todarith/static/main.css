@@ -184,6 +184,7 @@ nav ul li {
 .landingSvg {
   position: absolute;
   height: 40vh;
+  z-index: -100;
 }
 #plusSVG {
   fill: #ea7424;
@@ -209,18 +210,18 @@ nav ul li {
 #piSVG {
   height: 20vh;
   fill:#ea7424;
-  top: 125%;
-  left: 30%;
+  top: 115%;
+  left: 40%;
 }
 #sumSVG {
   fill:#0dd2b0;
-  top: 150vh;
+  top: 130vh;
   right: 10vw;
 }
 #deltaSVG {
   fill:#1aaad9;
   height: 30vh;
-  top: 200%;
+  top: 170%;
   left: 30%;
 }
 
@@ -231,10 +232,22 @@ nav ul li {
 }
 
 /* ||  */
+
+#wrap {min-height: 100%;}
+
+#main {
+  overflow:auto;
+	padding-bottom: 180px;
+}  
+
 footer {
+  position: relative;
+	margin-top: -180px; /* negative value of footer height */
+	height: 180px;
   background-color: orange;
-  height: 25vh;
+	clear:both;
 }
+
 #footer_Info {
   position: relative;
   height: 100%;
@@ -244,7 +257,7 @@ footer {
   position: relative;
   display: grid;
   margin-left: 33vw;
-  margin-top: -25vh;
+  margin-top: -20vh;
   height: 100%;
   width: 66%;
 }
@@ -283,7 +296,7 @@ footer {
   margin: 0;
 }
 .rightSideGradientBox {
-  position: relative;
+  position: fixed;
   border-radius: 15px;
   position: absolute;
   background-color: grey;

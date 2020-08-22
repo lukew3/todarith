@@ -49,8 +49,8 @@
       {% if current_user.is_authenticated %}
         <li id="navElement"><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
       {% else %}
-        <li id="navElement"><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
-        <li id="navElement"><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;
+        <!--<li id="navElement"><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
+        <li id="navElement"><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;-->
       {% endif %}
       <li id="navElement"> <!--This is the menu icon-->
         <a href="javascript:void(0);" class="icon" onclick="navHamburger()">
@@ -60,9 +60,13 @@
     </ul>
   </nav>
 
+  <div id="wrap">
+    <div id="main">
+      {% block content %}
+      {% endblock %}
+    </div>
 
-  {% block content %}
-  {% endblock %}
+  </div>
 
 
   <footer>
