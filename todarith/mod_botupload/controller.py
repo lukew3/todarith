@@ -27,12 +27,13 @@ def generate():
             ans=tup[1]
             skill=tup[2]
         print(Problem.query.filter_by(question=prob).first())
+        poster = User.query.filter_by().first()
         if Problem.query.filter_by(question=prob).first() == None: #makes sure there isnt a duplicate
             uploaded_count += 1
             Problem.create(
                 question=prob,
                 answer=ans,
-                poster_id=1,
+                poster_id=poster.id,
                 correctnessRating=1,
                 sortRating=1,
                 difficultyLevel=None,

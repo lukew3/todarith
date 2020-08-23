@@ -51,6 +51,7 @@ nav ul {
     float: right;
     margin: 0;
     padding: 0;
+    margin-right: -75px;
 }
 
 nav ul li {
@@ -68,7 +69,7 @@ nav ul li {
   float: right;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1100px) {
   .topnav ul li a {display: none;}
   .topnav ul li .icon {
     float: right;
@@ -79,7 +80,7 @@ nav ul li {
   }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1100px) {
   .topnav.responsive {position: fixed;}
   .topnav.responsive ul li .icon {
     position: absolute;
@@ -154,7 +155,7 @@ nav ul li {
   font-size: 2.5em;
 }
 
-@media (min-width: 620px) {
+@media (min-width: 1100px) {
   #st2 {
     grid-column: 2;
     grid-row: 2;
@@ -165,9 +166,9 @@ nav ul li {
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 1100px) {
   #landingInformationGrid {
-    margin-top: 190%;
+    margin-top: 100vh;
     grid-template-columns: 100%;
     grid-template-rows: 25% 25% 25% 25% 25% 25%;
   }
@@ -225,7 +226,7 @@ nav ul li {
   left: 30%;
 }
 
-@media (max-width: 620px) {
+@media (max-width: 1100px) {
   .landingSvg {
     display: none;
   }
@@ -233,12 +234,14 @@ nav ul li {
 
 /* ||  */
 
-#wrap {min-height: 100%;}
+#wrap {
+  min-height: 100%;
+}
 
 #main {
   overflow:auto;
 	padding-bottom: 180px;
-}  
+}
 
 footer {
   position: relative;
@@ -278,7 +281,7 @@ footer {
 }
 /* ||  Gradient box and description format*/
 .leftSideContainer {
-  position: relative;
+  position: absolute;
   height: 50vh;
   width: 40vw;
   top: 25vh;
@@ -296,14 +299,14 @@ footer {
   margin: 0;
 }
 .rightSideGradientBox {
-  position: fixed;
+  display: block;
   border-radius: 15px;
-  position: absolute;
   background-color: grey;
   height: 80vh;
   width: 40vw;
-  top: 12vh;
-  right: 5vw;
+  margin-top: 10vh;
+  margin-left: 55vw;
+  margin-bottom: 10vh;
 }
 
 /* || db/ask page */
@@ -332,12 +335,15 @@ footer {
 
 @media (max-width: 1000px) {
   .leftSideContainer {
+    display: none;
     top: 95%;
     width: 90%;
   }
   .leftSideHeadline { font-size: 3em; }
   .rightSideGradientBox {
     width: 90vw;
+    margin-top: 10vh;
+    margin-left: 5vw;
   }
 }
 

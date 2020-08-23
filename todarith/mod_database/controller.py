@@ -102,7 +102,7 @@ def ask_get_problem_input():
     if current_user.is_authenticated:
         poster = current_user.id
     else:
-        poster = 1
+        poster = (User.query.filter_by().first()).id
     dbAns = getDBAnswer(prob)
     solution = dbAns
     if dbAns=="unavailable":
@@ -147,7 +147,7 @@ def ask_add_solved():
     if current_user.is_authenticated:
         poster = current_user.id
     else:
-        poster = 1
+        poster = (User.query.filter_by().first()).id
     if db.session.query(Problem).filter_by(question=prob).first() != None:
         pass
     else:
@@ -178,7 +178,7 @@ def add_get_problem_input():
     if current_user.is_authenticated:
         poster = current_user.id
     else:
-        poster = 1
+        poster = (User.query.filter_by().first()).id
     if db.session.query(Problem).filter_by(question=prob).first() != None:
         return jsonify(result="Duplicate Found")
     else:
@@ -216,7 +216,7 @@ def get_answer_input():
     if current_user.is_authenticated:
         poster = current_user.id
     else:
-        poster = 1
+        poster = (User.query.filter_by().first()).id
     currentProblem = db.session.query(Problem).filter_by(question=prob).first()
     currentProblem.update(
         answer = ans,
