@@ -20,7 +20,7 @@
     <select id="answer_skillSelector" onchange="getSkillProbs(this)">
       <!--<option value="math">math</option>-->
       {% for skill in skills %}
-        <option value="{{ skill.id }}">{{ skill.skillName }}</option>
+        <option value="{{ skill.skillName }}">{{ skill.skillName }}</option>
       {% endfor %}
     </select>
     <div id="modeSelector">
