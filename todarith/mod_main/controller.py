@@ -56,7 +56,7 @@ def viewTopic(topicId):
     topic = Topic.query.filter_by(id=topicId).first()
     return render_template('main/viewTopic.html', topic=topic, problems=problems)
 
-@main.route('/user/<int:userId>')
+@main.route('/user/<string:userId>')
 def viewUser(userId):
     page = request.args.get('page', 1, type=int)
     problems = Problem.query.filter_by(poster_id=userId).paginate(page=page, per_page=50)

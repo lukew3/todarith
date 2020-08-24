@@ -59,11 +59,11 @@ def skillFilter(skills):
 # Set the route and accepted methods
 @moddb.route('/', methods=['GET', 'POST'])
 @moddb.route('/<string:getSkills>', methods=['GET'])
-def browse(getSkills='1'):
+def browse(getSkills='Math'):
     skillIds = getSkills.split('&')
     skills = []
     for skill in skillIds:
-        skills.append(Skill.query.filter_by(id=skill).first())
+        skills.append(Skill.query.filter_by(skillName=skill).first())
 
     if len(skills)==1:
         allProbs = skills[0].problems
@@ -286,3 +286,9 @@ def remove_skill():
     prob.skills.remove(skill)
     db.session.commit()
     return ""
+
+
+@moddb.route("/<string:problem_id>")
+def viewProblem(problem_id):
+    problem = Problem.query.get_or_404(problem_id)
+    return render_template('post/problem.html', problem=problem)
