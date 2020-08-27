@@ -579,3 +579,7 @@ footer {
 }
 
 /* || sort page */
+
+#sortGradientBox {
+  background-image: linear-gradient(to top right, #be3ca7, #0dd2b0);
+}

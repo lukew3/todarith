@@ -60,9 +60,9 @@ def skillFilter(skills):
 @moddb.route('/', methods=['GET', 'POST'])
 @moddb.route('/<string:getSkills>', methods=['GET'])
 def browse(getSkills='Math'):
-    skillIds = getSkills.split('&')
+    skillNames = getSkills.split('&')
     skills = []
-    for skill in skillIds:
+    for skill in skillNames:
         skills.append(Skill.query.filter_by(skillName=skill).first())
 
     if len(skills)==1:
@@ -259,7 +259,7 @@ def sort_next_problem():
 @moddb.route('/_add_skill')
 def add_skill():
     skillId = request.args.get('skillId', 0, type=int)
-    probId = request.args.get('probId', 0, type=int)
+    probId = request.args.get('probId', "", type=str)
     prob = Problem.query.filter_by(id=probId).first()
     prob.sortRating = 1
     skill = Skill.query.filter_by(id=skillId).first()
@@ -278,8 +278,9 @@ def create_skill():
 
 @moddb.route('/_remove_skill')
 def remove_skill():
+    print("made it here")
     skillId = request.args.get('skillId', 0, type=int)
-    probId = request.args.get('probId', 0, type=int)
+    probId = request.args.get('probId', "", type=str)
     prob = Problem.query.filter_by(id=probId).first()
     skill = Skill.query.filter_by(id=skillId).first()
 
@@ -288,7 +289,7 @@ def remove_skill():
     return ""
 
 
-@moddb.route("/<string:problem_id>")
+@moddb.route("/viewProb/<string:problem_id>")
 def viewProblem(problem_id):
-    problem = Problem.query.get_or_404(problem_id)
-    return render_template('post/problem.html', problem=problem)
+    problem = Problem.query.filter_by(id=problem_id).first()
+    return render_template('database/problem.html', problem=problem)

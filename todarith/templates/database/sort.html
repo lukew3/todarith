@@ -9,6 +9,7 @@
 
 {% block content %}
 
+  <p id="hiddenId" style="display: none">{{ problem.id }}</p>
   <div class="leftSideContainer">
     <h1 class="leftSideHeadline">Help Sort Problems</h1>
     <h3 class="leftSideDescription">On this page you can add skills to problems
@@ -48,111 +49,7 @@
     </div>
   </div>
 
+  <script src="{{ url_for('static', filename='js/sort.js') }}">
+</script>
 
-  <script type=text/javascript>
-    var curProbId = {{ problem.id }};
-    var selectedSkillId = 0;
-
-    function displaySkill(name, id) {
-      var temp = document.querySelector('template').content;
-      var li = temp.querySelector('li');
-      var text_to_change = li.childNodes[0];
-      text_to_change.nodeValue = name;
-      li.id = "sortSkill_" + id;
-      if (li.childNodes[1] != undefined) {
-        li.removeChild(li.childNodes[1])
-      }
-      var a = document.createElement("a");
-      a.innerHTML = '<a style="color: blue" href="#" onclick="removeSkill(' + id.toString() + ', ' + curProbId.toString() + ')"> remove</a>';
-      li.appendChild(a);
-      document.querySelector('#skillsList').appendChild(document.importNode(temp, true));
-    }
-
-    $(function() {
-      $('button#btn_flag').bind('click', function() {
-        $.getJSON($SCRIPT_ROOT + '/db/_flag_problem', {
-          //nada
-        }, function(data) {
-          //nope
-        });
-        return false;
-      });
-    });
-
-    $(function() {
-      $('button#btn_next').bind('click', function() {
-        $.getJSON($SCRIPT_ROOT + '/db/sort/_next_problem', {
-          //zip
-        }, function(data) {
-          console.log(data)
-           document.getElementById("sort_problem").innerHTML = data.problem;
-           document.getElementById("sort_answer").innerHTML = data.answer;
-           curProbId = data.id;
-
-           //Clear skills and add new ones
-           document.getElementById("skillsList").innerHTML = "";
-           skills = data.skills
-           console.log(skills)
-           console.log(data.skills[0].skillName)
-           skillsLen = Object.keys(data.skills).length
-           for (i = 0; i < skillsLen; i++) {
-             displaySkill(data.skills[i].skillName, data.skills[i].skillId);
-           }
-        });
-        return false;
-      });
-    });
-
-    function removeSkill(skillId, probId) {
-      console.log("remove began")
-      $.getJSON($SCRIPT_ROOT + '/db/_remove_skill', {
-        skillId: skillId,
-        probId: probId,
-      }, function(data) {
-      });
-      skillListItem= document.getElementById("sortSkill_" + skillId.toString())
-      skillListItem.parentNode.removeChild(skillListItem);
-      console.log("Skill Removed");
-    }
-
-    function addSkill() {
-      console.log(selectedSkillId + " added")
-      if (curProbId != undefined ) {
-        probId = curProbId;
-      } else {
-        console.log("no skill selected")
-      }
-      $.getJSON($SCRIPT_ROOT + '/db/_add_skill', {
-        probId: probId,
-        skillId: selectedSkillId,
-      }, function(data) {
-        displaySkill(data.name, data.id);
-        console.log("yep");
-      });
-    }
-
-    function createSkill() {
-      $.getJSON($SCRIPT_ROOT + '/db/_create_skill', {
-        skillName: document.querySelector('#sort_addSkillQuery').value,
-      }, function(data) {
-        selectedSkillId = data.id;
-        addSkill()
-      });
-    }
-
-    function queryEdited() {
-      const queryBox = document.querySelector('#sort_addSkillQuery');
-      console.log("Query is: " + queryBox.value)
-      query = queryBox.value
-      $.getJSON($SCRIPT_ROOT + '/db/_get_skill_query', {
-        query: query,
-      }, function(data) {
-        console.log(data.returnSkills);
-        queryResults = data.returnSkills;
-          document.getElementById('sort_queryResult').innerHTML = (queryResults[0].name)
-          selectedSkillId = queryResults[0].id;
-          console.log(selectedSkillId)
-      });
-    }
-  </script>
 {% endblock content %}
