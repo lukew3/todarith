@@ -260,9 +260,10 @@ footer {
   width: 33vw;
 }
 #footer_Sitemap {
+  position: relative;
   display: grid;
   margin-left: 33vw;
-  margin-top: -20vh;
+  margin-top: -11em;
   height: 100%;
   width: 66%;
 }
