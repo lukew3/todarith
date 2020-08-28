@@ -50,7 +50,8 @@
   <nav class="topnav" id="myTopnav">
     <a id="navTitle" href="{{ url_for('main.landing') }}">Todarith</a>
     <ul id="navList">
-      <li id="navElement"><a href="{{ url_for('main.siteMap') }}">Sitemap</a></li> &nbsp;
+
+
       <li id="navElement"><a href="{{ url_for('moddb.ask') }}">Ask</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('moddb.answer') }}">Answer</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('moddb.add') }}">Add</a></li> &nbsp;
@@ -58,6 +59,7 @@
       <li id="navElement"><a href="{{ url_for('moddb.sort') }}">Sort</a></li> &nbsp;
       <!--<li id="navElement"><a href="{{ url_for('moddb.browse') }}">Browse</a></li> &nbsp;-->
       <li id="navElement"><a href="{{ url_for('learn.practice') }}">Practice</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('main.about') }}">About</a></li> &nbsp;
       {% if current_user.is_authenticated %}
         <li id="navElement"><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
       {% else %}
@@ -72,6 +74,8 @@
     </ul>
   </nav>
 
+  <div id="topBuffer">
+  </div>
   <div id="wrap">
     <div id="main">
       {% block content %}
@@ -90,7 +94,7 @@
       <div id="footer_About" class="footer_Section">
         <h2 class="footerSubtitle">About</h2>
         <hr>
-        <h3 class="footerSec_Link"><a href="#">Something</a></h3>
+        <h3 class="footerSec_Link"><a href="{{ url_for('main.about') }}">About</a></h3>
       </div>
       <div id="footer_Database" class="footer_Section">
         <h2 class="footerSubtitle">Database</h2>
@@ -104,12 +108,12 @@
       <div id="footer_Generate" class="footer_Section">
         <h2 class="footerSubtitle">Generate</h2>
         <hr>
-        <h3 class="footerSec_Link"><a href="#">Something</a></h3>
+        <h3 class="footerSec_Link"><a href="#">Nothing Yet</a></h3>
       </div>
       <div id="footer_Learn" class="footer_Section">
         <h2 class="footerSubtitle">Learn</h2>
         <hr>
-        <h3 class="footerSec_Link"><a href="#">Something</a></h3>
+        <h3 class="footerSec_Link"><a href="{{ url_for('learn.practice') }}">Practice</a></h3>
       </div>
     </div>
   </footer>

@@ -82,8 +82,12 @@
         if (newURL == oldURL) {
           newURL = oldURL.replace(skillname.toString()+"&", '');
         }
+        if (newURL == oldURL) {
+          newURL = oldURL.replace(skillname.toString(), '');
+        }
         window.location.href = "http://localhost:5000/db/"+newURL;
-      }
+    }
+    
     function addSkillClicked() {
       console.log("hellopeople")
       document.getElementById("addSkillPage").style.display = "block";

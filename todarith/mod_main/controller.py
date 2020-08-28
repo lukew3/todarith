@@ -11,16 +11,11 @@ from todarith.mod_main import main
 # Set the route and accepted methods
 @main.route('/')
 def landing():
-    """
-    myprob = Problem.query.filter_by(id=3).first()
-    myskill = Skill.query.filter_by(id=2).first()
-    if myskill not in myprob.skills:
-        myprob.skills.append(myskill)
-    #myprob.skills.remove(myskill)
-    print(myprob.skills)
-    db.session.commit()
-    """
     return(render_template("main/landing.html"))
+
+@main.route('/about')
+def about():
+    return(render_template("main/about.html"))
 
 @main.route('/explore')
 def explore():

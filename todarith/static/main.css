@@ -30,6 +30,9 @@ a {
 
 /* || Navbar formatting */
 
+#topBuffer {
+  height: 4em;
+}
 nav {
   background-color: rgba(18,29,40,0.5);
   margin: none;
@@ -247,7 +250,7 @@ footer {
   position: relative;
 	margin-top: -180px; /* negative value of footer height */
 	height: 180px;
-  background-color: orange;
+  background-color: #EB5160;
 	clear:both;
 }
 
@@ -257,7 +260,6 @@ footer {
   width: 33vw;
 }
 #footer_Sitemap {
-  position: relative;
   display: grid;
   margin-left: 33vw;
   margin-top: -20vh;
@@ -460,7 +462,7 @@ footer {
   position: relative;
   height: 90%;
   width: 90%;
-  margin-top: 30vh;
+  margin-top: calc(30vh - 4em);
   margin-left: 5%;
 }
 
