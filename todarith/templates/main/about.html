@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+
+{% endblock head %}
+
+{% block content %}
+
+  <div>
+  <h1>About</h1>
+  <h2>Learning Deserves An Upgrade</h2>
+  <p>Math shouldn't be hard. It's natural, and present in everyday life.
+    However, the classroom can make it hard. That's why I created Todarith.
+    Todarith was created to help students by innovating in the latest technologies
+    in order to better help those with a passion to learn.
+  </p>
+  <p>One big flaw I find in the classroom teaching environment is that the pace is
+    different for different people. Some people can manage with a quick explanation,
+    while others want a longer more in depth explanation</p>
+
+  <h2>Past, Present, and Future</h2>
+  <h3>Past (What we've done)</h3>
+  <ul>
+    <li>Create a database for math problems</li>
+    <li>Create a system where users can ask and answer problems with each other</li>
+    <li>Enable a computer to sort problems into certain skills</li>
+  </ul>
+  <h3>Present (What's in progress)</h3>
+  <ul>
+    <li>Creating a way to add problems to sets and study or share certain problems</li>
+    <li>Open sourcing a hard-coded math problem generator</li>
+    <li>Create a rewards system for those who contribute to the site</li>
+  </ul>
+  <h3>Future (What's going to happen)</h3>
+  <ul>
+    <li>Create a system for open-sourcing lessons</li>
+    <li>Create a math problem generator that generates problems using machine learning</li>
+  </ul>
+
+  </div>
+{% endblock content %}

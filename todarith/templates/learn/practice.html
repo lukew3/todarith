@@ -18,7 +18,15 @@
   </div>
 
   <div id="practiceGradientBox" class="rightSideGradientBox">
+    <!--$$\sum_{n=1}^{\infty} 2^{-n} = 1$$-->
     <div id="practiceContentContainer">
+      <h3>Select Skill</h3>
+      <select id="practice_skillSelector" onchange="practice_changeSkill(this)">
+        {% for skill in skills %}
+          <option value="{{ skill.id }}">{{ skill.skillName }}</option>
+        {% endfor %}
+      </select>
+      <!--
       <div id="practiceSettings">
         <div class="practiceSettingsSection">
           <h3 class="pracSetsLabel">Category: </h3>
@@ -33,14 +41,17 @@
           <h3 id="timeValue" class="pracSetsValue">somethings</h3>
         </div>
       </div>
+      -->
+      <!--
       <div id="modeSelector">
         <svg id="cardSelected" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.72 38"><defs><style>.cls-1{fill:none;stroke:#fff;stroke-miterlimit:10;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" x="0.5" y="0.5" width="37" height="37" rx="5.99"/><line class="cls-1" x1="45.5" y1="0.5" x2="45.5" y2="37.5"/><path class="cls-1" d="M29.68,7.37,19.58,5.9a2.6,2.6,0,0,0-1.72.35c.85.51,3.05.11,3.95,1.11s.69,3.6.69,4.73V25.72c0,1.36.23,3.87-.44,5.35-.34.75-.7,1-1.84,1.2l5.7.83a2.64,2.64,0,0,0,3-2.23l3-20.5A2.64,2.64,0,0,0,29.68,7.37Z"/><path class="cls-1" d="M19.85,32.5H9.65A2.64,2.64,0,0,1,7,29.85V9.15A2.64,2.64,0,0,1,9.65,6.5h10.2A2.64,2.64,0,0,1,22.5,9.15v20.7A2.64,2.64,0,0,1,19.85,32.5Z"/><line class="cls-1" x1="55.65" y1="8.37" x2="77.72" y2="8.37"/><line class="cls-1" x1="55.65" y1="15.46" x2="77.19" y2="15.46"/><line class="cls-1" x1="55.65" y1="22.55" x2="77.19" y2="22.55"/><line class="cls-1" x1="55.47" y1="29.63" x2="77.19" y2="29.63"/><line class="cls-1" x1="55.96" y1="7.9" x2="55.96" y2="29.77"/><line class="cls-1" x1="63.16" y1="8.23" x2="63.16" y2="29.77"/><line class="cls-1" x1="77.19" y1="8.37" x2="77.19" y2="30.13"/></g></g></svg>
       </div>
+      -->
       <div id="practiceMain">
         <h2>Problem</h2>
-        <span id="practiceProblem" class="practiceMathField">ProblemContents</span>
+        <span id="practiceProblem" class="practiceMathField">Loading...</span>
         <h2>Answer</h2>
-        <span id="answer" class="mathquillField practiceMathField"></span>
+        <input type="text" id="practice_answerInput" name="askInput">
       </div>
 
       <div id="practiceStatsBox">
@@ -52,10 +63,12 @@
           <h3 class="pracStatsLabel">Score:</h3>
           <h3 id="scoreValue" class="pracStatsValue">0/0</h3>
         </div>
+        <!--
         <div class="practiceStatsSection">
           <h3 class="pracStatsLabel">Time:</h3>
           <h3 id="timeValue" class="pracStatsValue">0:00</h3>
         </div>
+        -->
       </div>
 
       <button id='btn_submit' type="submit" name="button">Submit</button>
@@ -67,14 +80,7 @@
 
 <script>
 
-  var answerSpan = document.getElementById('answer');
-  var answerMathField = MQ.MathField(answerSpan, {
-    handlers: {
-      edit: function() {
-        enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
-      }
-    }
-  });
+
 
   var usedProbs = [];
   var selectedCategory = 1;
@@ -84,10 +90,13 @@
   var ansCount = 0;
   var streak = 0;
   var time = 0;
+  var answerCont = document.getElementById('practice_answerInput');
   prob = document.getElementById('practiceProblem');
+  var selectValue = document.getElementById('practice_skillSelector').value;
 
   $( window ).on( "load", function() {
-    $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_problem', {
+    myUrl = '/learn/practice/_get_problem/' + selectValue;
+    $.getJSON($SCRIPT_ROOT + myUrl, {
       usedProbs: usedProbs,
       category: selectedCategory,
       difficulty: selectedDifficulty,
@@ -95,14 +104,18 @@
     }, function(data) {
       problem = data.problem;
       console.log(problem)
+      document.getElementById('practiceProblem').innerHTML = problem.problem
+      /*
       katex.render((problem["problem"]), prob, {
         throwOnError: false
       });
+      */
     });
     return false;
   });
 
   function checkAnswer() {
+    enteredAnswer = answerCont.value;
     if (enteredAnswer==problem["answer"]) {
       score++;
       streak++;
@@ -117,11 +130,13 @@
   }
 
   function updateProbStats() {
+    /*
     katex.render((problem["problem"]), prob, {
       throwOnError: false
     });
-    answerMathField.select();
-    answerMathField.write("");
+    */
+    document.getElementById('practiceProblem').innerHTML = problem.problem
+    answerCont.value = "";
     document.getElementById('streakValue').innerHTML = streak;
     document.getElementById('scoreValue').innerHTML = (score+"/"+ansCount);
   }
@@ -129,7 +144,8 @@
   $(function() {
     $('button#btn_submit').bind('click', function() {
       console.log("activated")
-      $.getJSON($SCRIPT_ROOT + '/learn/practice/_get_problem', {
+      myUrl = '/learn/practice/_get_problem/' + selectValue;
+      $.getJSON($SCRIPT_ROOT + myUrl, {
         usedProbs: usedProbs,
       }, function(data) {
         checkAnswer()
@@ -140,6 +156,16 @@
     });
   });
 
+
+  function practice_changeSkill(selectObject) {
+    var selectValue = selectObject.value;
+    $.getJSON($SCRIPT_ROOT + '/learn/practice/_skill_select', {
+      skillId: selectValue
+    }, function(data) {
+      problem = data.problem;
+      updateProbStats();
+    });
+  }
 
 </script>
 {% endblock content %}

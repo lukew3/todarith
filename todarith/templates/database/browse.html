@@ -9,15 +9,144 @@
 {% endblock head %}
 
 {% block content %}
+  <div id="browse_buffer">
+  </div>
+  <div id="paramCont">
+    Skills:
+    {% for skill in skills %}
+      <div id="skillCard_{{ skill.id }}" class="browse_skillCard">
+        <a id="browse_SkillName" href="{{ url_for('moddb.browse', getSkills=skill.skillName ) }}">{{ skill.skillName }}</a>
+        <svg class="browseSkillButton" onclick="removeSkill('{{ skill.skillName }}')" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"/></svg>
+      </div>
+    {% endfor %}
+      <div id="addSkillCard" class="browse_skillCard" onclick="addSkillClicked()">
+        <a id="browse_SkillName">Add A Skill</a>
+        <svg id="browseAddSkill" class="browseSkillButton" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
+      </div>
+  </div>
+  <div id="browseCont">
 
-  <div class="leftSideContainer">
-    <h1 class="leftSideHeadline">Browse Problems!</h1>
-    <h3 class="leftSideDescription"> Here you can browse the database and see all
-      that todarith has to offer.</h3>
+    <div id="browseProbCont">
+      {% for problem in problems %}
+      <div class="probCont">
+        <div class="questionCont">
+          <a id="browse_prob" href="{{ url_for('moddb.viewProblem', problem_id=problem.id) }}">$${{ problem.question }}$$</a>
+        </div>
+        {% for skill in problem.skills %}
+        <div class="skillBox">
+          <!--<a href="#">{{ skill.skillName }}</a>-->
+        </div>
+        {% endfor %}
+        <a class="browse_author" href="{{ url_for('main.viewUser', userId=problem.poster.id) }}">{{ problem.poster.username }}</a>
+        <div id="browse_levels">
+          <p>Dif: {{ problem.difficultyLevel }}</p>
+          <p>Time: {{ problem.expectedTime }}</p>
+        </div>
+      </div>
+      <hr style="color: #121d28;">
+      {% endfor %}
+    </div>
+  </div>
+  <div id="pageNav">
+    <a class="btn btn-info mb-4" onclick="firstPage()" href="javascript:void(0);"><<</a>
+    <a class="btn btn-info mb-4" onclick="previousPage()" href="javascript:void(0);"><</a>
+    <a class="btn btn-info mb-4" href="">{{ page }}</a>
+    <a class="btn btn-info mb-4" onclick="nextPage()" href="javascript:void(0);">></a>
+    <a class="btn btn-info mb-4" onclick="lastPage()" href="javascript:void(0);">>></a>
+  </div>
+  <div id="addSkillPage">
+    <div id="addSkillForm">
+      <svg id="browse_exitSkillBtn" onclick="exitAddSkill()" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"/></svg>
+      <input type="text" id="browse_addSkillQuery" oninput="queryEdited()" placeholder="Search For A Skill"></input>
+      <div id="browse_skillList">
+        <h1 id="browse_queryResult"></h1>
+      </div>
+      <button id="browse_addSkillBtn" onclick="addSkill()">Add</button>
+    </div>
   </div>
 
-  <div id="browseGradientBox" class="rightSideGradientBox">
+  <script>
+    selectedSkill="";
+    page = {{ page }}
+    lastPageNum = {{ lastPage }}
+    if (page == undefined) {
+      page = 1;
+    }
+    function removeSkill(skillname) {
+      console.log("this worked");
+        oldURL = (window.location.pathname).substring(4)
+        newURL = oldURL.replace("&"+skillname.toString()+"&", '');
+        if (newURL == oldURL) {
+          newURL = oldURL.replace("&"+skillname.toString(), '');
+        }
+        if (newURL == oldURL) {
+          newURL = oldURL.replace(skillname.toString()+"&", '');
+        }
+        if (newURL == oldURL) {
+          newURL = oldURL.replace(skillname.toString(), '');
+        }
+        window.location.href = "http://localhost:5000/db/"+newURL;
+    }
     
-  </div>
+    function addSkillClicked() {
+      console.log("hellopeople")
+      document.getElementById("addSkillPage").style.display = "block";
+    }
+
+    function exitAddSkill() {
+      document.getElementById("addSkillPage").style.display = "none";
+    }
+
+    function addSkill() {
+      document.getElementById("addSkillPage").style.display = "none";
+      oldURL = (window.location.pathname).substring(4)
+      console.log(oldURL)
+      if (oldURL == "") {
+        newURL = oldURL.concat(selectedSkill);
+      } else {
+        newURL = oldURL.concat("&", selectedSkill);
+      }
+      window.location.href = "http://localhost:5000/db/"+newURL;
+    }
+
+    function queryEdited() {
+      const queryBox = document.querySelector('#browse_addSkillQuery');
+      console.log("Query is: " + queryBox.value)
+      query = queryBox.value
+      $.getJSON($SCRIPT_ROOT + '/db/_get_skill_query', {
+        query: query,
+      }, function(data) {
+        console.log(data.returnSkills);
+        queryResults = data.returnSkills;
+          document.getElementById('browse_queryResult').innerHTML = (queryResults[0].name)
+          selectedSkill = queryResults[0].name;
+          console.log(selectedSkill)
+      });
+
+    }
+    function firstPage() {
+      oldURL = window.location.href;
+      newURL = oldURL.split("?")[0] + "?page=" + 1;
+      window.location.href = newURL;
+    }
+    function previousPage() {
+      oldURL = window.location.href;
+      if (page != 1) {
+        window.location.href = oldURL.split("?")[0] + "?page=" + (page-1);
+      }
+    }
+    function nextPage() {
+      oldURL = window.location.href;
+      if (page != lastPageNum) {
+        window.location.href = oldURL.split("?")[0] + "?page=" + (parseInt(page)+1);
+      }
+    }
+    function lastPage() {
+      oldURL = window.location.href;
+      newURL = oldURL.split("?")[0] + "?page=" + lastPageNum;
+      window.location.href = newURL;
+    }
+
+  </script>
 
 {% endblock content %}

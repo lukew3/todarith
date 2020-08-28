@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+
+{% endblock head %}
+
+{% block content %}
+
+  <div class="leftSideContainer">
+    <h1 class="leftSideHeadline">Help Answer Problems</h1>
+    <h3 class="leftSideDescription">On this page you can solve user-submitted
+    problems</h3>
+  </div>
+
+  <div id="answerGradientBox" class="rightSideGradientBox">
+
+    <div id="modeSelector">
+      <div id="cardSvg"></div>
+      <div id="tableSvg"></div>
+    </div>
+
+    <div class="formBox">
+      No problems to answer right now
+    </div>
+    <p id="foundStatus"></p>
+    <p id="answer"></p>
+  </div>
+
+  <script>
+      function probSubmit() {
+
+      }
+  </script>
+
+
+  <script>
+    makeMathFields()
+    function makeMathFields() {
+      var problemSpan = document.getElementById('problem');
+      problemMathField = MQ.MathField(problemSpan, {
+        handlers: {
+          edit: function() {
+            enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
+          }
+        }
+      });
+
+      var answerSpan = document.getElementById('answer');
+      answerMathField = MQ.MathField(answerSpan, {
+        handlers: {
+          edit: function() {
+            enteredAnswer = answerMathField.latex(); // Get entered math in LaTeX format
+          }
+        }
+      });
+
+      var categorySpan = document.getElementById('category');
+      categoryMathField = MQ.MathField(categorySpan, {
+        handlers: {
+          edit: function() {
+            enteredCategory = categoryMathField.latex(); // Get entered math in LaTeX format
+          }
+        }
+      });
+    }
+  </script>
+
+  <script type=text/javascript>
+    var problemMathField, answerMathField, categoryMathField;
+    var enteredProblem, enteredAnswer, enteredCategory;
+
+    $(function() {
+      $('button#btn_submit').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_get_answer_input', {
+          problem: problemMathField.latex(),
+          answer: enteredAnswer,
+          category: enteredCategory
+        }, function(data) {
+          problemMathField.select();
+          problemMathField.write(data.problem);
+          answerMathField.select();
+          answerMathField.write(data.answer);
+          categoryMathField.select();
+          categoryMathField.write(data.category);
+        });
+        return false;
+      });
+    });
+
+    $(function() {
+      $('button#btn_flag').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_flag_problem', {
+          problem: problemMathField.latex()
+        }, function(data) {
+          problemMathField.select();
+          problemMathField.write(data.problem);
+          answerMathField.select();
+          answerMathField.write(data.answer);
+          categoryMathField.select();
+          categoryMathField.write(data.category);
+        });
+        return false;
+      });
+    });
+
+    $(function() {
+      $('button#btn_skip').bind('click', function() {
+        console.log("activated")
+        $.getJSON($SCRIPT_ROOT + '/db/answer/_skip_problem', {
+          problem: problemMathField.latex()
+        }, function(data) {
+          problemMathField.select();
+          problemMathField.write(data.problem);
+          answerMathField.select();
+          answerMathField.write(data.answer);
+          categoryMathField.select();
+          categoryMathField.write(data.category);
+        });
+        return false;
+      });
+    });
+  </script>
+{% endblock content %}

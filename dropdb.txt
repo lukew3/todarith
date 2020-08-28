@@ -1,0 +1,5 @@
+sudo su
+su - postgres
+dropdb todarith
+createdb todarith
+

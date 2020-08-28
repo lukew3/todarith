@@ -1,4 +1,4 @@
-from todarith.models import Problem, Topic, User
+from todarith.models import Problem, Skill, User
 from todarith.database import db
 
 def getDBAnswer(query):

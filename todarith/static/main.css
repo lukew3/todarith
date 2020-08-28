@@ -30,6 +30,9 @@ a {
 
 /* || Navbar formatting */
 
+#topBuffer {
+  height: 4em;
+}
 nav {
   background-color: rgba(18,29,40,0.5);
   margin: none;
@@ -51,6 +54,7 @@ nav ul {
     float: right;
     margin: 0;
     padding: 0;
+    margin-right: -75px;
 }
 
 nav ul li {
@@ -68,7 +72,7 @@ nav ul li {
   float: right;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1100px) {
   .topnav ul li a {display: none;}
   .topnav ul li .icon {
     float: right;
@@ -79,7 +83,7 @@ nav ul li {
   }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1100px) {
   .topnav.responsive {position: fixed;}
   .topnav.responsive ul li .icon {
     position: absolute;
@@ -134,11 +138,11 @@ nav ul li {
 /* || landing page layout */
 
 #landingInformationGrid {
-  position: absolute;
-  top: 92%;
+  margin-top: 50%;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 33% 33% 33%;
+  padding-bottom: 10%;
 }
 
 .landingSemisection {
@@ -154,7 +158,7 @@ nav ul li {
   font-size: 2.5em;
 }
 
-@media (min-width: 620px) {
+@media (min-width: 1100px) {
   #st2 {
     grid-column: 2;
     grid-row: 2;
@@ -165,8 +169,9 @@ nav ul li {
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 1100px) {
   #landingInformationGrid {
+    margin-top: 100vh;
     grid-template-columns: 100%;
     grid-template-rows: 25% 25% 25% 25% 25% 25%;
   }
@@ -182,55 +187,101 @@ nav ul li {
 
 .landingSvg {
   position: absolute;
-  height: 40%;
+  height: 40vh;
+  z-index: -100;
 }
 #plusSVG {
   fill: #ea7424;
-  top: 20%;
-  left:-10%;
+  top: 20vh;
+  left: -5vw;
 }
 #minusSVG {
+  height: 15vh;
   fill: #0dd2b0;
-  position: absolute;
-  height: 15%;
-  top: 15%;
-  right: 5%;
+  top: 20vh;
+  right: 0vw;
 }
 #multiplySVG {
   fill:#1aaad9;
-  top: 70%;
-  left: 20%;
+  top: 80%;
+  left: 15%;
 }
 #divideSVG {
   fill:#be3ca7;
   top: 55%;
-  right: 10%;
+  right: 15%;
 }
 #piSVG {
+  height: 20vh;
   fill:#ea7424;
-  height: 20%;
-  top: 120%;
-  left: 0%;
+  top: 115%;
+  left: 40%;
 }
 #sumSVG {
   fill:#0dd2b0;
-  height: 40%;
-  top: 130%;
-  right: 10%;
+  top: 130vh;
+  right: 10vw;
 }
 #deltaSVG {
   fill:#1aaad9;
-  height: 30%;
+  height: 30vh;
   top: 170%;
   left: 30%;
 }
 
-@media (max-width: 620px) {
+@media (max-width: 1100px) {
   .landingSvg {
     display: none;
   }
 }
 
+/* ||  */
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow:auto;
+	padding-bottom: 180px;
+}
+
+footer {
+  position: relative;
+	margin-top: -180px; /* negative value of footer height */
+	height: 180px;
+  background-color: #EB5160;
+	clear:both;
+}
+
+#footer_Info {
+  position: relative;
+  height: 100%;
+  width: 33vw;
+}
+#footer_Sitemap {
+  position: relative;
+  display: grid;
+  margin-left: 33vw;
+  margin-top: -11em;
+  height: 100%;
+  width: 66%;
+}
+.footer_Section {
+
+}
+#footer_About {
+  grid-column: 1;
+}
+#footer_Database {
+  grid-column: 2;
+}
+#footer_Generate {
+  grid-column: 3;
+}
+#footer_Learn {
+  grid-column: 4;
+}
 /* ||  Gradient box and description format*/
 .leftSideContainer {
   position: absolute;
@@ -238,6 +289,7 @@ nav ul li {
   width: 40vw;
   top: 25vh;
   left: 5vw;
+  margin-bottom: 25%;
 }
 
 .leftSideHeadline {
@@ -250,13 +302,14 @@ nav ul li {
   margin: 0;
 }
 .rightSideGradientBox {
+  display: block;
   border-radius: 15px;
-  position: absolute;
   background-color: grey;
   height: 80vh;
   width: 40vw;
-  top: 12vh;
-  right: 5vw;
+  margin-top: 10vh;
+  margin-left: 55vw;
+  margin-bottom: 10vh;
 }
 
 /* || db/ask page */
@@ -278,29 +331,40 @@ nav ul li {
 .formLabel {
   width: 20%;
 }
+
 .mathquillField {
   width: 100%;
 }
 
 @media (max-width: 1000px) {
   .leftSideContainer {
+    display: none;
     top: 95%;
     width: 90%;
   }
   .leftSideHeadline { font-size: 3em; }
   .rightSideGradientBox {
     width: 90vw;
+    margin-top: 10vh;
+    margin-left: 5vw;
   }
 }
 
 /* || Login and register form formatting */
+.invisibleBox {
+  position: relative;
+  display: block;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
 .authFormBox {
   background-color: grey;
   width: 15%;
   position: absolute;
   left: 37.5%;
   top: 25%;
-  height: 40%;
+  height: 50%;
   padding: 5%;
 }
 .form-control {
@@ -375,6 +439,150 @@ nav ul li {
 }
 
 /* || db/browse page */
-#browseGradientBox {
-  background-image: linear-gradient(to top right, #1aaad9, #0dd2b0);
+#browse_buffer {
+  position: fixed;
+  background-color: #121d28;
+  color: orange;
+  height: 15vh;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+
+#paramCont {
+  position: fixed;
+  display: block;
+  height: 10vh;
+  width: 100%;
+  top: 0;
+  margin-top: 15vh;
+  background-color: orange;
+  z-index: 1;
+}
+#browseCont {
+  position: relative;
+  height: 90%;
+  width: 90%;
+  margin-top: calc(30vh - 4em);
+  margin-left: 5%;
+}
+
+
+#browseProbCont {
+  position: relative;
+  display: block;
+  top: 0%;
+  min-height: 100%;
+  width: 100%;
+}
+
+.probCont {
+  position: relative;
+  background-color: #ed5466;
+  width: 100%;
+  height: 10vh;
+}
+.questionCont {
+  position: relative;
+  width: 0%;
+}
+.skillBox {
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 30%;
+}
+
+.browse_author {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#browse_levels {
+  text-align: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#pageNav {
+  margin-top: 5%;
+  margin-left: 45%;
+}
+
+.browse_skillCard {
+  position: relative;
+  display: inline-block;
+  height: 50%;
+  background-color: darkgrey;
+  margin-top: 1%;
+}
+
+#browse_SkillName {
+  position: relative;
+  top: 10%;
+  margin-left: 10%;
+  margin-right: -10%;
+}
+.browseSkillButton {
+  position: relative;
+  height: 50%;
+  top: 25%;
+}
+#addSkillCard {
+  position: relative;
+  width: 8em;
+}
+#browseAddSkill {
+  margin-left: 10%;
+}
+#addSkillPage {
+  position: fixed;
+  display: none;
+  height: 100vh;
+  width: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: rgba(18,29,40,0.5);
+}
+#addSkillForm {
+  position: fixed;
+  display: auto;
+  height: 80%;
+  width: 80%;
+  top: 10%;
+  left: 10%;
+  z-index: 3;
+  background-color: red;
+}
+#browse_exitSkillBtn {
+  position: absolute;
+  height: 5%;
+  top: 1%;
+  left: 0
+}
+#browse_addSkillQuery {
+  position: absolute;
+  top: 10%;
+  width: 80%;
+  left: 10%;
+}
+#browse_addSkillBtn {
+  position: absolute;
+  margin: 10px;
+  bottom: 0;
+  right: 0
+}
+#browse_queryResult {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+}
+
+/* || sort page */
+
+#sortGradientBox {
+  background-image: linear-gradient(to top right, #be3ca7, #0dd2b0);
 }

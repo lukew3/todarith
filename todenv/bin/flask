@@ -1,4 +1,4 @@
-#!/home/luke/todarith/todenv/bin/python3
+#!/home/luke/todarith/todenv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

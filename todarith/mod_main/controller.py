@@ -4,7 +4,7 @@ from flask import (
 #from flask import Blueprint, request, render_template
 from todarith import db
 #from todarith.mod_auth.forms import LoginForm
-from todarith.models import Problem, Topic, User
+from todarith.models import Problem, Skill, User
 from todarith.mod_main import main
 
 
@@ -12,6 +12,10 @@ from todarith.mod_main import main
 @main.route('/')
 def landing():
     return(render_template("main/landing.html"))
+
+@main.route('/about')
+def about():
+    return(render_template("main/about.html"))
 
 @main.route('/explore')
 def explore():
@@ -36,6 +40,8 @@ def topicBrowser(topic_id):
 
 @main.route('/sitemap')
 def siteMap():
+    #prob=Problem.query.filter_by(id=2300).first()
+    #print(prob.skills)
     return render_template('main/sitemap.html')
 
 @main.route('/topic/<int:topicId>')
@@ -45,7 +51,7 @@ def viewTopic(topicId):
     topic = Topic.query.filter_by(id=topicId).first()
     return render_template('main/viewTopic.html', topic=topic, problems=problems)
 
-@main.route('/user/<int:userId>')
+@main.route('/user/<string:userId>')
 def viewUser(userId):
     page = request.args.get('page', 1, type=int)
     problems = Problem.query.filter_by(poster_id=userId).paginate(page=page, per_page=50)

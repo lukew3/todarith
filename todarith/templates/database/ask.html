@@ -18,62 +18,52 @@
   <div id="askGradientBox" class="rightSideGradientBox">
     <div class="formBox">
       <form>
-        <div class="formGroup">
-          <p class="formLabel">Problem</p>
-          <span id="problem" class="mathquillField"></span>
-        </div>
         <!--<div class="formGroup">
-          <p class="formLabel">Category(Optional)</p>
-          <span id="category" class="mathquillField"></span>
         </div>-->
-        <button id='btn_submit' type="submit" name="button" onclick="probSubmit()">Submit</button>
+        <p class="formLabel">Problem</p>
+        <input type="text" id="ask_problemInput" name="askInput">
+        <button id='btn_submit' type="submit" name="button">Submit</button>
       </form>
+      <div style="height: 30%;"></div>
+      <p id="foundStatus"></p>
+      <p id="answer"></p>
     </div>
-    <p id="foundStatus"></p>
-    <p id="answer"></p>
+
   </div>
-
-  <script>
-      function probSubmit() {
-        document.getElementsByClassName(formBox).style.height = 20%;
-
-      }
-  </script>
-
-
-  <script>
-    var problemSpan = document.getElementById('problem');
-    var problemMathField = MQ.MathField(problemSpan, {
-      handlers: {
-        edit: function() {
-          enteredProblem = problemMathField.latex(); // Get entered math in LaTeX format
-        }
-      }
-    });
-
-    var categorySpan = document.getElementById('category');
-    var categoryMathField = MQ.MathField(categorySpan, {
-      handlers: {
-        edit: function() {
-          enteredCategory = categoryMathField.latex(); // Get entered math in LaTeX format
-        }
-      }
-    });
-  </script>
 
   <script type=text/javascript>
     var enteredProblem, enteredAnswer, enteredCategory;
     $(function() {
       $('button#btn_submit').bind('click', function() {
-        console.log("activated")
-        $.getJSON($SCRIPT_ROOT + '/db/ask/_get_problem_input', {
-          problem: enteredProblem,
-          category: enteredCategory
-        }, function(data) {
-          $("#answer").text(data.answer);
-        });
+        var ansAttempt = attemptSolve(document.getElementById('ask_problemInput').value);
+        if (ansAttempt != "") {
+          $.getJSON($SCRIPT_ROOT + '/db/ask/_add_solved', {
+            problem: document.getElementById('ask_problemInput').value,
+            answer: ansAttempt
+          }, function(data) {
+            $("#answer").text("The answer is: " + data.answer);
+          });
+        }
+        else {
+          $.getJSON($SCRIPT_ROOT + '/db/ask/_get_problem_input', {
+            problem: document.getElementById('ask_problemInput').value,
+            category: enteredCategory
+          }, function(data) {
+            $("#answer").text(data.answer);
+          });
+        }
         return false;
       });
     });
+
+    function attemptSolve(input) {
+      var answer = "";
+
+      try { answer = math.evaluate(input).toString(); }
+      catch(err) { console.log(err.message); }
+
+      console.log(answer);
+      return answer;
+    }
   </script>
 {% endblock content %}
