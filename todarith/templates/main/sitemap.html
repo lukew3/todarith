@@ -4,7 +4,6 @@
   <div id="sitemapList">
     <ul>
       <li><h5>Main</h5></li> &nbsp;
-      <li><a href="{{ url_for('main.topicBrowser', topic_id=1) }}">Topic Browser</a></li> &nbsp;
       <li><a href="{{ url_for('main.landing') }}">Landing</a></li> &nbsp;
       <li><a href="{{ url_for('main.explore') }}">Explore</a></li> &nbsp;
       <li><a href="{{ url_for('main.viewUser', userId=1) }}">View User</a></li> &nbsp;
@@ -13,10 +12,6 @@
       <li><a href="{{ url_for('main.siteMap') }}">SiteMap</a></li> &nbsp;
       <li><a href="{{ url_for('main.quizMaker') }}">QuizMaker</a></li> &nbsp;
 
-
-      <li><h5>Post</h5></li> &nbsp;
-      <li><a href="{{ url_for('post.newPost') }}">Submit New Problem</a></li> &nbsp;
-      <li><a href="{{ url_for('post.createTopic') }}">Create A Topic</a></li> &nbsp;
 
       <li><h5>Auth</h5></li> &nbsp;
       <li><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
