@@ -1,0 +1,135 @@
+
+/* || Landing page specific */
+
+#titleGroup {
+  position: absolute;
+  top: 25%;
+  width: 50%;
+  left:25%;
+  text-align: center;
+}
+
+#landingTitle {
+  font-size: 5em;
+}
+
+#landingButton {
+  font-size: 2.5em;
+  background-color: #ed5466;
+  margin-left: 21%;
+  width: 50%;
+  padding: 2%;
+}
+
+@media screen and (max-width: 700px) {
+  #titleGroup {
+    width: 90%;
+    left: 5%;
+  }
+  #landingTitle {
+    font-size: 4em;
+  }
+  #landingButton {
+    font-size: 2em;
+  }
+}
+
+/* || landing page layout */
+
+#landingInformationGrid {
+  margin-top: 50%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 33% 33% 33%;
+  padding-bottom: 10%;
+}
+
+.landingSemisection {
+  padding: 20px;
+}
+.ssTitle {
+  position: relative;
+  top: 25%;
+  font-size: 5em;
+}
+
+.ssDesc {
+  font-size: 2.5em;
+}
+
+@media (min-width: 1100px) {
+  #st2 {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  #sd2 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 1100px) {
+  #landingInformationGrid {
+    margin-top: 100vh;
+    grid-template-columns: 100%;
+    grid-template-rows: 25% 25% 25% 25% 25% 25%;
+  }
+  .ssTitle {
+    font-size: 3.5em;
+  }
+  .ssDesc {
+    font-size: 2em;
+  }
+}
+
+/* || Landing page svgs */
+
+.landingSvg {
+  position: absolute;
+  height: 40vh;
+  z-index: -100;
+}
+#plusSVG {
+  fill: #ea7424;
+  top: 20vh;
+  left: -5vw;
+}
+#minusSVG {
+  height: 15vh;
+  fill: #0dd2b0;
+  top: 20vh;
+  right: 0vw;
+}
+#multiplySVG {
+  fill:#1aaad9;
+  top: 80%;
+  left: 15%;
+}
+#divideSVG {
+  fill:#be3ca7;
+  top: 55%;
+  right: 15%;
+}
+#piSVG {
+  height: 20vh;
+  fill:#ea7424;
+  top: 115%;
+  left: 40%;
+}
+#sumSVG {
+  fill:#0dd2b0;
+  top: 130vh;
+  right: 10vw;
+}
+#deltaSVG {
+  fill:#1aaad9;
+  height: 30vh;
+  top: 170%;
+  left: 30%;
+}
+
+@media (max-width: 1100px) {
+  .landingSvg {
+    display: none;
+  }
+}

@@ -1,0 +1,143 @@
+
+/* || db/browse page */
+#browse_buffer {
+  position: fixed;
+  background-color: #121d28;
+  color: orange;
+  height: 15vh;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+
+#paramCont {
+  position: fixed;
+  display: block;
+  height: 10vh;
+  width: 100%;
+  top: 0;
+  margin-top: 15vh;
+  background-color: orange;
+  z-index: 1;
+}
+#browseCont {
+  position: relative;
+  height: 90%;
+  width: 90%;
+  margin-top: calc(30vh - 4em);
+  margin-left: 5%;
+}
+
+
+#browseProbCont {
+  position: relative;
+  display: block;
+  top: 0%;
+  min-height: 100%;
+  width: 100%;
+}
+
+.probCont {
+  position: relative;
+  background-color: #ed5466;
+  width: 100%;
+  height: 10vh;
+}
+.questionCont {
+  position: relative;
+  width: 0%;
+}
+.skillBox {
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 30%;
+}
+
+.browse_author {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#browse_levels {
+  text-align: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#pageNav {
+  margin-top: 5%;
+  margin-left: 45%;
+}
+
+.browse_skillCard {
+  position: relative;
+  display: inline-block;
+  height: 50%;
+  background-color: darkgrey;
+  margin-top: 1%;
+}
+
+#browse_SkillName {
+  position: relative;
+  top: 10%;
+  margin-left: 10%;
+  margin-right: -10%;
+}
+.browseSkillButton {
+  position: relative;
+  height: 50%;
+  top: 25%;
+}
+#addSkillCard {
+  position: relative;
+  width: 8em;
+}
+#browseAddSkill {
+  margin-left: 10%;
+}
+#addSkillPage {
+  position: fixed;
+  display: none;
+  height: 100vh;
+  width: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: rgba(18,29,40,0.5);
+}
+#addSkillForm {
+  position: fixed;
+  display: auto;
+  height: 80%;
+  width: 80%;
+  top: 10%;
+  left: 10%;
+  z-index: 3;
+  background-color: red;
+}
+#browse_exitSkillBtn {
+  position: absolute;
+  height: 5%;
+  top: 1%;
+  left: 0
+}
+#browse_addSkillQuery {
+  position: absolute;
+  top: 10%;
+  width: 80%;
+  left: 10%;
+}
+#browse_addSkillBtn {
+  position: absolute;
+  margin: 10px;
+  bottom: 0;
+  right: 0
+}
+#browse_queryResult {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+}

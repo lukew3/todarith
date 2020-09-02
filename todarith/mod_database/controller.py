@@ -10,6 +10,7 @@ from todarith.mod_database.functions import getDBAnswer
 from random import random
 from Naked.toolshed.shell import execute_js, muterun_js, run_js #run nodejs scripts
 from sqlalchemy import func
+from sympy import *
 
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker()
