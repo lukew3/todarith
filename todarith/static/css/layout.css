@@ -36,6 +36,12 @@ nav {
   padding: 20px;
 }
 
+#navLogo {
+  height: 3em;
+  padding: 7px;
+  position: absolute;
+}
+
 nav ul {
     overflow: hidden;
     float: right;
@@ -103,7 +109,7 @@ footer {
   position: relative;
 	margin-top: -180px; /* negative value of footer height */
 	height: 180px;
-  background-color: #EB5160;
+  background-color: #797979;
 	clear:both;
 }
 
