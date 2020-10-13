@@ -6,7 +6,7 @@ from todarith.extensions import bcrypt
 import uuid
 
 class User(CRUDMixin, db.Model, UserMixin):
-    id = db.Column(db.String(128),  default=lambda: str(uuid.uuid4()), unique=True, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     pw_hash = db.Column(db.String(500), unique=False, nullable=False)
     email = db.Column(db.String(320), unique=True, nullable=True)
@@ -23,7 +23,7 @@ class User(CRUDMixin, db.Model, UserMixin):
 
 
 skillproblems = db.Table('skillproblems',
-    db.Column('problem_id', db.String, db.ForeignKey('problem.id'), primary_key=True),
+    db.Column('problem_id', db.Integer, db.ForeignKey('problem.id'), primary_key=True),
     db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'), primary_key=True)
 )
 
@@ -39,25 +39,25 @@ class Skill(CRUDMixin, db.Model):
         return f"Skill('{self.id}', '{self.skillName}', '{self.problems}')"
         #return f"Problem('{self.id}', '{self.skillName}', '{self.problems}')"
 
-clistproblems = db.Table('clistproblems',
-    db.Column('problem_id', db.String, db.ForeignKey('problem.id'), primary_key=True),
-    db.Column('customList_id', db.String, db.ForeignKey('customlist.id'), primary_key=True)
+setproblems = db.Table('setproblems',
+    db.Column('problem_id', db.Integer, db.ForeignKey('problem.id'), primary_key=True),
+    db.Column('set_id', db.Integer, db.ForeignKey('set.id'), primary_key=True)
 )
 
 
-class Customlist(CRUDMixin, db.Model):
-    id = db.Column(db.String(128),  default=lambda: str(uuid.uuid4()), unique=True, primary_key=True)
-    listName = db.Column(db.String(100), nullable=False)
-    problems = db.relationship('Problem', secondary=clistproblems, lazy='subquery',
-        backref=db.backref('customLists', lazy=True))
+class Set(CRUDMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    setName = db.Column(db.String(100), nullable=False)
+    problems = db.relationship('Problem', secondary=setproblems, lazy='subquery',
+        backref=db.backref('sets', lazy=True))
 
 
 class Problem(CRUDMixin, db.Model):
-    id = db.Column(db.String(128),  default=lambda: str(uuid.uuid4()), unique=True, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     #id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(1000), nullable=False)
     answer = db.Column(db.String(1000), nullable=True)
-    poster_id = db.Column(db.String, db.ForeignKey('user.id'), nullable=True) #user id of the person who posted it
+    poster_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) #user id of the person who posted it
     correctnessRating = db.Column(db.Integer, nullable=False)
     sortRating = db.Column(db.Integer, nullable=False)
     difficultyLevel = db.Column(db.String(1000), nullable=True)

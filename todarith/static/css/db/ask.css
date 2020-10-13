@@ -1,0 +1,37 @@
+/* || db/ask page */
+#askGradientBox {
+  background-image: linear-gradient(to top right, #be3ca7, #0dd2b0);
+}
+.formBox {
+  position: relative;
+  height: 80%;
+  width: 60%;
+  top: 15%;
+  left: 10%;
+}
+
+.formGroup {
+  width: 100%;
+  border-bottom: 2px solid white;
+}
+.formLabel {
+  width: 20%;
+}
+
+.mathquillField {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .leftSideContainer {
+    display: none;
+    top: 95%;
+    width: 90%;
+  }
+  .leftSideHeadline { font-size: 3em; }
+  .rightSideGradientBox {
+    width: 90vw;
+    margin-top: 10vh;
+    margin-left: 5vw;
+  }
+}

@@ -29,6 +29,7 @@
     <div id="browseProbCont">
       {% for problem in problems %}
       <div class="probCont">
+        <div class="containerContainer">
         <div class="questionCont">
           <a id="browse_prob" href="{{ url_for('moddb.viewProblem', problem_id=problem.id) }}">$${{ problem.question }}$$</a>
         </div>
@@ -41,6 +42,7 @@
         <div id="browse_levels">
           <p>Dif: {{ problem.difficultyLevel }}</p>
           <p>Time: {{ problem.expectedTime }}</p>
+        </div>
         </div>
       </div>
       <hr style="color: #121d28;">
@@ -87,7 +89,7 @@
         }
         window.location.href = "http://localhost:5000/db/"+newURL;
     }
-    
+
     function addSkillClicked() {
       console.log("hellopeople")
       document.getElementById("addSkillPage").style.display = "block";

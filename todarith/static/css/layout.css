@@ -1,0 +1,173 @@
+
+* {
+  margin: 0;
+}
+body {
+  background-color: #121d28;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+
+/* || Navbar */
+
+#topBuffer {
+  height: 4em;
+}
+nav {
+  background-color: rgba(18,29,40,0.5);
+  margin: none;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  overflow: hidden;
+}
+
+#navTitle {
+  font-size: 3em;
+  padding: 20px;
+}
+
+#navLogo {
+  height: 3em;
+  padding: 7px;
+  position: absolute;
+}
+
+nav ul {
+    overflow: hidden;
+    float: right;
+    margin: 0;
+    padding: 0;
+    margin-right: -75px;
+}
+
+nav ul li {
+    list-style: none;
+    display: block;
+    float: left;
+    text-align: center;
+    font-size: 2em;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.icon {
+  display: none;
+  float: right;
+}
+
+@media screen and (max-width: 1100px) {
+  .topnav ul li a {display: none;}
+  .topnav ul li .icon {
+    float: right;
+    position: absolute;
+    display: block;
+    right: 8px;
+    top: 8px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .topnav.responsive {position: fixed;}
+  .topnav.responsive ul li .icon {
+    position: absolute;
+    right: 6;
+    top: 6;
+  }
+  .topnav.responsive ul li a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .topnav.responsive ul {
+    background-color: rgba(18,29,40,0.5);
+  }
+
+}
+
+/* ||  Footer */
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow:auto;
+	padding-bottom: 180px;
+}
+
+footer {
+  position: relative;
+	margin-top: -180px; /* negative value of footer height */
+	height: 180px;
+  background-color: #2d3035;
+	clear:both;
+}
+
+#footer_Info {
+  position: relative;
+  height: 100%;
+  width: 33vw;
+}
+#footer_Sitemap {
+  position: relative;
+  display: grid;
+  margin-left: 33vw;
+  margin-top: -11em;
+  height: 100%;
+  width: 66%;
+}
+.footer_Section {
+
+}
+#footer_About {
+  grid-column: 1;
+}
+#footer_Database {
+  grid-column: 2;
+}
+#footer_Generate {
+  grid-column: 3;
+}
+#footer_Learn {
+  grid-column: 4;
+}
+
+/* ||  Gradient box and description format*/
+.leftSideContainer {
+  position: absolute;
+  height: 50vh;
+  width: 40vw;
+  top: 25vh;
+  left: 5vw;
+  margin-bottom: 25%;
+}
+
+.leftSideHeadline {
+  font-size: 4em;
+  margin: 0;
+}
+
+.leftSideDescription {
+  font-size: 2em;
+  margin: 0;
+}
+.rightSideGradientBox {
+  display: block;
+  border-radius: 15px;
+  background-color: grey;
+  height: 80vh;
+  width: 40vw;
+  margin-top: 10vh;
+  margin-left: 55vw;
+  margin-bottom: 10vh;
+}
