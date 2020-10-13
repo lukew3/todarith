@@ -1,12 +1,12 @@
 from flask import (
-    current_app, request, redirect, url_for, render_template, flash, abort,
+    current_app, request, redirect, url_for, render_template, flash, abort, jsonify
 )
 #from flask import Blueprint, request, render_template
 from todarith import db
 #from todarith.mod_auth.forms import LoginForm
 from todarith.models import Problem, Skill, User
 from todarith.mod_main import main
-
+from mathgenerator import mathgen
 
 # Set the route and accepted methods
 @main.route('/')
@@ -69,3 +69,17 @@ def solveProblems(topicId):
 @main.route('/quizmaker')
 def quizMaker():
     return render_template('main/quizMaker.html')
+
+@main.route('/generate/<int:genId>')
+def generate(genId=2):
+    generators = [[2, "addition"], [3, "subtraction"]]
+    genTitle = generators[genId-2][1]
+    return render_template('main/generate.html', genTitle=genTitle, genId=genId, generators=generators)
+
+@main.route('/generate/request')
+def requestGen():
+    genId = request.args.get('genId', 1, type=int)
+    generators = [[2, "addition"], [3, "subtraction"]]
+    title = generators[genId-2][1]
+    output = getattr(mathgen, title)()
+    return jsonify(problem=output[0], solution=output[1])

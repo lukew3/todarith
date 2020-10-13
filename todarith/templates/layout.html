@@ -61,6 +61,7 @@
       <!--<li id="navElement"><a href="{{ url_for('moddb.browse') }}">Browse</a></li> &nbsp;-->
       <li id="navElement"><a href="{{ url_for('learn.practice') }}">Practice</a></li> &nbsp;
       <li id="navElement"><a href="{{ url_for('main.about') }}">About</a></li> &nbsp;
+      <li id="navElement"><a href="{{ url_for('main.generate', genId=2) }}">Generate</a></li> &nbsp;
       {% if current_user.is_authenticated %}
         <li id="navElement"><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
       {% else %}
@@ -85,7 +86,7 @@
 
   </div>
 
-
+<!--
   <footer>
     <div id="footer_Info">
       <h1 id="footer_siteTitle">Todarith</h1>
@@ -118,7 +119,7 @@
       </div>
     </div>
   </footer>
-
+-->
   <script>
     function navHamburger() {
       var x = document.getElementById("myTopnav");

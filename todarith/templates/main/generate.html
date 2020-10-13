@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+
+{% endblock head %}
+
+{% block content %}
+
+<div id="generatorBox">
+  <h1 id="generatorTitle">{{ genTitle }}</h1>
+  <h3 id="generatorOutput">Press generate</h3>
+  <button id="generateButton" onclick="generateProb({{ genId }})">Generate</button>
+</div>
+<div id="generatorList">
+  <ul>
+  {% for generator in generators %}
+    <li class="genListItem" id="gen_{{ generator[0] }}"><a href="{{ url_for('main.generate', genId=generator[0] ) }}">{{ generator[1] }}</li>
+  {% endfor %}
+  </ul>
+</div>
+<script>
+  function generateProb(genId) {
+    $.getJSON($SCRIPT_ROOT + '/generate/request', {
+      genId: genId
+    }, function(data) {
+      $("#generatorOutput").text(data.problem + data.solution);
+    });
+  }
+</script>
+<style>
+  #generatorBox {
+    background-color: #2d3035;
+    height: 30vh;
+    width: 50vw;
+    margin: auto;
+    padding: 15px;
+    border-radius: 15px;
+  }
+  h1 {
+    color: red;
+  }
+  #generateButton {
+    width: 100%;
+    margin-top: 20vh;
+  }
+</style>
+{% endblock content %}
