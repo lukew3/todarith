@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
+
 {% block content %}
-  <div id="problemCard">
+  <div id="viewProblemCard">
 
     <div id="cardHeader" class="cardSection">
       <!-- Ratings might be numbers or be small bars that fill with color when their value increases-->
@@ -20,6 +21,7 @@
       <p id="problemAuthor">Author: {{ problem.poster.username }}</p>
       <p id="dateCreated">Date Created: Unavailable</p>
     </div>
+
 
   </div>
 {% endblock content %}

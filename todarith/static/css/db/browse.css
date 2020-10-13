@@ -3,7 +3,6 @@
 #browse_buffer {
   position: fixed;
   background-color: #121d28;
-  color: orange;
   height: 15vh;
   width: 100%;
   top: 0;
@@ -17,7 +16,7 @@
   width: 100%;
   top: 0;
   margin-top: 15vh;
-  background-color: orange;
+  background-color: #575757;
   z-index: 1;
 }
 #browseCont {
@@ -39,9 +38,12 @@
 
 .probCont {
   position: relative;
-  background-color: #ed5466;
+  background-color: #2d3035;
   width: 100%;
   height: 10vh;
+}
+.containerContainer {
+  padding: 5px;
 }
 .questionCont {
   position: relative;

@@ -109,7 +109,7 @@ footer {
   position: relative;
 	margin-top: -180px; /* negative value of footer height */
 	height: 180px;
-  background-color: #797979;
+  background-color: #2d3035;
 	clear:both;
 }
 
@@ -388,7 +388,6 @@ footer {
 #browse_buffer {
   position: fixed;
   background-color: #121d28;
-  color: orange;
   height: 15vh;
   width: 100%;
   top: 0;
@@ -402,7 +401,7 @@ footer {
   width: 100%;
   top: 0;
   margin-top: 15vh;
-  background-color: orange;
+  background-color: #575757;
   z-index: 1;
 }
 #browseCont {
@@ -424,9 +423,12 @@ footer {
 
 .probCont {
   position: relative;
-  background-color: #ed5466;
+  background-color: #2d3035;
   width: 100%;
   height: 10vh;
+}
+.containerContainer {
+  padding: 5px;
 }
 .questionCont {
   position: relative;
@@ -530,6 +532,26 @@ footer {
 
 #sortGradientBox {
   background-image: linear-gradient(to top right, #be3ca7, #0dd2b0);
+}
+#viewProblemCard {
+  width: 50vw;
+  height: 30vh;
+  background-color: #2d3035;
+  border-radius: 15px;
+  margin: auto;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 20px;
+}
+
+/* On mouse-over, add a deeper shadow */
+#viewProblemCard:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
 }
 
 /* || learn/practice page */

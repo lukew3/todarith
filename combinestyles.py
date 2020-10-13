@@ -10,6 +10,7 @@ files = [
     "db/ask.css",
     "db/browse.css",
     "db/sort.css",
+    "db/viewProb.css",
     "learn/practice.css"
 ]
 
