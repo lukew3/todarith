@@ -70,11 +70,13 @@ def solveProblems(topicId):
 def quizMaker():
     return render_template('main/quizMaker.html')
 
+@main.route('/generate/')
 @main.route('/generate/<int:genId>')
 def generate(genId=2):
     generators = [[2, "addition"], [3, "subtraction"]]
     genTitle = generators[genId-2][1]
-    return render_template('main/generate.html', genTitle=genTitle, genId=genId, generators=generators)
+    output = getattr(mathgen, genTitle)()
+    return render_template('main/generate.html', genTitle=genTitle.capitalize(), genId=genId, generators=generators, problem=output[0], solution=output[1])
 
 @main.route('/generate/request')
 def requestGen():
