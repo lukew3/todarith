@@ -73,7 +73,10 @@ def quizMaker():
 @main.route('/generate/')
 @main.route('/generate/<int:genId>')
 def generate(genId=2):
-    generators = [[2, "addition"], [3, "subtraction"]]
+    generators = [[2, "addition"], [3, "subtraction"], [4, "multiplication"], [5, "division"],
+        [6, "binaryComplement1s"], [7, "moduloDivision"], [8, "squareRoot"],
+        [9, "powerRuleDifferentiation"], [10, "square"], [11, "lcm"], [12, "gcd"]
+        ]
     genTitle = generators[genId-2][1]
     output = getattr(mathgen, genTitle)()
     return render_template('main/generate.html', genTitle=genTitle.capitalize(), genId=genId, generators=generators, problem=output[0], solution=output[1])
@@ -81,7 +84,10 @@ def generate(genId=2):
 @main.route('/generate/request')
 def requestGen():
     genId = request.args.get('genId', 1, type=int)
-    generators = [[2, "addition"], [3, "subtraction"]]
+    generators = [[2, "addition"], [3, "subtraction"], [4, "multiplication"], [5, "division"],
+        [6, "binaryComplement1s"], [7, "moduloDivision"], [8, "squareRoot"],
+        [9, "powerRuleDifferentiation"], [10, "square"], [11, "lcm"], [12, "gcd"]
+        ]
     title = generators[genId-2][1]
     output = getattr(mathgen, title)()
     return jsonify(problem=output[0], solution=output[1])
