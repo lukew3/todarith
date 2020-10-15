@@ -13,8 +13,9 @@
   <h3 id="generatorOutput">{{ problem }}{{ solution }}</h3>
   <button id="generateButton" onclick="generateProb({{ genId }})">Generate</button>
 </div>
-<div id="generatorList">
-  <ul>
+<div id="generatorListBox">
+  <h1>Choose a generator below</h1>
+  <ul id="generatorList">
   {% for generator in generators %}
     <li class="genListItem" id="gen_{{ generator[0] }}"><a href="{{ url_for('main.generate', genId=generator[0] ) }}">{{ generator[1] }}</li>
   {% endfor %}
@@ -35,15 +36,32 @@
     height: 30vh;
     width: 50vw;
     margin: auto;
-    padding: 15px;
+    padding: 20px;
     border-radius: 15px;
   }
   h1 {
-    color: red;
+    color: #d04949;
   }
   #generateButton {
     width: 100%;
     margin-top: 20vh;
+  }
+  #generatorListBox {
+    background-color: #2d3035;
+    height: auto;
+    width: 50vw;
+    margin: auto;
+    margin-top: 30px;
+    padding: 15px;
+    border-radius: 15px;
+  }
+  #generatorList {
+    list-style-type: none;
+    /*margin: 0;
+    padding: 0;*/
+  }
+  .genListItem {
+    margin-top:5px;
   }
 </style>
 {% endblock content %}
