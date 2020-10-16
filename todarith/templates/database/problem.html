@@ -1,9 +1,15 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+
+
   <div id="viewProblemCard">
 
     <div id="cardHeader" class="cardSection">
+      {% if current_user.is_authenticated %}
+        <a onclick="removeProb()" href="javascript: void(0)" style="color: red;">Remove Problem</a>
+      {% endif %}
       <!-- Ratings might be numbers or be small bars that fill with color when their value increases-->
       <div id="ratings">
         <p id="timeRating">Estimated time: {{ problem.expectedTime }}</p>
@@ -24,4 +30,15 @@
 
 
   </div>
+  <script>
+    function removeProb(){
+      id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+      $.getJSON($SCRIPT_ROOT + '/db/removeProb', {
+        id: id
+      }, function(data) {
+        console.log(data.message)
+      });
+      window.location.href = "https://todarith.ml/db/";
+    }
+  </script>
 {% endblock content %}
