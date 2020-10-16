@@ -294,3 +294,13 @@ def remove_skill():
 def viewProblem(problem_id):
     problem = Problem.query.filter_by(id=problem_id).first()
     return render_template('database/problem.html', problem=problem)
+
+@moddb.route("/removeProb")
+def removeProb():
+    problem_id = request.args.get('id', 0, type=int)
+    problem = Problem.query.filter_by(id=problem_id).first()
+    Problem.delete(problem)
+    print(problem)
+    redirectUrl = url_for('moddb.browse')
+    print(redirectUrl)
+    return jsonify(message="Problem removed", redirect=redirectUrl)

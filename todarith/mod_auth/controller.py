@@ -27,7 +27,7 @@ def login():
     #if form.validate_on_submit():
     #    return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
     if form.validate_on_submit():
-        return redirect(url_for('main.explore'))
+        return redirect(url_for('main.landing'))
 
     return render_template('/auth/login.html', form=form)
 
@@ -49,4 +49,4 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('main.explore'))
+    return redirect(url_for('main.landing'))
