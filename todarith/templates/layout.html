@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>TodArith</title>
+  <title>Todarith</title>
   <link rel="shortcut icon" type="image/png" href="/static/images/whitefav32.png"/>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,35 +47,40 @@
 </head>
 
 <body>
-  <nav class="topnav" id="myTopnav">
-    <a id="navTitle" href="{{ url_for('main.landing') }}">Todarith</a>
-    <img src="{{ url_for('static', filename='images/WhiteFavicon.png') }}" height="50" id="navLogo">
-    <ul id="navList">
 
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('main.landing') }}" id="navTitle">Todarith</a>
+    <a href="{{ url_for('moddb.ask') }}">Ask</a>
+    <a href="{{ url_for('moddb.answer') }}">Answer</a>
+    <a href="{{ url_for('moddb.add') }}">Add</a>
+    <a href="{{ url_for('moddb.browse') }}">Browse</a>
+    <a href="{{ url_for('moddb.sort') }}">Sort</a>
+    <a href="{{ url_for('learn.practice') }}">Practice</a>
+    <a href="{{ url_for('main.about') }}">About</a>
+    <a href="{{ url_for('main.generate', genId=0) }}">Generate</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
 
-      <li id="navElement"><a href="{{ url_for('moddb.ask') }}">Ask</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('moddb.answer') }}">Answer</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('moddb.add') }}">Add</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('moddb.browse') }}">Browse</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('moddb.sort') }}">Sort</a></li> &nbsp;
-      <!--<li id="navElement"><a href="{{ url_for('moddb.browse') }}">Browse</a></li> &nbsp;-->
-      <li id="navElement"><a href="{{ url_for('learn.practice') }}">Practice</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('main.about') }}">About</a></li> &nbsp;
-      <li id="navElement"><a href="{{ url_for('main.generate', genId=2) }}">Generate</a></li> &nbsp;
-      {% if current_user.is_authenticated %}
-        <li id="navElement"><a href="{{ url_for('auth.logout') }}">Logout</a></li> &nbsp;
-      {% else %}
-        <!--<li id="navElement"><a href="{{ url_for('auth.login') }}">Login</a></li> &nbsp;
-        <li id="navElement"><a href="{{ url_for('auth.register') }}">Register</a></li> &nbsp;-->
-      {% endif %}
-      <li id="navElement"> <!--This is the menu icon-->
-        <a href="javascript:void(0);" class="icon" onclick="navHamburger()">
-          <i class="fa fa-bars"></i>
-        </a>
-      </li> &nbsp;
-    </ul>
-  </nav>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+</style>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
   <div id="topBuffer">
   </div>
   <div id="wrap">
