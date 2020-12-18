@@ -10,7 +10,10 @@
 
 <div id="generatorBox">
   <h1 id="generatorTitle">{{ genTitle }}</h1>
-  <h3 id="generatorOutput">{{ problem }}{{ solution }}</h3>
+  <h4>Problem:</h4>
+  <h3 id="generatedProblem">{{ problem }}</h3>
+  <h4>Solution:</h4>
+  <h3 id="generatedSolution">{{ solution }}</h3>
   <button id="generateButton" onclick="generateProb({{ genId }})">Generate</button>
 </div>
 <div id="generatorListBox">
@@ -26,7 +29,8 @@
     $.getJSON($SCRIPT_ROOT + '/generate/request', {
       genId: genId
     }, function(data) {
-      $("#generatorOutput").text(data.problem + data.solution);
+      $("#generatedProblem").text(data.problem);
+      $("#generatedSolution").text(data.solution);
     });
   }
 </script>
