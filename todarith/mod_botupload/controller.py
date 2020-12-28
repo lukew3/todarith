@@ -10,6 +10,8 @@ from todarith.models import User, Problem, Skill
 from todarithgen import generator
 from todarith.mod_botupload.generator import runGenerator
 #from todarith.mod_botupload.postProc import checkAll, checkTopicExists
+from mathgenerator import mathgen
+import random
 
 @botupload.route('/', methods=['GET', 'POST'])
 def generate():
@@ -50,3 +52,39 @@ def generate():
             duplicateList.append(tup)
 
     return(render_template("botupload/generated.html", dupList=duplicateList, upList = uploadedList, upCount = uploaded_count, dupCount = duplicate_count))
+
+@botupload.route('/v2', methods=['GET', 'POST'])
+def generate_v2():
+    poster = User.query.filter_by().first()
+    gen_list = mathgen.getGenList()
+    
+    # Generates a defined number of problems, random generator id's for each
+    for _ in range(100):
+        gen_id = random.randint(0, len(gen_list)-1)
+        prob, ans = mathgen.genById(gen_id)
+        generator_name = gen_list[gen_id][1]
+        # If statement makes sure there isnt a duplicate
+        if Problem.query.filter_by(question=prob).first() == None: 
+            Problem.create(
+                question=prob,
+                answer=ans,
+                poster_id=poster.id,
+                correctnessRating=1,
+                sortRating=1,
+                difficultyLevel=None,
+                expectedTime=None,
+                hasSolution=True
+            )
+            thisProb = Problem.query.filter_by(question=prob).first()
+            # Add the math skill
+            thisProb.skills.append(Skill.query.filter_by(id=1).first())
+            # If generator_name skill doesn't yet exist, create it and then add it
+            if Skill.query.filter_by(skillName=generator_name).first() == None:
+                Skill.create(
+                    skillName = generator_name
+                )
+            thisProb.skills.append(Skill.query.filter_by(skillName=generator_name).first())
+            # Add generated tag in order to prevent disaster if a bad generator is made
+            thisProb.skills.append(Skill.query.filter_by(skillName="generated").first())
+            db.session.commit()
+    return "<p>Problems added</p>"
