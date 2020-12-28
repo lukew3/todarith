@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block head %}
+
+<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+{% endblock head %}
+
+{% block content %}
+
+<h1>Botupload</h1>
+
+<label>Number of problems to generate(1 if blank):</label>
+<input type="text" id="count_input" name="count"><br><br>
+<label for="lname">Generator id(randomized if blank):</label>
+<input type="text" id="generator_id_input" name="generator_id"><br><br>
+<button id='btn_generate' onclick='generate_problems()'>Generate</button>
+
+<h2>Results</h2>
+<div id="results_div">
+</div>
+<p id='problem_output'></>
+<p id='answer_output'></>
+<p id='skill_output'></>
+
+<script type=text/javascript>
+    function generate_problems() {
+        console.log("Running");
+        count = document.getElementById('count_input').value;
+        console.log(count);
+	if (count == "") {
+            count = 1;
+        }
+        generator_id = document.getElementById('generator_id_input').value;
+        if (generator_id == "") {
+            generator_id = 1;
+        }
+        for (i = 0; i < count; i++) {
+            $.getJSON($SCRIPT_ROOT + '/botupload/generate_problem', {
+                gen_id : generator_id,
+            }, function(data) {
+		appendage = '<p>Problem: ' + data.problem + '</p>\n' +
+			    '<p>Answer: ' + data.answer + '</p>\n' +
+			    '<p>Skill: ' + data.skill + '</p>\n' +
+			    '<p>--------------------------</p>\n'
+		results_div.innerHTML = appendage + results_div.innerHTML 
+            });
+        };
+        return false;
+    };
+</script>
+{% endblock content %}
