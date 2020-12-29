@@ -87,7 +87,7 @@
         if (newURL == oldURL) {
           newURL = oldURL.replace(skillname.toString(), '');
         }
-        window.location.href = "http://localhost:5000/db/"+newURL;
+        window.location.href = newURL;
     }
 
     function addSkillClicked() {
@@ -108,7 +108,7 @@
       } else {
         newURL = oldURL.concat("&", selectedSkill);
       }
-      window.location.href = "http://localhost:5000/db/"+newURL;
+      window.location.href = newURL;
     }
 
     function queryEdited() {
