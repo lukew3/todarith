@@ -31,7 +31,7 @@
       <div class="probCont">
         <div class="containerContainer">
         <div class="questionCont">
-          <a id="browse_prob" href="{{ url_for('moddb.viewProblem', problem_id=problem.id) }}">$${{ problem.question }}$$</a>
+          <a id="browse_prob" href="{{ url_for('moddb.viewProblem', problem_id=problem.id) }}">{{ problem.question }}</a>
         </div>
         {% for skill in problem.skills %}
         <div class="skillBox">
