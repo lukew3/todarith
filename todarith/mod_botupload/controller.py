@@ -27,6 +27,7 @@ def generate_problem():
     generator_name = gen_list[gen_id][1]
     # If statement makes sure there isnt a duplicate
     if Problem.query.filter_by(question=prob).first() == None: 
+        mathSkill = Skill.query.filter_by(id=1).first()
         Problem.create(
             question=prob,
             answer=ans,
@@ -35,7 +36,7 @@ def generate_problem():
             sortRating=1,
             difficultyLevel=None,
             expectedTime=None,
-            hasSolution=True
+            hasSolution=True,
         )
         thisProb = Problem.query.filter_by(question=prob).first()
         # Add the math skill
