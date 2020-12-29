@@ -11,7 +11,8 @@ from mathgenerator import mathgen
 # Set the route and accepted methods
 @main.route('/')
 def landing():
-    return(render_template("main/landing.html"))
+    problem_count = db.session.query(Problem).count()
+    return(render_template("main/landing.html", problemCount=problem_count))
 
 @main.route('/about')
 def about():
