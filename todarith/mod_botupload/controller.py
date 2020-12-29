@@ -4,12 +4,8 @@ from flask import (
 from todarith import db
 from todarith.models import Problem, Skill, User
 from todarith.mod_botupload import botupload
-from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
 from todarith.models import User, Problem, Skill
-from todarithgen import generator
-from todarith.mod_botupload.generator import runGenerator
-#from todarith.mod_botupload.postProc import checkAll, checkTopicExists
 from mathgenerator import mathgen
 import random
 
@@ -35,7 +31,7 @@ def generate_problem():
             sortRating=1,
             difficultyLevel=None,
             expectedTime=None,
-            hasSolution=True
+            hasSolution=True,
         )
         thisProb = Problem.query.filter_by(question=prob).first()
         # Add the math skill

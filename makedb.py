@@ -14,3 +14,6 @@ User.create(
 Skill.create(
     skillName="Math"
 )
+Skill.create(
+    skillName="generated"
+)
