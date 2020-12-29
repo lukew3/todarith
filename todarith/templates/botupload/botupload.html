@@ -34,7 +34,7 @@
             generator_id = 1;
         }
         for (i = 0; i < count; i++) {
-            $.getJSON($SCRIPT_ROOT + '/botupload/generate_problem', {
+            $.getJSON($SCRIPT_ROOT + '/botupload/request_generate_problem', {
                 gen_id : generator_id,
             }, function(data) {
 		appendage = '<p>Problem: ' + data.problem + '</p>\n' +

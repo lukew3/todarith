@@ -8,15 +8,19 @@ from werkzeug.utils import secure_filename
 from todarith.models import User, Problem, Skill
 from mathgenerator import mathgen
 import random
+import time
 
 @botupload.route('/', methods=['GET', 'POST'])
 def botupload_main():
     return(render_template("botupload/botupload.html"))
 
-@botupload.route('/generate_problem')
-def generate_problem():
+@botupload.route('/request_generate_problem')
+def request_generate_problem():
     gen_id = request.args.get('gen_id', -1, type=int)
+    problem, answer, skill = generate_problem(gen_id)
+    return jsonify(problem=problem, answer=answer, skill=skill)
 
+def generate_problem(gen_id):
     poster = User.query.filter_by().first()
     gen_list = mathgen.getGenList()
     prob, ans = mathgen.genById(gen_id)
@@ -45,7 +49,23 @@ def generate_problem():
         # Add generated tag in order to prevent disaster if a bad generator is made
         thisProb.skills.append(Skill.query.filter_by(skillName="generated").first())
         db.session.commit()
+        return prob, ans, generator_name
     else:
-        return jsonify(problem="Problem already exists", answer="N/A", skill="N/A")
-    return jsonify(problem=prob, answer=ans, skill=generator_name)
+        return "Problem already exists", "N/A", "N/A"
 
+@botupload.route('/start')
+def start_background():
+    # executor.submit(background_generation)
+    return "<h3>Generation started</h3>"
+
+@botupload.route('/stop')
+def stop_background():
+    return "<h3>Generation stopped</h3>"
+
+def background_generation():
+    pigs_fly = False
+    while pigs_fly == False:
+        gen_id = random.randint()
+        p, a, s = generate_problem(gen_id)
+        print(p)
+        time.sleep(1)
