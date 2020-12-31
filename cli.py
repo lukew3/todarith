@@ -3,6 +3,7 @@ from todarith import create_app, db
 from todarith.models import Skill, User, Problem
 import random, time, os
 from mathgenerator import mathgen
+import sys
 
 app = create_app()
 app.app_context().push()
@@ -79,8 +80,8 @@ def auto_generate():
             print(p)
         except Exception as e:
             with open("gen_errors.txt", "a") as myfile:
-                myfile.write(sys.exc_value)
-        time.sleep(0.5)
+                myfile.write(str(e))
+        time.sleep(0.2)
 
 def generate_problem(gen_id):
     poster = User.query.filter_by().first()
