@@ -80,8 +80,8 @@ def auto_generate():
             print(p)
         except Exception as e:
             with open("gen_errors.txt", "a") as myfile:
-                myfile.write(str(e))
-        time.sleep(0.2)
+                myfile.write("GEN ID: " + str(gen_id) + ". ERROR: " + str(e)) 
+        time.sleep(0.05)
 
 def generate_problem(gen_id):
     poster = User.query.filter_by().first()
