@@ -3,6 +3,8 @@ from todarith import create_app, db
 from todarith.models import Skill, User, Problem
 import random, time, os
 from mathgenerator import mathgen
+import tracemalloc
+import gc
 
 app = create_app()
 app.app_context().push()
@@ -68,24 +70,29 @@ def merge_css():
 
     export.close()
 
-
 @cli.command()
 def auto_generate():
-    pigs_fly = False
-    while pigs_fly == False:
+    tracemalloc.start()
+    while 0 == 0:
         gen_id = random.randint(0, len(mathgen.getGenList())-1)
         try:
+            print("Before: " + str(tracemalloc.get_traced_memory()[0]))
             p, a, s = generate_problem(gen_id)
-            print(p)
+            print("After: " + str(tracemalloc.get_traced_memory()[0]))
+            # print(p)
         except Exception as e:
             with open("gen_errors.txt", "a") as myfile:
                 myfile.write(sys.exc_value)
-
+        time.sleep(0.2)
+        current, peak = tracemalloc.get_traced_memory()
+        # print("3: " + str(current))
+        print("--------------------------")
 
 def generate_problem(gen_id):
     poster = User.query.filter_by().first()
     gen_list = mathgen.getGenList()
     prob, ans = mathgen.genById(gen_id)
+    #print("1: " + str(tracemalloc.get_traced_memory()[0]))
     generator_name = gen_list[gen_id][1]
     # If statement makes sure there isnt a duplicate
     if Problem.query.filter_by(question=prob).first() == None: 
@@ -111,9 +118,13 @@ def generate_problem(gen_id):
         # Add generated tag in order to prevent disaster if a bad generator is made
         thisProb.skills.append(Skill.query.filter_by(skillName="generated").first())
         db.session.commit()
+        db.session.expunge_all()
+        gc.collect()
+        # print("2: " + str(tracemalloc.get_traced_memory()[0]))
         return prob, ans, generator_name
     else:
         return "Problem already exists", "N/A", "N/A"
+
 
 if __name__ == "__main__":
     cli()
