@@ -70,18 +70,23 @@ def merge_css():
     export.close()
 
 
+exhausted_generators = [3, 6, 8, 9, 10, 11, 12, 14, 15, 47, 51, 58, 62, 90, 104]
 @cli.command()
 def auto_generate():
-    pigs_fly = False
-    while pigs_fly == False:
-        gen_id = random.randint(0, len(mathgen.getGenList())-1)
+    while True:
+        while True:
+            gen_id = random.randint(0, len(mathgen.getGenList())-1)
+            if gen_id not in exhausted_generators:
+                break
+            else:
+                print("---Generator of ID " + str(gen_id) + " exited")
         try:
             p, a, s = generate_problem(gen_id)
-            print(p)
+            print("ID: " + str(gen_id) + ". PROB: " + str(p))
         except Exception as e:
             with open("gen_errors.txt", "a") as myfile:
-                myfile.write("GEN ID: " + str(gen_id) + ". ERROR: " + str(e)) 
-        time.sleep(0.05)
+                myfile.write("\nGEN ID: " + str(gen_id) + ". ERROR: " + str(e)) 
+        time.sleep(0.01)
 
 def generate_problem(gen_id):
     poster = User.query.filter_by().first()
