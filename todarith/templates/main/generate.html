@@ -8,7 +8,7 @@
 
 {% block content %}
 
-<div id="generatorBox">
+<div id="generatorBox" class="generate_contentBox">
   <h1 id="generatorTitle">{{ genTitle }}</h1>
   <h4>Problem:</h4>
   <h3 id="generatedProblem">{{ problem }}</h3>
@@ -16,7 +16,7 @@
   <h3 id="generatedSolution">{{ solution }}</h3>
   <button id="generateButton" onclick="generateProb({{ genId }})">Generate</button>
 </div>
-<div id="generatorListBox">
+<div id="generatorListBox" class="generate_contentBox">
   <h1>Choose a generator below</h1>
   <ul id="generatorList">
   {% for generator in generators %}
@@ -68,6 +68,14 @@
   }
   .genListItem {
     margin-top:5px;
+  }
+  @media screen and (max-width: 700px) {
+	  #generatorBox {
+		  width: 90vw;
+	  }
+	  #generatorListBox {
+		  width: 90vw;
+	  }
   }
 </style>
 {% endblock content %}

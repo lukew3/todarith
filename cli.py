@@ -4,6 +4,7 @@ from todarith.models import Skill, User, Problem
 import random, time, os
 from mathgenerator import mathgen
 import sys
+from tqdm import tqdm
 
 app = create_app()
 app.app_context().push()
@@ -124,6 +125,27 @@ def generate_problem(gen_id):
     else:
         return "Problem already exists", "N/A", "N/A"
 
+@cli.command()
+def get_exhausted_list():
+    exhausted_list = []
+    for i in range(0, len(mathgen.getGenList())-1):
+        original = 0
+        duplicate = 0  
+        for j in tqdm(range(100), desc="ID: " + str(i)):
+            try:
+                p, a, s = generate_problem(i)
+                if p == "Problem already exists":
+                    duplicate += 1
+            except Exception as e:
+                with open("gen_errors.txt", "a") as myfile:
+                    myfile.write("\nGEN ID: " + str(i) + ". ERROR: " + str(e))
+        ratio = duplicate / 100
+        print("Ratio: " + str(ratio))
+        if ratio > .95:
+            exhausted_list.append(i)
+        time.sleep(0.01)
+    for item in exhausted_list:
+        print(item)
 
 if __name__ == "__main__":
     cli()
