@@ -65,17 +65,12 @@ def browse(getSkills='Math'):
     skills = []
     for skill in skillNames:
         skills.append(Skill.query.filter_by(skillName=skill).first())
-
-    if len(skills)==1:
-        allProbs = skills[0].problems
-    else:
-        allProbs = skillFilter(skills)
-
     page = request.args.get('page', 1, type=int)
     per_page=25
-    problems = paginate(allProbs, page, per_page)
-    lastPage= int(len(allProbs)/per_page)
-    if int(len(allProbs)%per_page) != 0:
+    problems = Problem.query.paginate(page, per_page, error_out=False)
+    problem_count = db.session.query(Problem).count()
+    lastPage= int(problem_count/per_page)
+    if int(problem_count%per_page) != 0:
         lastPage += 1
     return render_template("database/browse.html", problems=problems, skills=skills, page=page, lastPage=lastPage)
 
