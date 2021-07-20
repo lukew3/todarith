@@ -74,6 +74,7 @@ def quizMaker():
 @main.route('/generate/')
 @main.route('/generate/<int:genId>')
 def generate(genId=0):
+    return redirect("https://lukew3.com/mathgenerator")
     generators = mathgen.getGenList()
     genTitle = generators[genId][1]
     output = mathgen.genById(genId)
